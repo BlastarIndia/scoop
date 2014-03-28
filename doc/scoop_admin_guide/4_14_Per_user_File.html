@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.14 Per-user File Uploads</TITLE>
+<META NAME="description" CONTENT="4.14 Per-user File Uploads">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="4_15_User_Subscriptions.html">
+<LINK REL="previous" HREF="4_13_Trusted_Users.html">
+<LINK REL="up" HREF="4_Scoop_Features.html">
+<LINK REL="next" HREF="4_15_User_Subscriptions.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<UL>
+<LI><A href="4_1_Story_Selection.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN> Story Selection</A></LI>
+<LI><A href="4_2_User_Diaries.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> User Diaries</A></LI>
+<LI><A href="4_3_Story_Archiving.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN> Story Archiving</A></LI>
+<LI><A href="4_4_Story_Digest.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">4</SPAN> Story Digest Emails</A></LI>
+<LI><A href="4_5_Story_Syndication.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">5</SPAN> Story Syndication (RDF)</A></LI>
+<LI><A href="4_6_Story_hotlisting_bookma.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">6</SPAN> Story hotlisting/bookmarking</A></LI>
+<LI><A href="4_7_Automatic_Related.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">7</SPAN> Automatic `Related Links' listing</A></LI>
+<LI><A href="4_8_Comments_Comment.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">8</SPAN> Comments and Comment Views</A></LI>
+<LI><A href="4_9_Polls.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">9</SPAN> Polls</A></LI>
+<LI><A href="4_10_Spell_checking_Stories.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">10</SPAN> Spell-checking Stories and Comments</A></LI>
+<LI><A href="4_11_Macros_in.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">11</SPAN> Macros in Stories and Comments</A></LI>
+<LI><A href="4_12_Spam_Crapflood.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">12</SPAN> Spam and Crapflood Prevention</A></LI>
+<LI><A href="4_13_Trusted_Users.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">13</SPAN> Trusted Users and Mojo</A></LI>
+<LI><A href="4_14_Per_user_File.html" id="current"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">14</SPAN> Per-user File Uploads</A></LI>
+<LI><A href="4_15_User_Subscriptions.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">15</SPAN> User Subscriptions</A></LI>
+<LI><A href="4_16_User_submitted_Adverti.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">16</SPAN> User-submitted Advertisements</A></LI>
+<LI><A href="4_17_Calendar.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">17</SPAN> Calendar</A></LI>
+<LI><A href="4_18_Site_Layout.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">18</SPAN> Site Layout and Themes</A></LI>
+<LI><A href="4_19_Flexible_Sections.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">19</SPAN> Flexible Sections and Categorization</A></LI>
+<LI><A href="4_20_Searching_Relevance.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">20</SPAN> Searching by Relevance</A></LI>
+<LI><A href="4_21_Page_Caching.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">21</SPAN> Page Caching</A></LI>
+<LI><A href="4_22_Payment_Processing.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">22</SPAN> Payment Processing</A></LI>
+<LI><A href="4_23_Admin_Action.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">23</SPAN> Admin Action Logging</A></LI>
+<LI><A href="4_24_Access_Control.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">24</SPAN> Access Control While Upgrading</A></LI>
+<LI><A href="4_25_Boxtool.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">25</SPAN> Boxtool</A></LI>
+</UL>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html591"
+  HREF="4_14_Per_user_File.html#SECTION000414100000000000000"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">1</SPAN> Story Text Uploads</A>
+<LI><A NAME="tex2html592"
+  HREF="4_14_Per_user_File.html#SECTION000414200000000000000"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">2</SPAN> File Uploads</A>
+<LI><A NAME="tex2html593"
+  HREF="4_14_Per_user_File.html#SECTION000414300000000000000"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">3</SPAN> Admin Upload Area</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H2><A NAME="SECTION000414000000000000000"></A>
+<A NAME="features-file-uploads"></A>
+<BR>
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">14</SPAN> Per-user File Uploads
+</H2>
+
+<P>
+Scoop allows three types of file uploads.  To have any file uploads at all, the variable <B>allow_uploads</B> must be turned on. The different types of uploads are given to specific user groups using Scoop's permission system.
+
+<P>
+
+<H3><A NAME="SECTION000414100000000000000">
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">1</SPAN> Story Text Uploads</A>
+</H3>
+
+<P>
+Story text uploading allows users to write stories in their favourite program and upload the text file when posting the article; the uploaded file is then placed into the ``Extended Copy'' textarea on the submit story form when they preview. The file is not displayed in the previewed story until they preview again, it is only placed in the ``Extended Copy'' textarea.
+
+<P>
+If a file is uploaded when there is already content in the ``Extended Copy'' textarea, the content is replaced with the contents of the file. This can be useful for long articles when the author sees errors when previewing; the author can fix the error in the external program, save the file, then re-upload the corrected file and preview.
+
+<P>
+Permission to upload files into the submit story form is given using the perm <B>upload_content</B> in the Groups Admin Tool. This feature is given on a per-group basis.
+
+<P>
+
+<H3><A NAME="SECTION000414200000000000000">
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">2</SPAN> File Uploads</A>
+</H3>
+
+<P>
+File upload gives the user their own directory on the server where they can upload any file, subject to the limits imposed by the admin on upload size and total directory size.
+
+<P>
+Each user has his own directory and can only change his own directory, but all users can browse a user's files through the files link on the user info page.
+
+<P>
+To set up the upload area, the variable <B>upload_path_user</B> must be set to an absolute local path. Apache must have full write permissions to the directory, so it can manage files in it. The directory must also be accessible from outside via the web. The variable <B>upload_link_user</B> must be set to an absolute external path or URL, the external address of the directory named in the previous variable. The directory named in the above two variables is used as a base directory; each user gets a subdirectory for his own files.
+
+<P>
+Permission to use the upload area is given using the perm <B>upload_user</B> in the Groups Admin Tool. This feature is given on a per-group basis.
+
+<P>
+The variables <B>upload_delete</B> and <B>upload_rename</B> determine whether or not users with permission to use the upload area can also delete and rename their files, respectively. Since the file upload feature can be used to store files used by the user in stories published on the site, refusing to allow the user to delete or rename uploaded files can prevent broken links within the site.
+
+<P>
+To set <B>file size and disk space limits</B>, the variables <B>upload_max_file_size</B> and <B>upload_user_quota</B> are set to a positive number. In both cases, a value of zero disables the size limits and allows any size file to upload.
+
+<P>
+
+<H3><A NAME="SECTION000414300000000000000">
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">3</SPAN> Admin Upload Area</A>
+</H3>
+
+<P>
+The admin upload area is a shared upload directory. Each user with permission to manage this directory sees the same set of files. Permission to use the admin upload directory is given using the perm <B>upload_admin</B> in the Groups Admin Tool. This permission should only be given to administrative users, such as those in the Admin or Superuser groups.
+
+<P>
+To set up the upload area, the variable <B>upload_path_admin</B> must be set to an absolute local path.  Apache must have full write permissions to the directory, so it can manage files in it. The directory must also be accessible from outside via the web. The variable <B>upload_link_admin</B> must be set to an absolute external path or URL, the external address of the directory named in the previous variable.
+
+<P>
+The variable <B>upload_max_file_size</B> applies to admin uploads as well as user uploads.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

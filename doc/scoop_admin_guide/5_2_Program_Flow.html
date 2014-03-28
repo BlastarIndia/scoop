@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>5.2 Program Flow and Scoop's code structure</TITLE>
+<META NAME="description" CONTENT="5.2 Program Flow and Scoop's code structure">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="5_3_Working_with.html">
+<LINK REL="previous" HREF="5_1_S_Object.html">
+<LINK REL="up" HREF="5_Extending_Scoop_s.html">
+<LINK REL="next" HREF="5_3_Working_with.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<UL>
+<LI><A href="5_1_S_Object.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN> The $S Object</A></LI>
+<LI><A href="5_2_Program_Flow.html" id="current"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">2</SPAN> Program Flow and Scoop's code structure</A></LI>
+<LI><A href="5_3_Working_with.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">3</SPAN> Working with Boxes</A></LI>
+<LI><A href="5_4_Creating_new.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN> Creating new ops or features</A></LI>
+<LI><A href="5_5_Creating_Submitting.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">5</SPAN> Creating and Submitting Patches</A></LI>
+</UL>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00052000000000000000"></A>
+<A NAME="hacking-flow"></A>
+<BR>
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">2</SPAN> Program Flow and Scoop's code structure
+</H2>
+
+<P>
+First things first: where is everything? Scoop is set up in a type of heirarchy, with everthing in the lib/ directory of your Scoop distribution. You'll notice 2 directories there, Bundle and Scoop, and one file, Scoop.pm. Don't worry about Bundle, unless you like messing with CPAN. Scoop.pm has all the main initialization routines, and all of the other perl modules that make up Scoop fall under the lib/Scoop directory.
+
+<P>
+The file layout within the Scoop directory is pretty easy to understand. Polls stuff is in Polls.pm and under the Polls/ directory, Comments stuff is in Comments.pm and Comments/ directory, etc. The Admin/ directory is the exception; for the most part it contains all the code for the admin tools, but it also contains stuff like user creation, story submission, and so on. Basically the kinds of ``administrative'' things that users can do.
+
+<P>
+If you're adding a new module, and it starts to get bigger than about 1000 lines, think hard about splitting it up into its own subdirectory like some of the other modules.
+
+<P>
+All of Scoop's modules have some degree of POD (run 'perldoc perldoc' if you're not familiar with POD), so a lot of information about how they work and how to use them can be gleaned from typing 'perldoc Scoop.pm' or any other .pm file.
+
+<P>
+It can be tricky to trace what happens in what order--Scoop jumps from its backend code to boxes in the database and back again many times in every page request. 
+
+<P>
+To find out which function generates the |CONTENT| part of a given page, first look at what op the page is generated for--the first pseudo-directory, or `main' for the main page. In the Ops Admin Tool, the ops each have a function associated with them, and an indication of whether or not the function is a box. That function, plus the functions it may call, generates the central portion of each page. Additional code is run from box calls on the op's page template; the box name is found in the |BOX,boxname| keys.
+
+<P>
+You pretty much want to figure out where the part you're interested in is being generated (often based on some key strings in the display or, sometimes from those strings, the name of a block that's displayed) then follow the program either forward or back through Scoop's code and boxes. grep -r helps a lot with the former, and the admin tools search helps with the latter.
+
+<P>
+If you want to trace program execution, either in part or in full, ctags are handy for jumping around between subroutines in Scoop's modules and tracing program flow (in a text editor that understands ctags). From the base scoop directory: 'ctags -R lib/' will create a file called tags that your text editor can use. Add a -e flag if you use emacs.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

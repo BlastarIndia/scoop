@@ -1,0 +1,94 @@
+This just lists the order that you need to apply these patches, and the dates
+on which they were added to scoop. 
+
+The upgrade-db.pl in scripts/ will (hopefully) do all this for you. Try running
+it first.
+
+Apply them to your database in the order below with
+mysql -u root -p <scoopdb> < patch-NN-Name.sql
+
+Run the scripts with 
+./script-NN-(pre|post).pl
+
+If there are scripts and patches with the same number, run the -pre script
+first, then apply the patch, then run the -post script
+
+Don't apply patches dated earlier than when you installed scoop, or when you
+created the scoop database with scoop.sql  These patches are all in the
+scoop.sql file already
+
+Mar 21 10:18 patch-01-SiteControls.sql
+Mar 21 11:57 patch-02-RDF.sql
+Mar 30 17:05 patch-03-StickySig.sql
+Apr  1 12:44 patch-04-NewHotlist.sql  # note, don't forget to run 
+                                      # script-04-post.pl as well, to 
+                                      # upgrade all users to the new hotlist
+                                      # setup
+Apr 22 17:34 patch-05-RDFChanges.sql
+Apr 25 01:54 patch-06-AdminNotes.sql
+Apr 26 11:54 patch-07-AllowedHTML.sql
+Apr 26 19:03 patch-08-StickySig2.sql
+May 11 13:54 patch-09-RDFupdate.sql
+May 31 04:31 patch-10-RatingTimes.sql
+Jun  1 03:33 scripts/fix_urls.pl      # run this script to fix the URL's scoop
+                                      # uses. it will update boxes and blocks
+                                      # only if they're unchanged, so be sure to
+                                      # do any manual changes it says you should
+                                      # do
+Jun  3 15:05 patch-11-UserSecure.sql
+Jun  8 10:12 patch-12-SectionPerms.sql # don't forget to run
+                                      # script-12-post.pl after
+                                      # you apply this patch to give everyone
+                                      # permission to post to every section.  Unless
+                                      # you want to do it all by hand ;-)
+Jun 11 04:47 patch-13-Cron.sql        # also run script-13-post.pl to update
+                                      # your current cron. do update_cron.pl -h to
+                                      # see how to use it. it will put in all the
+                                      # stuff you've configured with old cron,
+                                      # automatically
+Jun 15 02:48 patch-14-SectionPages.sql
+Jun 24 11:47 patch-15-NewAccountLimit.sql
+Jun 26 07:03 patch-16-NewURLs.sql
+Jun 27 10:53 patch-17-NewSections.sql # after you run this, you need to run 
+                                      # script-17-post.pl
+                                      # to get converted over to the new style
+                                      # type 'perlpod update_new_sect_perms.pl'
+                                      # for some info on it
+Jul 02 02:33 patch-18-IndexChanges.sql # Best not to apply to a live site --
+                                       # take down apache before running.
+                                       # Refers to some archaic indexes
+                                       # which probably don't exist for you-
+                                       # use -f with mysql to skip warnings.
+Jul 07 14:27 patch-19-Subscriptions.sql # Adds one var (use_subscriptions), 
+                                        # and one Block (displayed for non-
+                                        # subscribers). Really way simple.
+Jul 07 19:57 patch-20-CommentControl.sql # Bool to hide or show comments
+                                         # from stories that didn't get posted
+Jul 10 11:28 patch-21-StorySection.sql  # sets stories table to use correct
+                                        # length for section field
+Jul 11 10:22 patch-22-PollPerms.sql    # adds the permissions for people to view
+                                       # post, read polls to the group perms
+Jul 11 13:40 patch-23-LastSectionStuff.sql  # gives you a 'default section permission'
+                                       # scheme to choose for all new sections
+Jul 14 12:28 patch-24-NewURLs2.sql  # Drops blocks 'op_aliases' and 
+                                    # 'op_templates' and replaces them with 
+                                    # current working version. If you've
+                                    # customized either of these, you may want 
+                                    # to merge by hand. You probably haven't 
+                                    # though. This is necessary stuff! Be 
+                                    # sure to upgrade.
+Jul 19 14:27 patch-25-StoryEmail.sql # adds a flag to stories table so that
+                                     # author mails about posted/dropped
+                                     # stories are only sent once
+Aug 04 20:02 patch-26-ConfirmPass.sql # drops a column from users, then adds
+                                      # two for pass changes. one saves the
+                                      # confirm string, the other when it was
+                                      # sent. adds a var for how long they are
+                                      # valid, and adds a new op template
+
+Any problems, email scoop-help@lists.sourceforge.net (don't forget to join!)
+join here: http://sourceforge.net/mail/?group_id=4901
+
+or if you irc look in #scoop on irc.slashnet.org  or #kuro5hin if nobody is
+in #scoop.
+

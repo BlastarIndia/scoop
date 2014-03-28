@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>5.5 Creating and Submitting Patches</TITLE>
+<META NAME="description" CONTENT="5.5 Creating and Submitting Patches">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="previous" HREF="5_4_Creating_new.html">
+<LINK REL="up" HREF="5_Extending_Scoop_s.html">
+<LINK REL="next" HREF="A_Admin_Tools.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<UL>
+<LI><A href="5_1_S_Object.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN> The $S Object</A></LI>
+<LI><A href="5_2_Program_Flow.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">2</SPAN> Program Flow and Scoop's code structure</A></LI>
+<LI><A href="5_3_Working_with.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">3</SPAN> Working with Boxes</A></LI>
+<LI><A href="5_4_Creating_new.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN> Creating new ops or features</A></LI>
+<LI><A href="5_5_Creating_Submitting.html" id="current"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">5</SPAN> Creating and Submitting Patches</A></LI>
+</UL>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00055000000000000000"></A>
+<A NAME="hacking-patches"></A>
+<BR>
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">5</SPAN> Creating and Submitting Patches
+</H2>
+
+<P>
+Patches should be attached to the relevant bug in the Scoop Bug Muncher, at <A HREF="http://bugz.mostly-harmless.ca/">http://bugz.mostly-harmless.ca/</A>. If you have a patch for a new feature which has no corresponding bug in the bug muncher, create the bug, assign it to yourself, then attach the file. Please note that if you want the attachment to be reviewed you should set the `review?' flag on the attachment. That flag is used in searches and makes it easier for us to distinguish between patches already tested and those that aren't. By setting the review? flag, you will also get an email notice when the patch is tested and either approved (review+) or rejected (review-) by the maintainers.
+
+<P>
+<B>Only send patches against the most recent cvs tree!</B> Patches against older code will not be accepted. To make sure you are developing from the most recent code, do a `cvs update -dPA' in your scoop/ directory.
+
+<P>
+Create your code patches using the `cvs diff -u' command, and issue that command in the scoop/ directory (not in the subdirectory containing the file you were working in) to make sure the patch contains all your changes. You probably want to redirect the output of that command into an appropriately named file. Note that these rules are to make it easier for the maintainers to read and apply your patch!
+
+<P>
+If any changes to the database are required, submit a database patch with all the SQL commands required to make those changes. The syntax is exactly the same as it is in the mysql client, so it's a good idea to create the patch as you make the database changes, and copy/paste the SQL commands you use into the patch file.
+
+<P>
+Remember that many blocks, boxes, and site controls that already exist may have been changed by a given site, and that if you are making significant changes to any of those that could break an established site, you probably want a db upgrade script that will test the site and make the changes as appropriate. You can look at the scripts in the scoop/struct/patch-files directories for examples.
+
+<P>
+
+<P>
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

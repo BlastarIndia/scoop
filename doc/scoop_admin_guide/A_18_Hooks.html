@@ -1,0 +1,141 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>A..18 Hooks</TITLE>
+<META NAME="description" CONTENT="A..18 Hooks">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="A_19_Log.html">
+<LINK REL="previous" HREF="A_17_Subscriptions.html">
+<LINK REL="up" HREF="A_Admin_Tools.html">
+<LINK REL="next" HREF="A_19_Log.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<UL>
+<LI><A href="A_1_New_Story.html">A..<SPAN CLASS="arabic">1</SPAN> New Story</A></LI>
+<LI><A href="A_2_Story_List.html">A..<SPAN CLASS="arabic">2</SPAN> Story List</A></LI>
+<LI><A href="A_3_Archived_Story.html">A..<SPAN CLASS="arabic">3</SPAN> Archived Story List</A></LI>
+<LI><A href="A_4_New_Poll.html">A..<SPAN CLASS="arabic">4</SPAN> New Poll</A></LI>
+<LI><A href="A_5_Poll_List.html">A..<SPAN CLASS="arabic">5</SPAN> Poll List</A></LI>
+<LI><A href="A_6_Site_Controls.html">A..<SPAN CLASS="arabic">6</SPAN> Site Controls</A></LI>
+<LI><A href="A_7_Blocks.html">A..<SPAN CLASS="arabic">7</SPAN> Blocks</A></LI>
+<LI><A href="A_8_Topics.html">A..<SPAN CLASS="arabic">8</SPAN> Topics</A></LI>
+<LI><A href="A_9_Sections.html">A..<SPAN CLASS="arabic">9</SPAN> Sections</A></LI>
+<LI><A href="A_10_Special_Pages.html">A..<SPAN CLASS="arabic">10</SPAN> Special Pages</A></LI>
+<LI><A href="A_11_Boxes.html">A..<SPAN CLASS="arabic">11</SPAN> Boxes</A></LI>
+<LI><A href="A_12_Groups.html">A..<SPAN CLASS="arabic">12</SPAN> Groups</A></LI>
+<LI><A href="A_13_RDF_Feeds.html">A..<SPAN CLASS="arabic">13</SPAN> RDF Feeds</A></LI>
+<LI><A href="A_14_Cron.html">A..<SPAN CLASS="arabic">14</SPAN> Cron</A></LI>
+<LI><A href="A_15_Advertising.html">A..<SPAN CLASS="arabic">15</SPAN> Advertising</A></LI>
+<LI><A href="A_16_Ops.html">A..<SPAN CLASS="arabic">16</SPAN> Ops</A></LI>
+<LI><A href="A_17_Subscriptions.html">A..<SPAN CLASS="arabic">17</SPAN> Subscriptions</A></LI>
+<LI><A href="A_18_Hooks.html" id="current">A..<SPAN CLASS="arabic">18</SPAN> Hooks</A></LI>
+<LI><A href="A_19_Log.html">A..<SPAN CLASS="arabic">19</SPAN> Log</A></LI>
+<LI><A href="A_20_Macros.html">A..<SPAN CLASS="arabic">20</SPAN> Macros</A></LI>
+<LI><A href="A_21_User_Preferences.html">A..<SPAN CLASS="arabic">21</SPAN> User Preferences</A></LI>
+<LI><A href="A_22_Calendars.html">A..<SPAN CLASS="arabic">22</SPAN> Calendars</A></LI>
+<LI><A href="A_23_Search.html">A..<SPAN CLASS="arabic">23</SPAN> Search</A></LI>
+</UL>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000618000000000000000"></A>
+<A NAME="admin-tools-hooks"></A>
+<BR>
+A..<SPAN CLASS="arabic">18</SPAN> Hooks
+</H2>
+
+<P>
+The Hooks Admin Tool is where you create and change hooks, or event triggers. Hooks are associated with events in Scoop, such as when a comment is posted or somebody creates a new account, and trigger some code that will do something based on what the event was. This provides similar but different functionality to the Cron Admin Tool (<A HREF="A_14_Cron.html#admin-tools-cron">A.14</A>), the difference being that cron items are run on a timed basis, while hooks are run based on the activities of users and administrators.
+
+<P>
+The hooks included with Scoop are all disabled, but are set up as an example. Each row in the hooks table displays the event that will trigger an action and the function or box that performs that action.
+
+<P>
+The table has five columns, with one row for each hook definition. The last row contains form elements where you can define new hooks. Below the table is a list of actions that can be performed on the hook definitions.
+
+<P>
+The first column is a checkbox, used to select existing hooks for an action as described below.
+
+<P>
+The second column is the event the hook is bound to. The list of available hooks is in the variable <B>hooks</B>. Hooks cannot be added arbitrarily to this list; a corresponding run_hook command must be present at the appropriate place in the code.
+
+<P>
+The third column is the name of the function or box run when the event in the second column happens.  This can be a built-in function, such as the <B>log_activity</B> function used in the included hooks, or it can be a box which you write yourself.
+
+<P>
+The fourth column indicates whether or not the function named in the third column is a box or not.
+
+<P>
+The fifth column indicates whether or not the hook is enabled. A disabled hook will be skipped when the event it's associated with occurs.
+
+<P>
+The actions are:
+
+<P>
+<DL>
+<DT><STRONG>Add Hook</STRONG></DT>
+<DD>Takes the information in the form elements of the last row of the table above and creates a new hook. Ignores any existing hooks which are selected.
+</DD>
+<DT><STRONG>Delete Hooks</STRONG></DT>
+<DD>Deletes the selected existing hooks. Ignores any information entered in the new hook form elements in the table above.
+</DD>
+<DT><STRONG>Toggle Enabled</STRONG></DT>
+<DD>Turns the selected existing hooks either on or off, depending on their status before. Each individual hook is toggled separately.
+</DD>
+</DL>
+
+<P>
+A given event may have as many functions or boxes associated with it as you like, but the functions should not depend on each other because you have no control over the order in which the functions are run.
+
+<P>
+Each event passes different parameters to the function or box that handles it. These parameters are listed beside the event name in both the variable <B>hooks</B> and in the drop-down box in the Hooks Admin Tool table. Although not listed explicitly, the name of the event is always the first parameter given to the function or box. This allows one function to handle several hooks, as the <B>log_activity</B> function does, by tailoring its response to the hook which triggered it.
+
+<P>
+When writing a box to handle a hook, then, the first line should be, using comment_new(sid,cid) as an example:
+
+<P>
+<PRE>
+my ($hookname, $sid, $cid) = @ARGS;
+</PRE>
+
+<P>
+The arguments are used to identify exactly what has happened. For comment_new, the sid (story ID) and cid (comment ID) uniquely identify every comment ever posted.
+
+<P>
+For more information on writing boxes, see section&nbsp;<A HREF="5_Extending_Scoop_s.html#hacking">5</A>.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

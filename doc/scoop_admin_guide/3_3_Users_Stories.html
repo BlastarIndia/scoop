@@ -1,0 +1,175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.3 Users and Stories</TITLE>
+<META NAME="description" CONTENT="3.3 Users and Stories">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="3_4_Routine_Maintenance.html">
+<LINK REL="previous" HREF="3_2_Basic_Customization.html">
+<LINK REL="up" HREF="3_Setup_Administration.html">
+<LINK REL="next" HREF="3_4_Routine_Maintenance.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<UL>
+<LI><A href="3_1_Initial_Setup.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">1</SPAN> Initial Setup</A></LI>
+<LI><A href="3_2_Basic_Customization.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN> Basic Customization</A></LI>
+<LI><A href="3_3_Users_Stories.html" id="current"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN> Users and Stories</A></LI>
+<LI><A href="3_4_Routine_Maintenance.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN> Routine Maintenance</A></LI>
+<LI><A href="3_5_Performance_Monitoring.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">5</SPAN> Performance Monitoring</A></LI>
+<LI><A href="3_6_General_Administrative.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">6</SPAN> General Administrative Tips</A></LI>
+</UL>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html338"
+  HREF="3_3_Users_Stories.html#SECTION00033100000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">1</SPAN> Accounts</A>
+<LI><A NAME="tex2html339"
+  HREF="3_3_Users_Stories.html#SECTION00033200000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN> Groups</A>
+<LI><A NAME="tex2html340"
+  HREF="3_3_Users_Stories.html#SECTION00033300000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN> Permissions</A>
+<LI><A NAME="tex2html341"
+  HREF="3_3_Users_Stories.html#SECTION00033400000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN> Publishing Stories</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H2><A NAME="SECTION00033000000000000000"></A>
+<A NAME="admin-users"></A>
+<BR>
+<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN> Users and Stories
+</H2>
+
+<P>
+Scoop has a permission and group system that allows you to customize which users can and cannot do what on your site.
+
+<P>
+
+<H3><A NAME="SECTION00033100000000000000">
+<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">1</SPAN> Accounts</A>
+</H3>
+
+<P>
+Account creation is automated and easy.  It requires a user to provide a working email address, so Scoop can confirm their account; it also requires you to configure Scoop to be able to successfully send email with a valid From: address (covered in section&nbsp;<A HREF="3_2_Basic_Customization.html#how-start">3.2</A>).
+
+<P>
+If Scoop's <B>email address is invalid</B>, it will often tell a new user trying to create an account that it's the user's email address that is invalid.
+
+<P>
+Beside the username in all stories and comments, as well as on the User Info page, an ``Edit User'' link will let you edit that user's User Info, as well as change their username and group, and add notes about that user that only administrators can see, such as keeping a record of abuses so the account can have its permissions reduced appropriately if necessary.
+
+<P>
+It's generally not a good idea to delete a user unless the account was just created and hadn't really done anything, because there is so much stuff tied to the userid and to that stuff (i.e., a user has comments, those comments have replies). Accounts which are created and post nothing but abusive comments and stories are generally the only accounts that should be deleted.
+
+<P>
+If somebody goes on an unfair rating rampage, their ratings can be reversed.  To revoke their rating abilities at the same time, you have to create a more restricted group that is missing that permission, then put that group's name in the site control `rating_wipe_group', in the Security category. The link to reverse a user's ratings is on the page showing that user's ratings.
+
+<P>
+
+<H3><A NAME="SECTION00033200000000000000"></A>
+<A NAME="admin-users-groups"></A>
+<BR>
+<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN> Groups
+</H3>
+
+<P>
+For a small site, you will generally only need three groups: Superuser, Users, and Anonymous.  Nearly all registered users will be in the group Users, you, as the administrator, will be in the Superuser group, and anybody not logged in will be in the Anonymous group.
+
+<P>
+For a larger site, the groups Admin and Editor come in handy.  Generally speaking, somebody in the Admin group should have administrative access to the site so they can fix things that break - such as blocks, boxes, and so on.  Somebody in the Editor group should have permission to change other people's stories, so they can fix typos, kick a story into or out of the edit queue, and so on.
+
+<P>
+For still larger sites, or sites with more specialized needs, other groups can be used and created at will, such as a Subscribers group if the site uses a subscription model, or a more limited group for users who have abused their privileges.
+
+<P>
+
+<H3><A NAME="SECTION00033300000000000000"></A>
+<A NAME="user-perms"></A>
+<BR>
+<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN> Permissions
+</H3>
+
+<P>
+The group a user is placed in determines what they are allowed to do on the site; what each group is allowed to do depends on the permissions given in the Groups Admin Tool (<A HREF="A_12_Groups.html#admin-tools-groups">A.12</A>).
+
+<P>
+Most of the permissions are fairly self-explanatory, such as comment_post, which determines whether or not a user is allowed to post a comment.  All permissions are described in appendix&nbsp;<A HREF="A_12_Groups.html#admin-tools-groups">A.12</A>, along with warnings and recommendations for their use.
+
+<P>
+More than half of the permissions are for administrative stuff.  All but one determine whether or not the user can perform an action; the one exception is super_mojo, which basically means that regardless of comment ratings, users in that group are always considered trusted.
+
+<P>
+The Superuser should have all permissions checked at all times, except the ``suballow_group_change'' and ``allow_subscription'' perms, as those allow Scoop to change the user group if subscriptions are active. (Generally, subscribers will have fewer perms than the superuser...)
+
+<P>
+<B>Warning:</B> if a group has permission to edit users and groups, members of that group can give themselves and others superuser privileges.  Just because it's a website, don't think somebody with superuser privileges can't hose your system; Scoop's box system can run <B>any command on your system</B>--including starting a daemon, or fetching the daemon (or trojan!) first, then starting it--and present the output to a person viewing the page in any way the box creator wants. I have heard of one site administrator using a Scoop box to restart sshd when it died once.
+
+<P>
+Permissions are checked both when an action is attempted and when building the page; somebody without the comment_post permission, for example, simply will not see the ``Reply to this'' and ``Post a comment'' links anywhere.
+
+<P>
+If you ever need to <B>add a new permission</B>, the master list is stored in the Site Control ``perms''.  When you add a new perm it will default to being unselected for all groups.  If for any reason you delete a perm from that list, the perm will still be set for all users that formerly had it, so make sure you've removed the permission from the groups first.
+
+<P>
+There are also <B>section permissions</B>, allowing you to have read-only or admin-only sections, as well as allowing certain groups to automatically post and bypass the queue.  Those settings can be useful in several situations, including a ``Site News'' style section, in which normal users cannot post stories at all, but the site administrator can automatically post to the section.  These are available in the Sections Admin Tool (<A HREF="A_9_Sections.html#admin-tools-sections">A.9</A>).  Using those permissions, an admin-only section, for example, can use either ``Hide'', where Scoop pretends that the section doesn't exist for that user, or ``Deny'', where Scoop admits that the section exists and tells the user he doesn't have permission to see it.
+
+<P>
+
+<H3><A NAME="SECTION00033400000000000000"></A>
+<A NAME="how-publishing"></A>
+<BR>
+<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN> Publishing Stories
+</H3>
+
+<P>
+Scoop uses a democratic model of publishing by default; that is, unlike most weblogs which have a limited number of people choosing what to post, <B>any registered user can vote</B> on what stories to publish and where.  Which users can submit stories and vote is controlled by their group permissions (see section&nbsp;<A HREF="#admin-users">3.3</A>).
+
+<P>
+If you have enabled the `edit queue' (see section&nbsp;<A HREF="4_1_Story_Selection.html#moderation-queues">4.1.1</A>) and the user has chosen to use it, he can change his story according to `editorial' comments other users offer to help improve it to the point where it can be moved on to the voting queue.
+
+<P>
+When the user is satisfied or a time limit is reached, the story is moved from the edit queue to the voting queue, and can then be voted on.  If the edit queue isn't active, all stories go immediately to the voting queue.  Other users then cast their vote; either +1 (post), -1 (drop), or 0 (abstain).  The votes are added up using the methods described in section&nbsp;<A HREF="4_1_Story_Selection.html#moderation-autopost">4.1.2</A>, and when the story reaches one of the thresholds, the story is either posted or dropped.  All of the limits can be configured through the Site Controls Admin Tool, in the Stories category.
+
+<P>
+If there are not enough people to vote a story up, the Superuser can force a story to be published--this is common in brand new sites.  By clicking the `edit' link in the story then setting the dropdown box just under the title to ``Always Display'' a story can be published on the front page regardless of votes.
+
+<P>
+If you don't want to use Scoop's story voting mechanism but just let yourself or maybe a few people post stories at will, you can take away normal users' ability to post stories or vote using the Groups Admin Tool, then use the Sections Admin Tool to give your group the ability to auto-post stories to the front page or the section page, whichever you prefer.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>A..14 Cron</TITLE>
+<META NAME="description" CONTENT="A..14 Cron">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="A_15_Advertising.html">
+<LINK REL="previous" HREF="A_13_RDF_Feeds.html">
+<LINK REL="up" HREF="A_Admin_Tools.html">
+<LINK REL="next" HREF="A_15_Advertising.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<UL>
+<LI><A href="A_1_New_Story.html">A..<SPAN CLASS="arabic">1</SPAN> New Story</A></LI>
+<LI><A href="A_2_Story_List.html">A..<SPAN CLASS="arabic">2</SPAN> Story List</A></LI>
+<LI><A href="A_3_Archived_Story.html">A..<SPAN CLASS="arabic">3</SPAN> Archived Story List</A></LI>
+<LI><A href="A_4_New_Poll.html">A..<SPAN CLASS="arabic">4</SPAN> New Poll</A></LI>
+<LI><A href="A_5_Poll_List.html">A..<SPAN CLASS="arabic">5</SPAN> Poll List</A></LI>
+<LI><A href="A_6_Site_Controls.html">A..<SPAN CLASS="arabic">6</SPAN> Site Controls</A></LI>
+<LI><A href="A_7_Blocks.html">A..<SPAN CLASS="arabic">7</SPAN> Blocks</A></LI>
+<LI><A href="A_8_Topics.html">A..<SPAN CLASS="arabic">8</SPAN> Topics</A></LI>
+<LI><A href="A_9_Sections.html">A..<SPAN CLASS="arabic">9</SPAN> Sections</A></LI>
+<LI><A href="A_10_Special_Pages.html">A..<SPAN CLASS="arabic">10</SPAN> Special Pages</A></LI>
+<LI><A href="A_11_Boxes.html">A..<SPAN CLASS="arabic">11</SPAN> Boxes</A></LI>
+<LI><A href="A_12_Groups.html">A..<SPAN CLASS="arabic">12</SPAN> Groups</A></LI>
+<LI><A href="A_13_RDF_Feeds.html">A..<SPAN CLASS="arabic">13</SPAN> RDF Feeds</A></LI>
+<LI><A href="A_14_Cron.html" id="current">A..<SPAN CLASS="arabic">14</SPAN> Cron</A></LI>
+<LI><A href="A_15_Advertising.html">A..<SPAN CLASS="arabic">15</SPAN> Advertising</A></LI>
+<LI><A href="A_16_Ops.html">A..<SPAN CLASS="arabic">16</SPAN> Ops</A></LI>
+<LI><A href="A_17_Subscriptions.html">A..<SPAN CLASS="arabic">17</SPAN> Subscriptions</A></LI>
+<LI><A href="A_18_Hooks.html">A..<SPAN CLASS="arabic">18</SPAN> Hooks</A></LI>
+<LI><A href="A_19_Log.html">A..<SPAN CLASS="arabic">19</SPAN> Log</A></LI>
+<LI><A href="A_20_Macros.html">A..<SPAN CLASS="arabic">20</SPAN> Macros</A></LI>
+<LI><A href="A_21_User_Preferences.html">A..<SPAN CLASS="arabic">21</SPAN> User Preferences</A></LI>
+<LI><A href="A_22_Calendars.html">A..<SPAN CLASS="arabic">22</SPAN> Calendars</A></LI>
+<LI><A href="A_23_Search.html">A..<SPAN CLASS="arabic">23</SPAN> Search</A></LI>
+</UL>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000614000000000000000"></A>
+<A NAME="admin-tools-cron"></A>
+<BR>
+A..<SPAN CLASS="arabic">14</SPAN> Cron
+</H2>
+
+<P>
+The Cron Admin Tool is where you manage Scoop's scheduled tasks, those tasks which are not done in response to a user action, such as dealing with RDF feeds or cleaning up the sessions table in the database.  The Cron Admin Tool is composed of two parts: a list of cron items, and the actions that can be performed on a cron item. This provides similar but different functionality to the Hooks Admin Tool (<A HREF="A_18_Hooks.html#admin-tools-hooks">A.18</A>), the difference being that cron items are run on a timed basis, while hooks are run based on the activities of users and administrators.
+
+<P>
+To run Scoop's crons, you must have your system scheduler run the scoop/scripts/run_cron.pl with the URL or URLs of your Scoop site's cron op as an argument.  If your Scoop site is on a virtual host, i.e., http://www.mysite.com/ displays Scoop's front page, then the URL you give the script is http://www.mysite.com/cron.  If your Scoop site is in a subdirectory, i.e., http://www.mysite.com/ is a normal website and http://www.mysite.com/scoop/ displays Scoop's front page, then the URL you give the script is http://www.mysite.com/scoop/cron.  Your system scheduler must trigger Scoop's cron system as frequently as the most frequent cron item, as Scoop cannot run its scheduled items unless it is told to, which it is when the cron op is requested.
+
+<P>
+The list of cron items is a table with seven columns and one row for each item.
+
+<P>
+The first column is a checkbox, allowing you to select the feeds you want to have an action apply to.  As many crons as you like can be selected.
+
+<P>
+The second column is the name of the cron.  The names are usually self-explanatory, but the default crons are described below.
+
+<P>
+The third column indicates whether or not the cron is a box.  Some cron items have code built into Scoop, and some run a box.  (See section&nbsp;<A HREF="5_Extending_Scoop_s.html#hacking">5</A>.)
+
+<P>
+The fourth column is the name of the function or box the cron runs.  If the cron runs a box, the function's code can be found in the Boxes Admin Tool (<A HREF="A_11_Boxes.html#admin-tools-boxes">A.11</A>) as a box of the same name. If the cron is not a box, the function's code is in the scoop/lib directory; you will need to search for the function name, and if you change it you will need to stop and start apache for the changes to take effect.
+
+<P>
+The fifth column is the interval at which the cron should run.  The format is &lt;number&gt;&lt;unit&gt;; for example, to run a cron once a day you would enter 1d, and to run it every 5 minutes, you would enter 5m.  The possible units are s (second), m (minute), h (hour), d (day), w (week), M (month), Y (year).
+
+<P>
+The sixth column is the time and date of the last time the cron item was run.
+
+<P>
+The seventh column indicates whether or not the cron is enabled, or run on schedule.
+
+<P>
+The last row in the table is made up of text boxes or check boxes for all of the information needed to add a new cron item.
+
+<P>
+Below the table are the possible actions.  One of these must be selected when you click the ``Save crons'' button, or nothing will happen.  The action selected will apply to all cron items with checked boxes in the list of cron items, unless it is ``Add Cron'', in which case it will create a new row with the contents of the text boxes in the last row of the table.
+
+<P>
+Below the actions is a link that will run whatever cron items are due to run, independantly of the trigger your system scheduler provides but using the same mechanism.
+
+<P>
+The actions are:
+<DL>
+<DT><STRONG>Force Run</STRONG></DT>
+<DD>Runs the selected cron items whether they are due to run or not.  This can be useful if a cron item does not seem to be doing its job; you can see any error messages it produces that may help you sort out the problem.
+</DD>
+<DT><STRONG>Toggle Enabled</STRONG></DT>
+<DD>Turns the selected cron items on or off.  Some cron items are not relevant to some sites, and should be turned off.
+</DD>
+<DT><STRONG>Change Run Every</STRONG></DT>
+<DD>Changes the run interval of the selected cron items to whatever is in the text box in the fifth column.  See above for the interval format.
+</DD>
+<DT><STRONG>Clear Last Run</STRONG></DT>
+<DD>Clears the date and time of the last run for the selected cron items.  If the cron item is enabled, the next time Scoop's cron system is triggered, that item will be guaranteed to run.
+</DD>
+<DT><STRONG>Add Cron</STRONG></DT>
+<DD>Creates a new cron item using the information entered in the text boxes of the last row of the table.
+</DD>
+<DT><STRONG>Remove Cron</STRONG></DT>
+<DD>Deletes the selected cron items from the table.
+</DD>
+</DL>
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

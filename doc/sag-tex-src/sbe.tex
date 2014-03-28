@@ -1,0 +1,46 @@
+\section{The Scoop Box Exchange}
+\label{sbe}
+
+The Scoop Box Exchange (SBE) is a repository of boxes for Scoop that users and developers have written and decided to share. The SBE can be found at \hturl{http://scoop.kuro5hin.org/sbe/}.
+
+\subsection{Boxes as a small part of the page}
+\label{sbe-box-normal}
+
+For most boxes, copying the code from the box page, pasting the code into the Boxes Admin Tool (\ref{admin-tools-boxes}), and saving a new box, is sufficient to install the box. It can then be used in the same way as most boxes included with Scoop, that is, inserting \latexhtml{$\vert$}{|}BOX,boxname\latexhtml{$\vert$}{|} into a block at the appropriate place.
+
+Relatively simple boxes such as these require no more, and if they do they usually say so in the comments inside the perl code of the box itself.
+
+\subsection{Boxes generating the main page content}
+\label{sbe-box-op}
+
+Some boxes can generate the main page content and fill in the CONTENT special key on a page template. These boxes are saved in the Boxes Admin Tool (\ref{admin-tools-boxes}) by copying and pasting the code into the form and saving the new box. Once saved, they are activated in the Ops Admin Tool (\ref{admin-tools-ops}).
+
+Create a new, appropriately named op, and fill in the form in a way that makes sense to the box. For example, while most pages use default\_template as their page template, something like the faq\_display box may be better suited to using index\_template, which is used for the front and section index pages. Similarly, if the box is for general use, it probably doesn't need a permission associated with it.
+
+Enter the name of the box in the `function' field and mark that this op is, in fact, a box.
+
+If the box takes any parameters, these should be entered in the URL templates field. Using the faq\_display box as our example again, the URL template would be:
+\begin{verbatim}
+/section/
+\end{verbatim}
+
+This URL template indicates that the box takes the CGI parameter named `section' as its first pseudo-subdirectory; visiting the URL /faq/help will display the section named `help' using the faq\_display box. This will allow you to display any of the existing sections using the faq\_display box, actually.
+
+\subsection{Boxes with special needs}
+\label{sbe-other}
+
+Some boxes cannot be installed using one or the other of the methods described in the previous two sections. Some are described here.
+
+\subsubsection{diarysub\_box}
+\label{sbe-diarysub}
+
+Diary subscriptions are made up of two boxes.
+
+The {\bf diarysub\_box} has two functions: it creates the subscribe/unsubscribe link and is ALSO called as an op called `diary'. First, add the diarysub\_box through the box admin interface, then create an op called `diary' that calles the diarysub\_box with the URL template: /user/. Then add a call to the diarysub\_box from the `story\_summary' box. The call should be of the form:
+\begin{verbatim}
+|BOX,diarysub_box,|aid||
+\end{verbatim}
+where we're passing the author ID variable to the box, causing it to return the subscribe/unsubscribe link, rather than the behavior seen when called as an op. Note that the op behavior is to either add or remove a subscription then to redirect back to the calling URL. For this reason, the page template specified for the op is completely irelevant. It is however important that the box template specified for diarysub\_box is set to `empty\_box' because any other template will cause the subscribe/unsubscribe link to be wrapped and generally mess up the formatting of your story\_summary block.
+
+The second piece of the diary subscription system is the diary enabled hotlist\_flex box which you can get from the SBE as well, using the general box adding procedure and a more traditional box call from within index\_template and default\_template.
+

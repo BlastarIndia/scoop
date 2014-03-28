@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>5.4 Creating new ops or features</TITLE>
+<META NAME="description" CONTENT="5.4 Creating new ops or features">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="5_5_Creating_Submitting.html">
+<LINK REL="previous" HREF="5_3_Working_with.html">
+<LINK REL="up" HREF="5_Extending_Scoop_s.html">
+<LINK REL="next" HREF="5_5_Creating_Submitting.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<UL>
+<LI><A href="5_1_S_Object.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN> The $S Object</A></LI>
+<LI><A href="5_2_Program_Flow.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">2</SPAN> Program Flow and Scoop's code structure</A></LI>
+<LI><A href="5_3_Working_with.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">3</SPAN> Working with Boxes</A></LI>
+<LI><A href="5_4_Creating_new.html" id="current"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN> Creating new ops or features</A></LI>
+<LI><A href="5_5_Creating_Submitting.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">5</SPAN> Creating and Submitting Patches</A></LI>
+</UL>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00054000000000000000"></A>
+<A NAME="hacking-new-feature"></A>
+<BR>
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN> Creating new ops or features
+</H2>
+
+<P>
+The first question you are probably asking if you are new to Scoop development is, what exactly is an `op' and how would I use it?
+
+<P>
+From the programmers perspective, an op is a way of representing the primary function that will be called to handle a particular page request. The relationship between an op and the function that will handle that page is defined using the Ops Admin Tool (<A HREF="A_16_Ops.html#admin-tools-ops">A.16</A>), as are a few other important details such as how the path after the op name is translated into CGI arguments.
+
+<P>
+From the user perspective, an op is the first directory of the page they're requesting, and indicates what the page they request will do, in general - for example, the `story' op will display a story. When creating new ops and features, it is important not to confuse this expectation.
+
+<P>
+Features and ops don't always correspond directly; sometimes features will use more than one op (like advertisements, with showad and submitad), others will use exactly one op (like hotlist), and still others won't have an op at all (like spellchecking).
+
+<P>
+When planning features, make sure that your feature fits the way Scoop does things. If you have an idea for a feature and would like feedback on its design within Scoop, feel free to post a detailed description of your idea and how you plan to do it to <A HREF="http://scoop.kuro5hin.org/">http://scoop.kuro5hin.org/</A> or the scoop-dev list (<A HREF="1_4_Where_Get.html#get-help">1.4</A>) for comments.
+
+<P>
+Whatever the feature is, anything that can be configurable should be, via Site Controls, Blocks, whatever else is appropriate.  At the absolute minimum, a new feature should have an ``on-off switch'' set by default to ``off'' so existing sites don't have their functionality changed without the admin knowing about it.
+
+<P>
+Any HTML output by the feature should be either in a box or a block. We're in the process of taking all the HTML out of the code, so please don't put more in! In general, the HTML will be handled easily by blocks, sometimes with special keys as required and very occasionally by boxes. Typically the HTML will be in a block, special keys are filled with values from the database (usually not formatted; the formatting should happen in the block), and for certain form elements (such as a SELECT) that need to have a particular default selection, a box would be appropriate.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

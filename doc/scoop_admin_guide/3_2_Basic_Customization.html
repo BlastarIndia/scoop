@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.2 Basic Customization</TITLE>
+<META NAME="description" CONTENT="3.2 Basic Customization">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="3_3_Users_Stories.html">
+<LINK REL="previous" HREF="3_1_Initial_Setup.html">
+<LINK REL="up" HREF="3_Setup_Administration.html">
+<LINK REL="next" HREF="3_3_Users_Stories.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<UL>
+<LI><A href="3_1_Initial_Setup.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">1</SPAN> Initial Setup</A></LI>
+<LI><A href="3_2_Basic_Customization.html" id="current"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN> Basic Customization</A></LI>
+<LI><A href="3_3_Users_Stories.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN> Users and Stories</A></LI>
+<LI><A href="3_4_Routine_Maintenance.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN> Routine Maintenance</A></LI>
+<LI><A href="3_5_Performance_Monitoring.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">5</SPAN> Performance Monitoring</A></LI>
+<LI><A href="3_6_General_Administrative.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">6</SPAN> General Administrative Tips</A></LI>
+</UL>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html325"
+  HREF="3_2_Basic_Customization.html#SECTION00032100000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> Site Controls</A>
+<LI><A NAME="tex2html326"
+  HREF="3_2_Basic_Customization.html#SECTION00032200000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> Blocks</A>
+<LI><A NAME="tex2html327"
+  HREF="3_2_Basic_Customization.html#SECTION00032300000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN> Boxes</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H2><A NAME="SECTION00032000000000000000"></A>
+<A NAME="how-start"></A>
+<BR>
+<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN> Basic Customization
+</H2>
+
+<P>
+Scoop pulls basically everything from the database, including many of its features.  Unless you are adding major new functionality to Scoop, you will do all customization through the web interface it provides.  Some display text and settings are still in the code, but they are being moved to the database as developers find them.
+
+<P>
+Scoop builds every page from building blocks known as Blocks and Boxes, and many options are set in Site Controls; all three can be found in the Admin Tools menu when you're logged in as an administrator.
+
+<P>
+It can often be tricky to figure out where the item you're looking for is, or what it's called. The Search Admin Tool (<A HREF="A_23_Search.html#admin-tools-search">A.23</A>) lets you search through values and descriptions for several of the other admin tools.
+
+<P>
+
+<H3><A NAME="SECTION00032100000000000000"></A>
+<A NAME="how-vars"></A>
+<BR>
+<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> Site Controls
+</H3>
+
+<P>
+You should start your customization in Site Controls.  We already looked at a few of the variables available in section&nbsp;<A HREF="3_1_Initial_Setup.html#initial-setup">3.1</A>.  Site Controls are Scoop's equivalent to what other programs call ``preferences'' or ``options''.  Here you can enable and disable features such as the spellchecker, advertising, polls, diaries, and a variety of other things, as well as changing the configuration for those features.
+
+<P>
+Once you get the hang of Scoop, the various Site Controls will make more sense to you.   Scrolling through the categories can give you some idea of the basic functionality that Scoop ships with.  Each control also has a description to tell you what effect it will have on your site.
+
+<P>
+Section&nbsp;<A HREF="4_Scoop_Features.html#features">4</A> refers to all the relevant Site Controls for each feature it describes, and gives a brief overview of how they work together while describing the feature.
+
+<P>
+A few preferences are group-specific, that is, you want certain people to have one setting, and certain others to have a different setting.  Those preferences are generally found in the Groups Admin Tool, and are referred to within Scoop as permissions, or `perms'.
+
+<P>
+Some others are section-specific, or both section- and group-specific.  Those are generally found in the Sections Admin Tool, and are referred to within Scoop as `section perms'.
+
+<P>
+The preferences found in Site Controls are global to the site. There are also user-specific preferences (user prefs) which each user can change on their own; the user preferences available and their defaults can be managed in the User Preferences Admin Tool (<A HREF="A_21_User_Preferences.html#admin-tools-user-preferences">A.21</A>).
+
+<P>
+
+<H3><A NAME="SECTION00032200000000000000"></A>
+<A NAME="how-blocks"></A>
+<BR>
+<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> Blocks
+</H3>
+
+<P>
+The most basic elements of Scoop's generated pages are the blocks.  <B>A block is simply a chunk of text or HTML</B> code that is used when generating a page.  Blocks should be (and usually are) fairly self-contained; that is, any tags that you open in a block should be closed in the same block, and the block shouldn't break anything horribly if you put it in a different location on the page.
+
+<P>
+You can customize these blocks according to your own site design.  To do any significant customization, you'll need to have a working knowledge of HTML.
+
+<P>
+A good starting place, just to test the waters, might be the header and footer blocks.  Make a few small changes to these, and hit the ``Save'' button.  When the page reloads, see how the changes you made were already implemented?  This is because the header and footer blocks are used when creating most pages.
+
+<P>
+The best part of the blocks system is the ability to include other blocks within a block.  Look carefully at the header block.  You will notice that, mixed in with the HTML elements and text, are a few items marked off by pipes (|).  Where you see the key `|section_links|', Scoop will take the value from the section_links block and seamlessly replace the key with it.
+
+<P>
+If you refer to a block that doesn't exist, possibly by making a typo in a key that should refer to a block that does exist, Scoop silently replaces it with an empty string.  If you're quite sure you put a block there and nothing is showing up, double-check your spelling.
+
+<P>
+Now that you know this, you can start changing the look of your site.  But it's easy to very quickly get lost in the maze of blocks and keys, especially with ``special keys'' which do not refer to a block at all, so the best place to start is at the top level--the page templates category.
+
+<P>
+A page template is just another block, but it's the first one Scoop pulls up when it's building a page because it is a complete HTML page, starting with &lt;html&gt; and ending with &lt;/html&gt;.
+
+<P>
+Your front page (and section pages) will use index_template, viewing a story uses the story_template, and most admin pages use admin_template.  Be very careful changing these, because, if you mess them up, you might not be able to view your site.
+
+<P>
+To change a template, go to the block editor and choose the ``Page Templates'' link, then scroll down to view the contents of the ``index_template'' block.  You can see near the top there is a key called |header|.  As you can probably guess, this is a reference back to the header that we changed a few paragraphs before.  It also contains the special key |CONTENT|, which is where all of the stories for the page are inserted.  By changing this page you can drastically alter how your site appears.  The special block |CONTENT| is critical, as it is replaced with the main content--in the case of the index_template, it is replaced with the headlines and story summaries.
+
+<P>
+There are several special keys, most specific to a particular block and filled from the database.  For example, the comment block, in the content category, has special keys for the comment subject, author, rating, and so on; those special keys have no meaning outside the comment block and corresponding blocks will not be found in the Blocks Admin Tool.
+
+<P>
+For more details on special keys and how the blocks fit together, see section&nbsp;<A HREF="4_18_Site_Layout.html#features-custom">4.18</A>.
+
+<P>
+
+<H3><A NAME="SECTION00032300000000000000"></A>
+<A NAME="how-boxes"></A>
+<BR>
+<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN> Boxes
+</H3>
+
+<P>
+Blocks are only the beginning of the story, however, and since they always return (roughly) the same thing, they can't provide some of the more customized content.  
+
+<P>
+You will notice that the templates also contain keys like |BOX,admin_tools| and |BOX,user_box|.  Unlike the blocks that we have just looked at, <B>a box is a chunk of Perl code</B> that generally has HTML as output.  Mostly, the boxes produce fairly generic output and don't need much changing, and the box template (Blocks Admin Tool, Box Templates category) chosen will have the most effect on how they look.
+
+<P>
+Boxes can include keys as part of their output, and those will be interpolated in the same way as keys included in blocks.
+
+<P>
+If you already know Perl, you will find Boxes an invaluable way to customize your Scoop site.  Some fairly significant features have been done entirely in boxes, since boxes have access to every Scoop function and every bit of data Scoop carries.
+
+<P>
+If you don't know Perl, you will be limited to tweaking the existing boxes, or borrowing code from the Scoop Box Exchange.  I am not going to provide a Perl tutorial for you here, but if you are interested in some light customization, just examine some of the boxes that ship with Scoop. If you like, you can look at a Perl tutorial so you can go a bit farther.
+
+<P>
+For more information on customizing your site using boxes, see section&nbsp;<A HREF="5_Extending_Scoop_s.html#hacking">5</A>.
+
+<P>
+One warning, though: be very careful about who you give permission to edit boxes to, because <B>boxes can run any program on your system</B>.  This is considered a feature; it's just dangerous if you're not careful about your permissions (<A HREF="3_3_Users_Stories.html#user-perms">3.3.3</A>).
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

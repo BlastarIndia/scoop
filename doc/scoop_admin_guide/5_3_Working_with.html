@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>5.3 Working with Boxes</TITLE>
+<META NAME="description" CONTENT="5.3 Working with Boxes">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="5_4_Creating_new.html">
+<LINK REL="previous" HREF="5_2_Program_Flow.html">
+<LINK REL="up" HREF="5_Extending_Scoop_s.html">
+<LINK REL="next" HREF="5_4_Creating_new.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<UL>
+<LI><A href="5_1_S_Object.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN> The $S Object</A></LI>
+<LI><A href="5_2_Program_Flow.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">2</SPAN> Program Flow and Scoop's code structure</A></LI>
+<LI><A href="5_3_Working_with.html" id="current"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">3</SPAN> Working with Boxes</A></LI>
+<LI><A href="5_4_Creating_new.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN> Creating new ops or features</A></LI>
+<LI><A href="5_5_Creating_Submitting.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">5</SPAN> Creating and Submitting Patches</A></LI>
+</UL>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html781"
+  HREF="5_3_Working_with.html#SECTION00053100000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">1</SPAN> Box structure</A>
+<LI><A NAME="tex2html782"
+  HREF="5_3_Working_with.html#SECTION00053200000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN> Adding new features</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H2><A NAME="SECTION00053000000000000000"></A>
+<A NAME="hacking-boxes"></A>
+<BR>
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">3</SPAN> Working with Boxes
+</H2>
+
+<P>
+New features can be easily added to Scoop using its unique box system.  Boxes are chunks of perl code with complete access to all of Scoop's data and functions.  Many boxes are used for simple purposes such as adding or removing items from the user and admin menus, depending on permissions.  Other boxes provide functionality that appears completely built in, such as the commentless, sidebarless story view with the full URL at the bottom used for a printable copy.  Others display site statistics such as the number of stories and comments posted, or the stories hotlisted by the most people.
+
+<P>
+Boxes can be either embedded in the page as a small, modular bit of code as with the user menu, or they can generate the entire page on their own as with the printable version of a story. Boxes embedded in the page are `normal' boxes, while boxes used to generate the entire page (such as the printable story view mentioned above) are referred to as `box ops'. The two types of boxes are mostly written in the same way, but are placed on the page in very different ways. They can also run as a scheduled item through Scoop's cron system (<A HREF="A_14_Cron.html#admin-tools-cron">A.14</A>).
+
+<P>
+
+<H3><A NAME="SECTION00053100000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">1</SPAN> Box structure</A>
+</H3>
+
+<P>
+Box code generally looks like what you'd find in a typical perl script. You do not need to put the #! line at the top, nor a subroutine name, nor a `my $S = shift;' - all that is handled by Scoop's box handler. You simply write the code that would be inside the subroutine.  Boxes placed on the page with a box key can take arguments; you then call them with |BOX,boxname,arg1,arg2| and you can get the values of the arguments from the @ARGS array.
+
+<P>
+Boxes must return an anonymous hash with the keys `content' and `title'. The key `title' is optional; if omitted, the text in the Title field of the Boxes Admin Tool (<A HREF="A_11_Boxes.html#admin-tools-boxes">A.11</A>) form is used.
+
+<P>
+Boxes cannot use block or box keys as part of their code, but can return them as part of the title or content string.
+
+<P>
+Don't use subroutines in boxes. It will sometimes work, but is not reliable and will sometimes fail with an Internal Server Error.
+
+<P>
+
+<H3><A NAME="SECTION00053200000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN> Adding new features</A>
+</H3>
+
+<P>
+Quite a few features can be added entirely through boxes. Other features which modify a `core' feature of Scoop, such as how stories and comments are handled, must be done in the perl modules or in a combination of modules and boxes.  See section&nbsp;<A HREF="5_4_Creating_new.html#hacking-new-feature">5.4</A> for more information on adding new features in general.
+
+<P>
+If a feature makes sense as a separate `op', such as the printable version of a story, you can designate the box as the function for the new op, using the Ops Admin Tool (<A HREF="A_16_Ops.html#admin-tools-ops">A.16</A>) so that it generates the entire page and handles any parameters passed to that op. Parameters are available to the box code as CGI parameters, with the names of those that appear in the path defined in the URL Templates field of the Ops Admin Tool.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

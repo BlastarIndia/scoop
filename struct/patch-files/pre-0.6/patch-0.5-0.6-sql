@@ -1,0 +1,112 @@
+#
+# Patch to bring scoop DB up to date for 0.5.2
+#
+# Adds last_accessed timestamp column to the sessions table.
+# This allows us to expire old rows with *musch* greater speed.
+ 
+alter table sessions add column last_accessed TIMESTAMP(14);
+#
+# Patch to bring scoop DB up to date for 0.5.2
+#
+# Adds last_accessed timestamp column to the sessions table.
+# This allows us to expire old rows with *musch* greater speed.
+ 
+alter table sessions change column id id varchar(32) NOT NULL;
+alter table users change nickname nickname varchar(50) NOT NULL;
+create unique index nick_idx on users (nickname);
+
+create index pid_c_idx on comments (pid);
+create index sid_c_idx on comments (sid);
+create index uid_c_idx on comments (uid);
+
+create index qid_s_idx on sections (qid);
+
+create index tid_st_idx on stories (tid);
+create index aid_st_idx on stories (aid);
+create index time_st_idx on stories (time);
+create index section_st_idx on stories (section);
+create index score_st_idx on stories (score);
+create index rating_st_idx on stories (rating);
+
+create index uid_sm_idx on storymoderate (uid);
+# this inserts the poll_block row into blocks
+insert into blocks values ('poll_block', '<TR>
+<TD>
+<TABLE WIDTH=100% BORDER=0 CELLPADDING=1 CELLSPACING=0>
+<TR>
+<TD BGCOLOR="%%title_bgcolor%%" colspan=2>
+%%title_font%%<B>%%title%%</B></FONT>
+</TD>
+</TR>
+
+<TR>
+<TD BGCOLOR="%%topic_bg%%">
+%%norm_font%%
+%%info%%
+</FONT>
+</TD>
+<TD BGCOLOR="%%topic_bg%%" align="right">
+%%norm_font%%%%hotlist%%</FONT>
+</TD>
+</TR>
+<tr><td><br></td></tr>
+%%poll_image%%
+</TABLE>
+</TD></TR>', NULL, NULL);
+
+# this inserts the new current_poll var into vars
+insert into vars values ('current_poll', NULL, "The qid of the current poll");
+
+## These 3 tables are copies of the one's used in slashcode.
+## I used them here because of good design, and why reinvent the
+## wheel?  ... too much :)
+
+# Table structure for table 'pollanswers'
+#
+CREATE TABLE pollanswers (
+   qid char(20) DEFAULT '' NOT NULL,
+   aid int(11) DEFAULT '0' NOT NULL,
+   answer char(255),
+   votes int(11),
+   PRIMARY KEY (qid,aid) );
+
+#
+# Table structure for table 'pollquestions'
+#
+CREATE TABLE pollquestions (
+   qid char(20) DEFAULT '' NOT NULL,
+   question char(255) DEFAULT '' NOT NULL,
+   voters int(11),
+   post_date datetime,
+   PRIMARY KEY (qid) );
+
+#
+# Table structure for table 'pollvoters'
+#
+CREATE TABLE pollvoters (
+   qid char(20) DEFAULT '' NOT NULL,
+   id char(35) DEFAULT '' NOT NULL,
+   time datetime,
+   uid int(11) DEFAULT '-1' NOT NULL,
+   user_ip	char(15) NOT NULL,
+   KEY qid (qid,id,uid) );
+
+
+UPDATE stories SET time = '2000-07-10 16:04:09' WHERE sid = '2000/2/12/16148/2875';
+UPDATE users SET seclev = '10000' WHERE seclev = '1000';
+INSERT INTO vars VALUES ('seclev_editor','1000','Allow someone to be an editor of content, but not a super admin. Middle level admin, someone you don\'t want messing w/ your shi');
+INSERT INTO vars VALUES ('seclev_super','10000','Seclev needed to edit vars/blocks, topics, sections, special pages.');
+INSERT INTO vars VALUES ('seclev_vote','1','Seclev needed to vote on polls, moderate stories, comment rating, so on...');
+INSERT INTO vars VALUES ('poll_num_ans','100','Allowed number of poll answers to be set.');
+
+INSERT INTO blocks VALUES ('moderation_comment','<!-- comment -->\r\n<TR width=\"100%\">\r\n <TD bgcolor=\"#cccccc\">\r\n %%norm_font%%<A NAME=\"%%cid%%\"><B>%%subject%%</B> %%score%%</A> (#%%cid%%)<BR>\r\n by %%name%% %%email%% on %%date%%<BR>\r\n %%user_info%% %%url%% %%norm_font_end%%\r\n </TD>\r\n</TR>\r\n<TR width=\"100%\">\r\n <TD>\r\n %%norm_font%%\r\n %%comment%%<P>\r\n %%sig%%<P>\r\n %%actions%%\r\n %%norm_font_end %%\r\n </TD>\r\n</TR>\r\n<TR width=\"100%\">\r\n <TD valign=\"top\">\r\n %%norm_font%%\r\n\r\n %%replies%%\r\n \r\n %%norm_font_end%%\r\n </TD>\r\n</TR>\r\n<TR><TD><SPACER type=\"vertical\" SIZE=10></TD></TR>\r\n<!-- Xcomment  -->',NULL,10000);
+INSERT INTO vars VALUES ('show_thresholds','0','whether or not to show users thresholds for submissions');
+INSERT INTO pollanswers VALUES ('diditwork',1,'A monkey could do it.',0);
+INSERT INTO pollanswers VALUES ('diditwork',2,'A child could do it.',0);
+INSERT INTO pollanswers VALUES ('diditwork',3,'Help!',0);
+INSERT INTO pollanswers VALUES ('diditwork',4,'No wait, I see polls.',0);
+INSERT INTO pollquestions VALUES ('diditwork','How did the install go?',0,'2000-07-17 14:00:40');
+INSERT INTO vars VALUES ('current_poll','diditwork','The qid of the current poll');
+INSERT INTO vars VALUES ('use_new_scoring','0','0 means add the votes for and against together, 1 means compare to the thresholds by themselves.');
+DELETE FROM blocks WHERE bid = 'moderation';
+INSERT INTO vars VALUES ('seclev_post','0','Seclev needed to submit a story or post a comment. 0 = anon. 1 = regular user.')

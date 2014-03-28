@@ -1,0 +1,58 @@
+Patch numbering and tracking did not start until after the 0.6 release; this
+file is an attempt to help those who still have pre-0.6 sites upgrade properly.
+
+Missing patches from this directory can have strange and often disastrous
+effects when running other patches in later version directories. One frequently
+seen example is losing all ops, which renders the site completely
+non-functional.
+
+Since the patches do not have any application order information or tracking,
+you will have to check the list below against your database to see which ones
+have been applied already and which you still need to apply. The patches are
+listed in the order in which they were added to CVS; applying them in this
+order should work, starting with the patch after the last one you already have.
+
+Descriptions of visible features have been added to some of the patches to help
+you find the patch you want to start with.
+
+Some of the patches have been modified after their creation date (usually small
+bugfixes, and usually quite soon after their creation) so you may want to
+compare the ones with dates close before your VERSION timestamp to your
+database to see if you need to apply them, or parts of them, too.
+
+
+
+- patch-0.5.2.sql Sat		Sat May 6 06:54:02 2000 UTC
+- patch-Session.sql		Thu Jun 1 15:33:08 2000 UTC
+- patch-Indexes1.sql		Mon Jun 12 18:38:10 2000 UTC
+- patch-polls.sql		Sat Jun 24 22:48:19 2000 UTC (polls)
+- patch-004-seclev.sql		Mon Jul 10 21:32:25 2000 UTC
+- patch-005-modcomment.sql	Fri Jul 14 14:06:52 2000 UTC (editorial comment)
+
+- patch-0.5-0.6-sql		Wed Jul 12 15:52:20 2000 UTC (this patch 
+					contains all 6 above)
+
+- patch-006-newvars.sql		Mon Jul 17 18:28:24 2000 UTC
+- patch-007-TableReorg.sql	Mon Jul 24 20:19:19 2000 UTC
+- patch-AttachPoll.sql		Tue Aug 29 04:53:29 2000 UTC
+- patch-EditBoxes.sql		Mon Aug 28 09:28:19 2000 UTC
+- patch-Templates.sql		Mon Aug 28 09:28:19 2000 UTC (templates admin tool)
+- patch-Perms.sql		Mon Aug 28 09:28:19 2000 UTC (groups admin tool)
+- patch-PostThrottle.sql	Thu Aug 31 09:44:48 2000 UTC
+- patch-SectionVote.sql		Thu Aug 31 16:07:06 2000 UTC (vote story to section)
+- patch-Sections.sql		Tue Sep 5 11:13:28 2000 UTC
+- patch-Mojo.sql		Sun Sep 17 21:48:32 2000 UTC (mojo-related vars)
+- patch-NewCache.sql		Sat Sep 23 01:29:35 2000 UTC
+- patch-StoryVoteBug.sql	Sun Oct 8 07:09:41 2000 UTC
+
+- patch-008-CommentDefaults.sql	Thu Dec 7 23:27:05 2000 UTC (default_comment_sort var)
+- patch-UserTable.sql		Thu Feb 8 02:41:29 2001 UTC
+- patch-VarChars.sql		Mon Feb 26 08:01:09 2001 UTC
+- patch-ForumZilla.sql		Tue Feb 27 10:24:35 2001 UTC (forumzilla support, opcodes block)
+
+- patch-0.6pre2-0.6.sql		Thu Mar 1 06:43:50 2001 UTC (this patch 
+					contains the 4 preceding patches plus 
+					a lot more, and should be used instead)
+
+
+

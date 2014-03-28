@@ -1,0 +1,1 @@
+INSERT INTO `vars` (`name`, `value`, `description`, `type`, `category`) VALUES ('require_tags','0','If this var is set, users <b>must</b> submit at least one tag when they submit a story.','bool','Tags');

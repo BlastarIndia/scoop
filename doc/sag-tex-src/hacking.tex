@@ -1,0 +1,311 @@
+\section{Extending Scoop's Abilities}
+\label{hacking}
+
+This section will explain the overall design of Scoop and some of the major functions that will help you program it. This does not by any means cover everything there is to know about Scoop; the only way to figure all that out is to read the code. This is intended to be a quick introduction to help you get started.
+
+Most modules have perlpod in them, so you can `perldoc Module.pm' to get descriptions of most of a given module's functions.
+
+This section assumes a working knowledge of perl and perl's OO syntax, and a little bit of SQL knowledge. A perl and SQL tutorial are way outside of the scope of this section, and besides, there are ones better than I could ever write already available all over the internet. It also assumes that you are familiar with running Scoop, as described in the rest of this admin guide.
+
+Scoop uses perl's OO syntax but is not at heart very object oriented. All of Scoop's data and methods are available through one object, \$S, mainly for convenience.
+
+Adding features sometimes require changes to the underlying code of Scoop, sometimes only boxes, and sometimes a combination of underlying code and boxes.
+
+When you change any of the .pm files in the scoop/lib directory or you change any of the apache configuration, you must completely stop apache, then start it. This forces everything to be recompiled; an `apachectl restart' will {\em not} do the job. When you change anything that is available to change via the web interface, you don't need to touch apache, it gets picked up automatically.
+
+\subsection{The \$S Object}
+\label{hacking-s}
+
+The \$S object contains all of Scoop's data and methods. In quite a few cases, the data is accessed via a method rather than directly. All of the data is drawn from the database, but in most cases you will not have to access the database directly as Scoop does some aggressive (and transparent) data caching.
+
+\subsubsection{Data}
+
+Below is a list of some of the more useful bits of data that you access directly, followed by a list of data that you want to access using Scoop's methods.
+
+All of this data is loaded into \$S in the initialization stages of each request, from the cache if possible and from the database if necessary.
+
+\begin{description}
+\item[\$S-\latexhtml{$>$}{>}\{UI\}-\latexhtml{$>$}{>}\{VARS\}] Each of Scoop's site controls (variables, or vars) can be accessed using \$S-\latexhtml{$>$}{>}\{UI\}-\latexhtml{$>$}{>}\{VARS\}-\latexhtml{$>$}{>}\{variable\_name\} for use in testing whether or not a feature is on or off, or for getting or setting values. If your code will break horribly if a variable is zero or blank then make sure to put a sensible default value in your code that will be used if the variable in question is empty. Administrators can change the variables through the Site Controls Admin Tool (\ref{admin-tools-vars}). For ease of use, the site controls are usually assigned to a variable local to that subroutine or box if they will be used more than once in that part of the code, then used as the much shorter and easier to type variable from then on.
+
+\item[\$S-\latexhtml{$>$}{>}\{UI\}-\latexhtml{$>$}{>}\{BLOCKS\}] Each of Scoop's blocks can be accessed using \$S-\latexhtml{$>$}{>}\{UI\}-\latexhtml{$>$}{>}\{BLOCKS\}-\latexhtml{$>$}{>}\{block\_name\} for use in perl code. This method of accessing blocks should only be used if you need to process the block in question in a special way, such as handling special keys (\ref{features-custom}); if you want to simply include one block in another one, place the included block's name between vertical pipes (\latexhtml{$\vert$}{|}block\_name\latexhtml{$\vert$}{|}) where its content should be placed in the other block. If you are using perl code to handle special keys in a particular block, whether in a box or in the code, in the substitution command the key should be between double percent signs (\%\%key\_name\%\%) as that's how keys are stored in the database. When processing the page just before sending it to the user's computer, Scoop does all the normal block interpolation automatically, so you don't have to worry about substituting keys for blocks that exist. Administrators can change the blocks through the Blocks Admin Tool (\ref{admin-tools-blocks}).
+
+\item[\$S-\latexhtml{$>$}{>}\{SECTION\_DATA\}] The information associated with each of Scoop's sections can be accessed using \$S-\latexhtml{$>$}{>}\{SECTION\_DATA\}-\latexhtml{$>$}{>}\{sectionid\}. The information available is the section's title, description, and icon. For example:
+\begin{verbatim}
+my $title = $S->{SECTION_DATA}->{$section}->{title};
+my $section_slogan = $S->{SECTION_DATA}->{$section}->{description};
+my $headline = qq@$title ~ $section_slogan@;
+\end{verbatim}
+where \$section is set earlier in the code to something appropriate to the page being processed.
+
+\item[\$S-\latexhtml{$>$}{>}\{TOPIC\_DATA\}] The information associated with each of Scoop's topics can be accessed using \$S-\latexhtml{$>$}{>}\{SECTION\_DATA\}-\latexhtml{$>$}{>}\{topicid\}. The information available is the topic's image, alt text (or text version), image width, and image height. For example:
+\begin{verbatim}
+my $img = $S->{TOPIC_DATA}->{$tid}->{image};
+my $alt = $S->{TOPIC_DATA}->{$tid}->{alttext};
+my $topic_img = qq~<IMG src="|imagedir||topics|/$img" alt="$alt">~;
+\end{verbatim}
+where \$tid is set earlier in the code to something appropriate to the page being processed.
+
+\item[\$S-\latexhtml{$>$}{>}\{NICK\}] The nickname of the user requesting the current page. This is mainly used for customization of the display, greeting the visitor by name, etc.
+
+\item[\$S-\latexhtml{$>$}{>}\{UID\}] The user ID of the user requesting the current page. This is mainly used for getting other information by or about the current user, since all information particular to a user is identified by the UID.
+
+\item[\$S-\latexhtml{$>$}{>}\{GID\}] The group ID of the user requesting the current page. This is mainly used for checking permissions, as the purpose of groups is mainly to give and restrict permissions. It is used as a default group ID if no group ID is specified when using the \$S-\latexhtml{$>$}{>}have\_perm() function.
+
+\end{description}
+
+\begin{description}
+\item[\$S-\latexhtml{$>$}{>}cgi-\latexhtml{$>$}{>}param()] The param method provides access to all of the form variables sent by either GET or POST to Scoop. Pass the name of the form variable to the method as the argument; the return value is the value of that variable.
+\item[\$S-\latexhtml{$>$}{>}apache()] This is the apache request object, stuffed in \$S so it's always available. This gives you access to methods which get or set things like the incoming or outgoing headers, the connection information, the configuration, and so on. For information on what functions the apache request object supports, read the pod for the Apache perl modules. \$S-\latexhtml{$>$}{>}apache corresponds to the \$r used in the module documentation.
+\end{description}
+
+\subsubsection{Database access}
+
+To get information into and out of the database, Scoop provides an interface to the database that allows you to build your query in code then retreive it in the form of a series of hashes. The methods provide caching where appropriate, to reduce the number of requests sent to the database.
+
+The select, update, insert, and delete methods described below all return two values, \$rv and \$sth. \$rv is the return value; false if the query was not successful. \$sth contains the data and all of the other information about the query. It's a DBI object and has several methods of its own.  For information on what functions \$sth supports, read the pod for DBI, 'perldoc DBI' and see below.
+
+\begin{description}
+\item[\$sth-\latexhtml{$>$}{>}fetchrow\_hashref()] Note: this method is not an \$S method. Each time it is run it fetches the next row of results from the database query you just ran until it runs out of results, after which it returns a false value. This is generally used in a while loop:
+\begin{verbatim}
+while( my $tmp = $sth->fetchrow_hashref() ) {
+   # perl code here processing $tmp->{fieldname} value(s)
+}
+\end{verbatim}
+
+\item[\$sth-\latexhtml{$>$}{>}fetchrow\_array()] Note: this method is not an \$S method. Each time it is run it fetches the next row of results from the database query you just ran until it runs out of results, after which it returns a false value. This is generally used in a while loop:
+\begin{verbatim}
+while( my ($foo, $bar) = $sth->fetchrow_array() ) {
+   # perl code here processing $foo and $bar
+}
+\end{verbatim}
+fetchrow\_array is extremely useful when you are fetching only a few columns, because you can assign the returned values into normal scalar variables instead of using hashref notation.
+
+\item[\$S-\latexhtml{$>$}{>}db\_select()] This method takes an anonymous hash as its arguments, with keys WHAT, FROM, WHERE, GROUP\_BY, ORDER\_BY, LIMIT, DEBUG, and DISTINCT. The values of these correspond to the SQL statements by the same name, excepting WHAT and DEBUG; WHAT is the list of fields to fetch from the database, and DEBUG determines whether or not Scoop will print debugging information for that particular query. All values default to blank if not used, so things like DEBUG and DISTINCT don't have to be explicitly turned off.
+\begin{verbatim}
+my ($rv, $sth) = $S->db_select({
+	WHAT => 'title,sid',
+	FROM => 'stories',
+	WHERE => qq~aid = "$S->{UID}" AND displaystatus = '0'~,
+	ORDER_BY => 'time DESC',
+	LIMIT => '10'
+});
+\end{verbatim}
+The above code will fetch the titles and story IDs (sid) of the 10 most recent front-page posted stories by the current user. A display status of 0 means posted to front page. 1 means posted to section only, and negative display status values are for unpublished (hidden or queued) stories. See the first item in this list for getting the data returned by this query from \$sth.
+
+\item[\$S-\latexhtml{$>$}{>}db\_update()] This method takes an anonymous hash as its arguments, with keys WHAT, SET, WHERE, and DEBUG. The values of these correspond to the SQL statements by the same name, excepting WHAT and DEBUG; WHAT is the name of the table to update, and DEBUG determines whether or not Scoop will print debugging information for that particular query. All values default to blank if not used, so things like DEBUG don't have to be explicitly turned off.
+\begin{verbatim}
+my ($rv, $sth) = $S->db_update({
+	WHAT => 'comments',
+	SET => 'subject = "[wiped]", comment = "[wiped]"',
+	WHERE => qq~sid = "$sid" AND cid = "$cid"~
+});
+\end{verbatim}
+The above code will wipe the subject and body of a particular comment, while leaving it in place so as not to disrupt the threading of a discussion. The variables \$sid and \$cid (story ID and comment ID, respectively) would be set earlier in the code, and together uniquely identify the comment.
+
+\item[\$S-\latexhtml{$>$}{>}db\_insert()] This method takes an anonymous hash as its arguments, with keys INTO, COLS, VALUES, and DEBUG. The values of these correspond to the SQL statements by the same name, excepting DEBUG, which determines whether or not Scoop will print debugging information for that particular query. All values default to blank if not used, so things like DEBUG don't have to be explicitly turned off.
+\begin{verbatim}
+my ($rv, $sth) = $S->db_insert({
+	INTO => 'pollanswers',
+	COLS => 'qid, aid, answer, votes',
+	VALUES => qq~$qid, $aid, $answer, '0'~,
+});
+\end{verbatim}
+The above code will insert a new poll answer with 0 votes into an existing poll (basically allowing write-in answers to be added to the poll). The variable \$qid is the poll (question) ID, \$aid is the answer ID, and \$answer is the text of the answer. \$aid would need to be discovered before the insert; a simple count of the number of answers + 1 via a db\_select statement would provide the right value to use in the insert. \$answer would be supplied by the user. (Don't forget to quote() it first! See below...)
+
+\item[\$S-\latexhtml{$>$}{>}db\_delete()] This method takes an anonymous hash as its arguments, with keys FROM, WHERE, and DEBUG. The values of these correspond to the SQL statements by the same name, excepting DEBUG, which determines whether or not Scoop will print debugging information for that particular query. All values default to blank if not used, so things like DEBUG don't have to be explicitly turned off.
+\begin{verbatim}
+my ($rv, $sth) = $S->db_delete({
+	FROM => 'users',
+	WHERE => qq~creation_time < DATE_SUB(NOW(), INTERVAL 1 month)
+		AND is_new_account = '1'~,
+});
+\end{verbatim}
+The above code will delete any accounts which have not been confirmed by one month after their creation. Since unconfirmed accounts cannot have anything in the database attached to them, deleting them holds no risk of causing data integrity errors. Accounts are confirmed by logging in with the username and password emailed to the user when they create the account.
+
+\item[\$S-\latexhtml{$>$}{>}dbh-\latexhtml{$>$}{>}quote()] This method takes a string as its argument and returns a string properly quoted for use in the database. Use this any time you are passing any string to the database that is not hardcoded right in your perl code; even hidden form fields can be changed. 
+
+This isn't only a security measure to stop malicious users. {\bf Everything} going into the database or used in a query should always be quoted, even administrative stuff that only trusted administrators will use, because a misplaced quote---or even an unexpected apostrophe---can cause database errors when not quoted.
+
+\end{description}
+
+\subsubsection{User-related Scoop Methods}
+
+\begin{description}
+\item[\$S-\latexhtml{$>$}{>}user\_data()] This method takes a numeric user ID and returns a hashref containing all user info, user preferences and subscription information if subscriptions are being used. 
+
+The user info, such as the user's homepage, bio, fake email, and so on, are stored as \$user-\latexhtml{$>$}{>}\{homepage\} and so on; the hash keys are the names of the fields in the users table. 
+
+The user preferences, such as the user's time zone, how many titles they want displayed on the front and section pages, whether or not they're listed in the ``who's online'' box, and so on, are stored as \$user-\latexhtml{$>$}{>}\{prefs\}-\latexhtml{$>$}{>}\{time\_zone\} and so on; the hash keys are the names of the preferences in the `prefname' field of the userprefs table.
+
+The subscription information, such as when it was created, when it expires, whether or not it is active, and so on, are stored as \$user-\latexhtml{$>$}{>}\{sub\}-\latexhtml{$>$}{>}\{created\} and so on; the hash keys are the names of the fields in the subscription\_info table.
+
+If you pass user\_data() an array of UIDs, it will fetch all of the user data for all of the UIDs and save them to the user data cache, and return nothing. If you want the user data for a large number of users, this is the best way to do it because it guarantees only one hit to the database; calling user\_data with single UIDs after this will fetch the information from the cache. If you skip the step of sending user\_data an array of UIDs, it could potentially mean a number of hits to the database equal to the number of UIDs you want information for.
+
+\item[\$S-\latexhtml{$>$}{>}get\_nick\_from\_uid()] This method takes a numeric user ID and returns the corresponding nickname. If the user doesn't exist, it returns an empty string.
+
+\item[\$S-\latexhtml{$>$}{>}get\_uid\_from\_nick()] This method takes a nickname and returns the corresponding numeric user ID. If the user doesn't exist, it returns an undefined value.
+
+\item[\$S-\latexhtml{$>$}{>}have\_perm()] This method takes the name of a permission as seen in the Groups Admin Tool (\ref{admin-tools-groups}) and returns a true value if the current user has the permission. If an (optional) group ID is given as a second argument, it returns a true value if the group named has the permission. This is typically used in conditional blocks to permit or deny actions depending on permissions:
+\begin{verbatim}
+if ( $S->have_perm('comment_rate') ) {
+	$out = "Hey you! Rate comments!";
+}
+\end{verbatim}
+
+\item[\$S-\latexhtml{$>$}{>}have\_section\_perm()] This method takes the name of a section permission and the name of a section as arguments and returns a true value if the user has the permission. This is used differently than \$S-\latexhtml{$>$}{>}have\_perm() because if a user {\em has} the section perm `hide\_read\_stories' then the user should {\em not} be allowed to read the story. This is because section perms are not a simple yes/no switch the way regular perms are; they distinguish between allowing, hiding, and denying permission. See section~\ref{sections-perms} for more details on section permissions and how to use them.
+\begin{verbatim}
+if ( $S->have_section_perm('hide_read_stories', 'news') ) {
+	$out = "Never heard of it";
+} elsif ( $S->have_section_perm('deny_read_stories', 'news') ) {
+	$out = "You're not allowed in here";
+} else {
+	$out = "Welcome to this section";
+}
+\end{verbatim}
+
+\item[\$S-\latexhtml{$>$}{>}pref()] This method provides a way to get and set the user preferences for user requesting the current page. 
+
+To get a preference, pass the name of the user preference as the only argument; the return value is the value of that user preference. 
+
+To set a single preference, pass the name of the user preference and the new value as the only two arguments; the return value is a database error string if the update failed.
+
+To set multiple preferences, pass a single variable that is a hashref of the preferences you wish to set, with prefnames as the keys and the new values as the hash values; the return value is a database error string if the update failed.
+
+\end{description}
+
+\subsubsection{Story-related Scoop Methods}
+
+\begin{description}
+\item[\$S-\latexhtml{$>$}{>}displaystory()] This method formats the full story: header, introtext, and bodytext. It takes the story ID as the first parameter and returns two variables: a hashref containing all story data and the formatted story. The print\_story box available on the Scoop Box Exchange (\ref{sbe}) uses this to format the story with no comments.
+
+\item[\$S-\latexhtml{$>$}{>}getstories()] This method gets story data with a wide variety of options. This should be used instead of accessing the database directly if at all possible, because among other things, this takes into account all group and section permissions for you.
+
+It takes one argument, a hashref containing all of its options, with the option name (listed below) as the hash key. It returns an arrayref which contains one hashref for each story returned, with all of the data requested for that story in the hashref.
+
+The options understood by getstories() are: (note that the dash is part of the key)
+\begin{description}
+\item[-type] This can be one of summaries, fullstory, titlesonly, titlesonly-section, or section. Each of those returns a list of stories and their data as described in their name, subject to the options set in the other parameters. This is the only option that is required.
+\item[-topic] This can be the internal name of any of the topics you have configured. (The topic ID, not the alttext.) Setting a -topic value when you are using a -type of either titlesonly or section means that you will get back only stories in the topic you named.
+\item[-user] This can be the nickname of any user on the system. Setting a -user value when you are using a -type of section means that you will get back only stories (and diaries) written by the user you named.
+\item[-section] This can be the internal name of any of the sections you have configured. Setting a -section value when you are using a -type of either titlesonly or section means that you will get back only stories in the section you named. If you want the `Everything' pseudo-section, use the section name `\_\_all\_\_'. If you want all sections except a particular section, use the name of the section you want to exclude prefixed with an exclamation mark (!).
+\item[-sid] This can be any valid story ID (sid) in the system. Setting a -sid value when you are using a -type of summaries, fullstory, or titlesonly means that you will get back only the story with the story ID you named.
+\item[-dispstatus] This can be any of the internally used display statuses: 1 for published to section only, 0 for published to front page, -1 for hidden, -2 for in the voting queue, and -3 for in the edit queue. Setting a -dispstatus value when you are using a -type of summaries means that you will get back only stories with the displaystatus you named. If you do not set a -dispstatus value, Scoop uses 0 (front page stories only).
+\item[-where] This can be any SQL `where' clause. Setting a -where value when you are using a -type of either summaries or titlesonly means that whatever SQL you put here will be appended to the SQL `where' clause.
+\item[-from] This can be any SQL `from' clause. Setting a -from value when you are using a -type of summaries means that whatever SQL you put here will be appended to the SQL `from' clause.
+\item[-perm\_override] This is generally either a 1 or not set, as it is used as a true/false test. Setting a -perm\_override value to anything true when you are using a -type of fullstory means that story viewing permissions are ignored and the user can see even hidden stories.
+\item[-page] This can be any positive number, and represents the `page number' of a story index page. Setting a -page value when you are using a -type of either summaries or section means that you will get a list of stories offset by that number of pages.
+\end{description}
+
+\end{description}
+
+\subsubsection{Comment-related Scoop Methods}
+
+\begin{description}
+\item[\$S-\latexhtml{$>$}{>}display\_comments()] This method takes up to four arguments and returns formatted comments as a string. The four arguments are, in order, sid, pid, mode, and cid (story ID, parent comment ID, display mode, and comment ID). sid and cid together uniquely identify every comment. A pid of 0 indicates top level comments (you can think of the story as comment \#0). The mode can be `alone' (do not display any replies) or `collapsed' (show only the subject and author as a link to the full comment); if blank, replies to the comment named in sid and cid are displayed and formatted according to the user's comment display preferences.
+\item[\$S-\latexhtml{$>$}{>}\_commentcount()] This method takes a sid (story ID) as its argument and returns the total number of comments, both topical and editorial, attached to that sid.
+\item[\$S-\latexhtml{$>$}{>}\_comment\_highest()] This method takes a sid (story ID) as its argument and returns the cid (comment ID) of the highest numbered comment attached to that sid.
+
+\end{description}
+
+\subsubsection{Other Useful Scoop Methods}
+
+\begin{description}
+\item[\$S-\latexhtml{$>$}{>}interpolate()] This method does all of the work of substituting the value of blocks into the keys before sending the page out. It can also be used to substitute the special keys in particular blocks. It takes a string containing the block you want interpolated and a hashref containing the data for the keys as arguments, and returns a string containing the block with the keys substituted.
+
+Generally to use this function, you would build up a hashref with the data - the keys of the hashref must be the keys you want substituted in the block - then have the function interpolate all the special keys you handle in one go. Any other, non-special keys will not be touched at this time, and will be substituted when Scoop does its final page preparation.
+
+\item[\$S-\latexhtml{$>$}{>}mail()] This method sends an email from the address you set in the site control {\bf local\_email}. The arguments it takes are, in order, the recipient's email address, the email subject, and the email content. If there is a problem with sending the email, it will return an error message.
+
+\item[\$S-\latexhtml{$>$}{>}admin\_alert()] This method sends an email from the address you set in the site control {\bf local\_email} to the email(s) listed in the site control {\bf admin\_alert}. It takes one argument, the warning about the event that triggered the email. Information on the current user (the user who triggered the email) is automatically included.
+
+\item[\$S-\latexhtml{$>$}{>}urlify()] This method takes a string as its only argument and returns that string with any non-URL-safe characters URL-encoded. This method should be used on any string that will be used in a URL.
+
+\end{description}
+
+\subsubsection{Debugging}
+
+If you look at the code, you will see the variable \$DEBUG scattered all over, always near a warn() command. All of those debugging messages, if Scoop is in debugging mode, are printed in apache's error log. You can turn debugging on for each perl module by setting the value of \$DEBUG to 1 at the top of the file.
+
+Most debugging statements look like this:
+\begin{verbatim}
+warn "some error text" if $DEBUG;
+\end{verbatim}
+They should include the function name, but not all of them do.  The error or status text you include is completely up to you, and will depend on what behaviour you are trying to track down.
+
+Whatever you do, don't forget the `if \$DEBUG' part of the statement, and don't forget to turn \$DEBUG off before you submit your patch. Debugging output in distributed code is not something most people like.
+
+The only warn statements that should ever be used without the `if \$DEBUG' are for actual errors or events that the admin must be able to look up in the logs. If the admin must be notified of something immediately (such as when a member tries to break things) you can use \$S-\latexhtml{$>$}{>}admin\_alert(), which sends an email to the site admins.
+
+\subsection{Program Flow and Scoop's code structure}
+\label{hacking-flow}
+
+First things first: where is everything? Scoop is set up in a type of heirarchy, with everthing in the lib/ directory of your Scoop distribution. You'll notice 2 directories there, Bundle and Scoop, and one file, Scoop.pm. Don't worry about Bundle, unless you like messing with CPAN. Scoop.pm has all the main initialization routines, and all of the other perl modules that make up Scoop fall under the lib/Scoop directory.
+
+The file layout within the Scoop directory is pretty easy to understand. Polls stuff is in Polls.pm and under the Polls/ directory, Comments stuff is in Comments.pm and Comments/ directory, etc. The Admin/ directory is the exception; for the most part it contains all the code for the admin tools, but it also contains stuff like user creation, story submission, and so on. Basically the kinds of ``administrative'' things that users can do.
+
+If you're adding a new module, and it starts to get bigger than about 1000 lines, think hard about splitting it up into its own subdirectory like some of the other modules.
+
+All of Scoop's modules have some degree of POD (run 'perldoc perldoc' if you're not familiar with POD), so a lot of information about how they work and how to use them can be gleaned from typing 'perldoc Scoop.pm' or any other .pm file.
+
+It can be tricky to trace what happens in what order---Scoop jumps from its backend code to boxes in the database and back again many times in every page request. 
+
+To find out which function generates the \latexhtml{$\vert$}{|}CONTENT\latexhtml{$\vert$}{|} part of a given page, first look at what op the page is generated for---the first pseudo-directory, or `main' for the main page. In the Ops Admin Tool, the ops each have a function associated with them, and an indication of whether or not the function is a box. That function, plus the functions it may call, generates the central portion of each page. Additional code is run from box calls on the op's page template; the box name is found in the \latexhtml{$\vert$}{|}BOX,boxname\latexhtml{$\vert$}{|} keys.
+
+You pretty much want to figure out where the part you're interested in is being generated (often based on some key strings in the display or, sometimes from those strings, the name of a block that's displayed) then follow the program either forward or back through Scoop's code and boxes. grep -r helps a lot with the former, and the admin tools search helps with the latter.
+
+If you want to trace program execution, either in part or in full, ctags are handy for jumping around between subroutines in Scoop's modules and tracing program flow (in a text editor that understands ctags). From the base scoop directory: 'ctags -R lib/' will create a file called tags that your text editor can use. Add a -e flag if you use emacs.
+
+\subsection{Working with Boxes}
+\label{hacking-boxes}
+
+New features can be easily added to Scoop using its unique box system.  Boxes are chunks of perl code with complete access to all of Scoop's data and functions.  Many boxes are used for simple purposes such as adding or removing items from the user and admin menus, depending on permissions.  Other boxes provide functionality that appears completely built in, such as the commentless, sidebarless story view with the full URL at the bottom used for a printable copy.  Others display site statistics such as the number of stories and comments posted, or the stories hotlisted by the most people.
+
+Boxes can be either embedded in the page as a small, modular bit of code as with the user menu, or they can generate the entire page on their own as with the printable version of a story. Boxes embedded in the page are `normal' boxes, while boxes used to generate the entire page (such as the printable story view mentioned above) are referred to as `box ops'. The two types of boxes are mostly written in the same way, but are placed on the page in very different ways. They can also run as a scheduled item through Scoop's cron system (\ref{admin-tools-cron}).
+
+\subsubsection{Box structure}
+
+Box code generally looks like what you'd find in a typical perl script. You do not need to put the \#! line at the top, nor a subroutine name, nor a `my \$S = shift;' - all that is handled by Scoop's box handler. You simply write the code that would be inside the subroutine.  Boxes placed on the page with a box key can take arguments; you then call them with \latexhtml{$\vert$}{|}BOX,boxname,arg1,arg2\latexhtml{$\vert$}{|} and you can get the values of the arguments from the @ARGS array.
+
+Boxes must return an anonymous hash with the keys `content' and `title'. The key `title' is optional; if omitted, the text in the Title field of the Boxes Admin Tool (\ref{admin-tools-boxes}) form is used.
+
+Boxes cannot use block or box keys as part of their code, but can return them as part of the title or content string.
+
+Don't use subroutines in boxes. It will sometimes work, but is not reliable and will sometimes fail with an Internal Server Error.
+
+\subsubsection{Adding new features}
+
+Quite a few features can be added entirely through boxes. Other features which modify a `core' feature of Scoop, such as how stories and comments are handled, must be done in the perl modules or in a combination of modules and boxes.  See section~\ref{hacking-new-feature} for more information on adding new features in general.
+
+If a feature makes sense as a separate `op', such as the printable version of a story, you can designate the box as the function for the new op, using the Ops Admin Tool (\ref{admin-tools-ops}) so that it generates the entire page and handles any parameters passed to that op. Parameters are available to the box code as CGI parameters, with the names of those that appear in the path defined in the URL Templates field of the Ops Admin Tool.
+
+\subsection{Creating new ops or features}
+\label{hacking-new-feature}
+
+The first question you are probably asking if you are new to Scoop development is, what exactly is an `op' and how would I use it?
+
+From the programmers perspective, an op is a way of representing the primary function that will be called to handle a particular page request. The relationship between an op and the function that will handle that page is defined using the Ops Admin Tool (\ref{admin-tools-ops}), as are a few other important details such as how the path after the op name is translated into CGI arguments.
+
+From the user perspective, an op is the first directory of the page they're requesting, and indicates what the page they request will do, in general - for example, the `story' op will display a story. When creating new ops and features, it is important not to confuse this expectation.
+
+Features and ops don't always correspond directly; sometimes features will use more than one op (like advertisements, with showad and submitad), others will use exactly one op (like hotlist), and still others won't have an op at all (like spellchecking).
+
+When planning features, make sure that your feature fits the way Scoop does things. If you have an idea for a feature and would like feedback on its design within Scoop, feel free to post a detailed description of your idea and how you plan to do it to \hturl{http://scoop.kuro5hin.org/} or the scoop-dev list (\ref{get-help}) for comments.
+
+Whatever the feature is, anything that can be configurable should be, via Site Controls, Blocks, whatever else is appropriate.  At the absolute minimum, a new feature should have an ``on-off switch'' set by default to ``off'' so existing sites don't have their functionality changed without the admin knowing about it.
+
+Any HTML output by the feature should be either in a box or a block. We're in the process of taking all the HTML out of the code, so please don't put more in! In general, the HTML will be handled easily by blocks, sometimes with special keys as required and very occasionally by boxes. Typically the HTML will be in a block, special keys are filled with values from the database (usually not formatted; the formatting should happen in the block), and for certain form elements (such as a SELECT) that need to have a particular default selection, a box would be appropriate.
+
+\subsection{Creating and Submitting Patches}
+\label{hacking-patches}
+
+Patches should be attached to the relevant bug in the Scoop Bug Muncher, at \hturl{http://bugz.mostly-harmless.ca/}. If you have a patch for a new feature which has no corresponding bug in the bug muncher, create the bug, assign it to yourself, then attach the file. Please note that if you want the attachment to be reviewed you should set the `review?' flag on the attachment. That flag is used in searches and makes it easier for us to distinguish between patches already tested and those that aren't. By setting the review? flag, you will also get an email notice when the patch is tested and either approved (review+) or rejected (review-) by the maintainers.
+
+{\bf Only send patches against the most recent cvs tree!} Patches against older code will not be accepted. To make sure you are developing from the most recent code, do a `cvs update -dPA' in your scoop/ directory.
+
+Create your code patches using the `cvs diff -u' command, and issue that command in the scoop/ directory (not in the subdirectory containing the file you were working in) to make sure the patch contains all your changes. You probably want to redirect the output of that command into an appropriately named file. Note that these rules are to make it easier for the maintainers to read and apply your patch!
+
+If any changes to the database are required, submit a database patch with all the SQL commands required to make those changes. The syntax is exactly the same as it is in the mysql client, so it's a good idea to create the patch as you make the database changes, and copy/paste the SQL commands you use into the patch file.
+
+Remember that many blocks, boxes, and site controls that already exist may have been changed by a given site, and that if you are making significant changes to any of those that could break an established site, you probably want a db upgrade script that will test the site and make the changes as appropriate. You can look at the scripts in the scoop/struct/patch-files directories for examples.
+
+

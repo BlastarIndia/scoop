@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3 Setup and Administration</TITLE>
+<META NAME="description" CONTENT="3 Setup and Administration">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="4_Scoop_Features.html">
+<LINK REL="previous" HREF="2_Installation.html">
+<LINK REL="up" HREF="sag.html">
+<LINK REL="next" HREF="3_1_Initial_Setup.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html" id="current"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<UL>
+<LI><A href="3_1_Initial_Setup.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">1</SPAN> Initial Setup</A></LI>
+<LI><A href="3_2_Basic_Customization.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN> Basic Customization</A></LI>
+<LI><A href="3_3_Users_Stories.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN> Users and Stories</A></LI>
+<LI><A href="3_4_Routine_Maintenance.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN> Routine Maintenance</A></LI>
+<LI><A href="3_5_Performance_Monitoring.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">5</SPAN> Performance Monitoring</A></LI>
+<LI><A href="3_6_General_Administrative.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">6</SPAN> General Administrative Tips</A></LI>
+</UL>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00030000000000000000"></A>
+<A NAME="admin"></A>
+<BR>
+<SPAN CLASS="arabic">3</SPAN> Setup and Administration
+</H1>
+
+<P>
+Basically all administration is done through the web interface and is stored in the database.  For a reference to what each item in your admin menu does and details on how to use each interface, see appendix&nbsp;<A HREF="A_Admin_Tools.html#admin-tools">A</A>.
+
+<P>
+This section will take you through the setup you should do before taking your site live, explain why things work the way they do as much as possible, and help you learn where to find stuff.  For information on taking customization farther, and enabling Scoop's more interesting features, see section&nbsp;<A HREF="4_Scoop_Features.html#features">4</A>.
+
+<P>
+Scoop has a few quirks that make no sense until somebody explains them; as much as possible, those are covered here as well.
+
+<P>
+
+<HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html287"
+  HREF="3_1_Initial_Setup.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">1</SPAN> Initial Setup</A>
+<LI><A NAME="tex2html288"
+  HREF="3_2_Basic_Customization.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN> Basic Customization</A>
+<UL>
+<LI><A NAME="tex2html289"
+  HREF="3_2_Basic_Customization.html#SECTION00032100000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> Site Controls</A>
+<LI><A NAME="tex2html290"
+  HREF="3_2_Basic_Customization.html#SECTION00032200000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> Blocks</A>
+<LI><A NAME="tex2html291"
+  HREF="3_2_Basic_Customization.html#SECTION00032300000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN> Boxes</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html292"
+  HREF="3_3_Users_Stories.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN> Users and Stories</A>
+<UL>
+<LI><A NAME="tex2html293"
+  HREF="3_3_Users_Stories.html#SECTION00033100000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">1</SPAN> Accounts</A>
+<LI><A NAME="tex2html294"
+  HREF="3_3_Users_Stories.html#SECTION00033200000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN> Groups</A>
+<LI><A NAME="tex2html295"
+  HREF="3_3_Users_Stories.html#SECTION00033300000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN> Permissions</A>
+<LI><A NAME="tex2html296"
+  HREF="3_3_Users_Stories.html#SECTION00033400000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN> Publishing Stories</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html297"
+  HREF="3_4_Routine_Maintenance.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN> Routine Maintenance</A>
+<UL>
+<LI><A NAME="tex2html298"
+  HREF="3_4_Routine_Maintenance.html#SECTION00034100000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN> Scheduled Tasks</A>
+<LI><A NAME="tex2html299"
+  HREF="3_4_Routine_Maintenance.html#SECTION00034200000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> Required Admin Approvals</A>
+<LI><A NAME="tex2html300"
+  HREF="3_4_Routine_Maintenance.html#SECTION00034300000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN> Event notification and logging</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html301"
+  HREF="3_5_Performance_Monitoring.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">5</SPAN> Performance Monitoring</A>
+<LI><A NAME="tex2html302"
+  HREF="3_6_General_Administrative.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">6</SPAN> General Administrative Tips</A>
+<UL>
+<LI><A NAME="tex2html303"
+  HREF="3_6_General_Administrative.html#SECTION00036100000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">1</SPAN> Security</A>
+<LI><A NAME="tex2html304"
+  HREF="3_6_General_Administrative.html#SECTION00036200000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">2</SPAN> Access Control</A>
+</UL></UL>
+<!--End of Table of Child-Links-->
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

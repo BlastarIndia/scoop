@@ -1,0 +1,1251 @@
+\section{The Admin Tools Menu}
+\label{admin-tools}
+
+When logged in with permission to access administrator functions, a box in the sidebar will appear containing the following items.  The Superuser should have all of the tools available; other administrators, if any, will have only the ones they have permission for.
+
+Everything in Scoop can be managed through these tools.
+
+\subsection{New Story}
+\label{admin-tools-new-story}
+
+The New Story Admin Tool brings you to a blank story edit page, where you can create and post a new story to your Scoop site.  To use this Admin Tool, you must have the story\_admin perm (\ref{perm-story-admin}) active for your group.
+
+The story edit form is very similar to the story edit form used by all regular users in that there are fields for the story title, section, topic, intro copy, extended copy, and poll items.  The extra features are as follows:
+
+%\htmladdimg{newstory.jpg}
+%\includegraphics[width=5in]{newstory}
+
+%\begin{figure}[hp]
+%  \label{new-story-fig}
+%  \caption{New Story form differences}
+%  \begin{rawhtml}
+%   <IMG src="newstory.jpg" alt="screenshot">
+%  \end{rawhtml}
+%  \latex{\centering\includegraphics[width=5in]{newstory}}
+%\end{figure}
+
+\begin{description}
+\item[Set timestamp to now (checkbox)] Resets the story's timestamp to the current date and time.  This is most useful when editing an existing story, and you want to either pull a posted story to the top of its index page, or allow a story in the edit queue to return to the beginning of its time limit.
+\item[Story display mode (drop-down list)] Allows you to determine a story's current mode from ``Editing'' (in the edit queue, if it's active), ``Submitted'' (in the voting queue), ``Never Display'' (hidden from sight as if it had been voted down in the queue), ``Always Display'' (display on the front page, and section and everything pages), or ``Only Display Within Section'' (display on the section and everything pages, but not the front page).
+\item[Comment Status (drop-down list)] Allows you to enable or disable comment posting to this story.  ``Comments Enabled'' allows anybody with permission to post comments to post to this story, ``Comments Disabled'' disallows everybody from posting comments, doesn't show any existing comments, and removes the comment controls, and ``Read-Only'' disallows everybody from posting but displays any existing comments and leaves the comment controls.
+\end{description}
+
+The Preview button acts the same as in the normal story edit form; the Update and Save buttons have slightly different behaviours.  ``Save'' saves the story and takes you to the story display page, while ``Update'' saves the story but returns you to the story edit form.
+
+\subsection{Story List}
+\label{admin-tools-story-list}
+
+The Story List Admin Tool brings you to a list of all stories, whether posted, in the queue, dropped, or diary, in reverse chronological order.  To use this Admin Tool, you must have the story\_list perm (\ref{perm-story-list})active for your group.
+
+There are four columns, three with headings.
+
+The first column contains the story title, topic and section, and number of comments.  Clicking on the story title will take you to a story edit page as described in appendix~\ref{admin-tools-new-story}, while clicking on the ``Read'' link will simply display the story.
+
+The second column contains the date and time stamp of when the story was posted.
+
+The third column contains the author's name.
+
+The fourth column contains actions you can perform on the story.  ``Delete'' deletes the story; note that stories voted down in the voting queue are not deleted but marked ``hidden'', and still appear in the story list.  Deleting a story also deletes all its comments.  ``Archive'' moves the story and its comments to the archive database, if you have the archive database configured.  If the archive database is not configured, Scoop reports that the story has not been archived when you click on the ``Archive'' link.
+
+\subsection{Archived Story List}
+\label{admin-tools-archived-story-list}
+
+The Archived Story List Admin Tool brings you to a list of all archived stories.  It is set up as described in appendix~\ref{admin-tools-story-list}, except the ``Archive'' link is replaced with the ``Unarchive'' link, which moves the story and its comments back into the main database.  To use this Admin Tool, you must have the story\_list perm (\ref{perm-story-list}) active for your group.
+
+\subsection{New Poll}
+\label{admin-tools-new-poll}
+
+The New Poll Admin Tool brings you to a blank poll form, where you can enter a poll question and answers independant of a story.  To use this Admin Tool, you must have the edit\_polls perm (\ref{perm-edit-polls}) active for your group.
+
+The ``Poll Question'' and ``Poll Answers'' fields are where you input the question and possible answers, respectively.  The number of available poll answer fields is configurable using the variable poll\_num\_ans.
+
+The checkbox ``Make Main'' determines whether the poll will be made into a front/section page poll when saved, replacing the previous poll, or whether it will just be saved.  There is no preview function.
+
+If the variable allow\_ballot\_stuffing is turned on, a second column of textboxes appears beside the ``Poll Answers''.  The administrator can put the initial number of votes for each possible answer in those textboxes.  This also allows you to edit an existing poll and change the number of votes, or reset them all to zero.
+
+\subsection{Poll List}
+\label{admin-tools-poll-list}
+
+The Poll List Admin Tool brings you to a list of all polls, both attached to stories and unattached.  To use this Admin Tool, you must have the list\_polls perm (\ref{perm-list-polls}) active for your group.
+
+There are four columns, two with headings.
+
+The first column contains the poll's question and the number of votes.  Clicking on the question brings you to the poll edit form, as described in appendix~\ref{admin-tools-new-poll}; clicking on the ``Vote'' link brings you to a page where you can vote in the poll.
+
+The second column contains the date and time of the last change to the poll, not counting votes or comments being added.
+
+The third column contains actions that can be performed on the poll.  If the poll is attached to a story, the action is ``Unattach'', which dissociates the poll from the story and comments it was previously attached to, and the poll then becomes a ``floating'' poll.  If the poll is the current front/section page poll, the action is ``Remove from Main'', which removes the poll from the front and section pages and makes it a ``floating'' poll.  If the poll is currently a ``floating'' poll, the action is ``make main'', which designates that poll as the new current front/section page poll.  If there was already a main poll when this action was performed, the previous main poll is converted to a ``floating'' poll automatically.
+
+The fourth column contains links to delete the poll.
+
+\subsection{Site Controls}
+\label{admin-tools-vars}
+
+The Site Controls Admin Tool is where you change the multitude of Scoop configuration options.  This is where many features are turned on or off, or are configured.  To use this Admin Tool, you must have the edit\_vars perm (\ref{perm-edit-vars}) active for your group.
+
+There are two ways of editing variables; in the single variable screen, one variable at a time is fetched and displayed, edited, then saved.  In the category screen, all variables in a category are fetched and displayed, any number of them are edited, then saved all at once.
+
+The single variable screen can be reached by either clicking the ``Add New'' link at the top of the category list or by clicking a variable name from the category screen.  The category screen can be reached by clicking the name of the category in the category list from any of the screens in the Site Controls Admin Tool.
+
+\subsubsection{The Single Variable Screen}
+
+When you first load the Site Controls Admin Tool, or when you are editing a single variable within the Site Controls, this is the form you will see.  The single variable form allows you to edit any part of a variable, including its type and name.
+
+Just below the category list are two form buttons, Save and Get.  These buttons are duplicated at the bottom of the single variable form.  
+
+Directly underneath the top Save and Get buttons is a checkbox marked ``delete''.  If a variable has been selected from the ``Select Variable'' list, checking this box then saving the variable will delete it from the database.  It doesn't have to have been loaded first.
+
+The fields are:
+
+\begin{description}
+\item[Type] This determines what kind of sanity checking Scoop will do when saving the value.  
+\begin{itemize}
+\item {\bf Text} variables can be short strings of any characters.  They are used for things like the email address Scoop uses to send notices from, and the URL of the site.  
+\item {\bf Number} variables must be a numeric value.  They are used for things like maximum or minimum times, threshold values, and the number of fields available in a poll.  
+\item {\bf Boolean} values must be either 1 (on) or 0 (off).  They are used for things like turning spellchecking or advertising on or off.
+\item {\bf Textarea} values are long freeform fields.  They are used for any text variable that is too long for the Text type, such as the list of permissions.
+\end{itemize}
+\item[Select Variable] Contains a list of every variable contained in the Site Controls.  To load a variable, you would select its name here, then press the Get button above to fetch the variable's data.  When adding a new variable, this must be set to ``Add New Variable''; when saving an existing variable, this must match the variable name in the ``Name'' field, below.
+\item[Select Categories] Contains a list of all existing categories.  When a variable has been loaded, that variable's categories are hilighted.  When saving a variable, at least one of the categories should be selected (or a new category named in the ``New Category'' field below).  If a variable has no selected category, it will only be visible in a list of all variables, making it rather hard to find later.
+\item[Name] Contains the name of the variable, as it is used in the code.  Changing the name of an existing variable is discouraged, as many variables are called by name from the code.  New variables may be named anything as long as it doesn't conflict with any other variable names.
+\item[New Category] Used only when a new variable doesn't fit in any of the existing categories, or you want to add an existing variable to a newly created category.  A category only exists when a variable is filed in it; by filing a variable in a new category, that category is automatically created.  (Likewise, when the last variable in a category is removed, the category automatically disappears.)
+\item[Value] Contains the value of the variable.  It can be anything, subject to the limitations imposed by the ``Type'' field, above.  This is the field most often changed, and is also the only field that can be changed when in the category screen.
+\item[Description] Contains the documentation for that particular variable.  If you create a new variable, please describe it well, using the conventions described in section~\ref{vars-description-format} as much as possible.
+\end{description}
+
+\subsubsection{The Category Screen}
+
+When you click on one of the category links (except for the ``Add New'' link) in the category list, this is the screen you will see.  The category form allows you to edit the value only of any number of variables at the same time.
+
+At the top and bottom of the list of the category form are the Save and Get buttons.  In this case, the Get button acts as a reset button, undoing any changes you had made (as long as you didn't save them).  The save button saves the variables that you have changed, and leaves the other ones alone.
+
+The category form itself is a series of repeating rows, one for each variable.  The first column contains the name of the variable, in the form of a link to the single variable edit form described above.  The second column contains a control for the variable's value; the exact nature of the control will depend on the variable's type.  The third column contains the description of the variable.
+
+The variables are sorted first by type, then alphabetically by name.  Boolean variables are displayed first; their value is represented as a checkbox.  Number variables are displayed second; their value is displayed in a short text input.  Text variables are displayed third; their value is displayed in a default length text input.  Textarea variables are displayed last; their value is displayed in a (roughly) 60*20 textarea control.
+
+Any number of variables in the category form may be changed at once, and saved in one operation.  The categories also make variables much easier to find, especially when you can't remember the exact variable name.
+
+Variables cannot be created or deleted from the category screen.
+
+\subsubsection{Site Control Description Format}
+\label{vars-description-format}
+
+The purpose of the site control descriptions is to inform the admin as to what a particular variable is for, what possible values it will accept, what a good default value is, what effect it will have on his site, and warn about any pitfalls involved in changing the variable's value.
+
+The descriptions then all follow the same format, to ensure no important details are forgotten.  If you create a new variable, please use the same format for the description to help other Scoop admins use it effectively.
+
+The description should address the following points in order and as completely as possible.
+
+\begin{itemize}
+\item Which feature this variable affects
+\item What the possible values are, and their meanings if applicable
+\item What the default value is, and a rule for choosing a new value
+\item List any variables this variable affects directly, or which this variable depends on.
+\item What effect this variable has on the site
+\item Any warnings regarding this variable's use
+\end{itemize}
+
+\subsection{Blocks}
+\label{admin-tools-blocks}
+
+The Blocks Admin Tool is where you change the static content and layout of the site.  This includes most messages, such as the text shown when somebody signs up for a new account, and most layout, such as how a page, story, or comment is formatted.  To use this Admin Tool, you must have the edit\_blocks perm (\ref{perm-edit-blocks}) active for your group.
+
+There are two ways of editing blocks; in the single block screen, one block at a time is fetched and displayed, edited, then saved. In the category screen, all blocks in a category are fetched and displayed, any number of them are edited, then saved all at once.
+
+The single block screen can be reached by either clicking the ``Add New'' link at the top of the category list or by clicking a block name from the category screen. The category screen can be reached by clicking the name of the category in the category list from any of the screens in the Blocks Admin Tool. 
+
+Above the category list, a list of existing themes is shown.  Clicking on the theme name will cause the categories and select block fields to only display blocks from that theme.  The link to the theme overview allows you to select which themes to display, then arranges block names in a table so you can see at a glance which themes contain which blocks.  For more information on themes, see section~\ref{blocks-themes}.
+
+\subsubsection{The Single Block Screen}
+
+When you first load the Blocks Admin Tool, or when you are editing a single block, this is the form you will see. The single block form allows you to edit any part of a block, including its description and name.
+
+Just below the category list are two form buttons, Save and Get. These buttons are duplicated at the bottom of the single block form.
+
+Directly underneath the top Save and Get buttons is a checkbox marked ``Check HTML''. This will run your block through Scoop's internal HTML validator and report any errors (errors will cause the block to not be saved).  Below that is a checkbox marked ``delete''. If a block has been selected from the ``Select Block'' list, checking this box then saving the block will delete it from the database. It doesn't have to have been loaded first.
+
+\begin{description}
+\item[Select Block] Contains a list of every block contained in the database. To load a block, you would select its name here, then press the Get button above to fetch the block's data. When adding a new block (including copying an existing block to a different theme), this must be set to ``Add New Block''; when saving an existing block, this must match the block name in the ``Name'' field, below.
+\item[Select Categories] Contains a list of all existing categories. When a block has been loaded, that block's categories are hilighted. When saving a block, at least one of the categories should be selected (or a new category named in the ``New Category'' field below). If a block has no selected category, it will only be visible in a list of all blocks, making it rather hard to find later.
+\item[Name] Contains the name of the block, as it is used in the code. Changing the name of an existing block is discouraged, as many blocks are called by name from the code. New blocks may be named anything as long as it doesn't conflict with any other block names.
+\item[Theme] Contains the name of the theme the block is a part of.  If this field is left blank, whichever theme you are currently working in is used.  New themes can be created by saving a new block with a theme name that doesn't exist.  Likewise, when the last block in a theme is deleted, the theme automatically disappears.
+\item[New Category] Used only when a new block doesn't fit in any of the existing categories, or you want to add an existing block to a newly created category. A category only exists when a block is filed in it; by filing a block in a new category, that category is automatically created. Likewise, when the last block in a category is deleted, the category automatically disappears.
+\item[Value] Contains the value of the block. It can be anything, keeping in mind of course what its intended use is. This is the field most often changed, and is also the only field that can be changed when in the category screen.
+\item[Description] field contains the documentation for that particular variable. If you create a new variable, please describe it well, using the conventions described in section~\ref{blocks-description-format} as much as possible. 
+\end{description}
+
+\subsubsection{The Category Screen}
+
+ When you click on one of the category links (except for the ``Add New'' link) in the category list, this is the screen you will see. The category form allows you to edit the value only of any number of blocks at the same time.
+
+At the top and bottom of the list of the category form are the Save and Get buttons. In this case, the Get button acts as a reset button, undoing any changes you had made (as long as you didn't save them). The save button saves the blocks that you have changed, and leaves the other ones alone.
+
+The category form itself is a series of repeating rows, one for each block. The first column contains the name of the block, in the form of a link to the single block edit form described above, and the description of the block. The second column contains a textarea for the block's value, roughly 60*20 in size.
+
+Any number of blocks in the category form may be changed at once, and saved in one operation. The categories also make blocks much easier to find, especially when you can't remember the exact block name.
+
+Blocks cannot be created or deleted from the category screen.
+
+\subsubsection{Block Description Format}
+\label{blocks-description-format}
+
+The purpose of the block descriptions is to inform the admin as to what a particular block is for, where it is typically used, what special values, if any, it uses, and warnings about any pitfalls involved in changing the block's value.
+
+The descriptions then all follow the same format, to ensure no important details are forgotten. If you create a new block, please use the same format for the description to help other Scoop admins use it effectively.
+
+The description should address the following points in order and as completely as possible.
+
+\begin{itemize}
+\item Where in the site this block is used
+\item What in general should be contained in the block
+\item List any special keys that this block recognizes, and what they are replaced with
+\item Any warnings regarding changes to this block
+\end{itemize}
+
+\subsection{Topics}
+\label{admin-tools-topics}
+
+The Topics Admin Tool is where you edit the topics and associated topic images.  To use this Admin Tool, you must have the edit\_topics perm (\ref{perm-edit-topics}) active for your group.
+
+To turn topics on and off, see the variable use\_topics.
+
+On the Topics admin page, all topics are listed with their images to the right of the page, and the topic detail form for the currently selected topic is to the left.  Clicking on a topic will bring its details into the form to the left.
+
+\begin{description}
+\item[TID] The topic ID, a short alphanumeric string used to uniquely identify the topic.
+\item[Dimensions] Used when displaying the image in a story.  Enter the pixel width in the first box and the pixel height in the second.
+\item[Alt Text] Used both as the alt attribute when displaying the topic icon and also as the descriptive name in the select box when a new story is being posted.
+\item[Image Name] The filename of the topic image, with no path information.  Scoop assumes that all topic images are in the subdirectory named in the variable topics of the directory named in the variable imagedir and will prepend that path to whatever image name you supply.
+\end{description}
+
+If you are editing an existing topic, an additional option is shown, used if you are deleting the topic.  Another topic should be selected, and all stories using the deleted topic will be reassigned to the topic selected here.
+
+The ``Write'' button either saves changes or creates a new topic, depending on whether the topic ID exists already or not.  The ``Delete'' button deletes the topic and reassigns stories as required.
+
+
+\subsection{Sections}
+\label{admin-tools-sections}
+
+The Sections Admin Tool is where you edit sections and their associated subsections and section permissions.  To use this Admin Tool, you must have the edit\_sections perm (\ref{perm-edit-sections}) active for your group.
+
+\subsubsection{Sections}
+
+The top third of the page is taken up with a list of sections and a section detail form.  When you click on a section from the list of sections on the right, its details are filled in in the form.
+
+\begin{description}
+\item[Section] is the section ID, a short alphanumeric string used to uniquely identify the section.  This shouldn't have any spaces, as it's used in the URL.
+\item[Display Title] is the full name of the section, used both as a page header on the section index page and in the drop-down box on the story submission form.
+\item[Description] can be used for a section-specific slogan if you like, or can just be a reminder to yourself what the section was for.  If you use a section-specific slogan, you'll need to alter the box section\_title to display it.
+\item[Section Icon] is the filename of the section image.  Scoop prepends the directory named in the variable imagedir to this filename.
+\end{description}
+
+If you are editing an existing section, an additional few options are shown, used if you are deleting the section.  The ``Delete this Section?'' checkbox, if checked, will cause the section to be deleted when you save it.  If you also select the ``Recursively'' checkbox, all subsections (see \ref{admin-tools-subsections}) will also be deleted.  When deleting a section, you must choose a section to hold all the stories in the deleted section from the drop-down box just below.
+
+The ``Update Section'' button down at the bottom updates everything on the page.
+
+\subsubsection{Section Permissions}
+\label{admin-tools-section-permissions}
+
+The middle third of the page is the section permission table.
+
+The ``Make Default Section Permissions'' checkbox allows you to set the current section's permission scheme as the default for newly created sections, so you don't have to change them all by hand.
+
+The table itself has one row for each user group, and one column for each type of section permission.
+
+``Post Stories'' has five options: ``Allow'', which allows members of the group to post stories to the queue in this section, the default behaviour; ``Hide'', which doesn't admit to the group that the section exists when they are posting a story to the queue; ``Deny'', which admits the section exists when they are posting a story, but tells the group they don't have permission to post to that section; ``Auto-post Front Page'', which allows a member of the group to skip the voting queue entirely and post any story listed in that section to the front page; and ``Auto-post to Section'', which allows a member of the group to skip the voting queue entirely and post any story listed in that section to the section page, but not the front page.
+
+The remaining three columns have three options each: Allow, Hide, and Deny.  ``Allow'' is the default behaviour, and does not restrict the user's activity any more than the group permissions do.  ``Hide'' causes Scoop to pretend that the item doesn't exist at all, while ``Deny'' causes Scoop to deny permission while admitting that the item exists.
+
+\subsubsection{Subsections}
+\label{admin-tools-subsections}
+
+Subsections can allow a simple heirarchical structure for the sections on your site, if one `level' of sections isn't adequate. Subsections can also do much stranger things, such as allow you to file one story in several sections.
+
+Below the section permissions table, a list of all parent sections is displayed. If there are no parent sections, ``Top Level'' is shown; if there are, the ``path'' to the current section is shown, with the names of the parent sections links to edit that section. Below that, a table containing any child sections is shown if there are any, again with the names of the child sections as links to edit that section, and a drop-down box containing any section names that are not already marked as a parent or child section.
+
+You cannot directly add a parent section. Instead, you must go to the parent section and add a child; the parent section is automatically updated from this information.
+
+Sections can have multiple child sections, just as directories can have multiple subdirectories. For a simple heirarchical structure, this is all you will need. Sections can also have multiple parent sections, which tends to be rather confusing at first.
+
+The simplest case is a heirarchical structure, where each section has one parent and however many children as seems appropriate. Each story is displayed in its particular section and on the front page as appropriate. The only real difference between this case and the normal `flat' structure in which subsections aren't used at all is that Scoop can generate links to the parent sections when in a child section's index page.
+
+Child sections have two properties that make more complicated structures possible. As mentioned above, a child section can have two parents (or, two sections can claim the same section as their child). The ``inheritable'' property found in the table of child sections when editing a parent section allows stories filed in the child section to also appear in the parent section's index listing. (This is the reverse of normal inheritance, in which the child gets whatever the parent has.) Combined with a child section having two or more parents, a single story can be effectively filed in multiple sections.
+
+The ``invisible'' property makes the name of the child section disappear from the generated heirarchy when viewing its children's index pages. If you write a dynamic menu/submenu for your site's sections, you can test this property and not display invisible subsections in the menu structure. Invisible subsections are primarily used when they are also inheritable to more than one parent section and you don't want them to show in a menu structure.
+
+\subsection{Special Pages}
+\label{admin-tools-special-pages}
+
+The Special Pages Admin Tool is where you can edit and manage the ``special'', or static pages, such as the FAQ and other pages that don't change often or need comments.  To use this Admin Tool, you must have the edit\_special perm (\ref{perm-edit-special}) active for your group.
+
+To edit a special page, first select the desired page from the drop-down box then click the ``Get Page'' button.  The fields below will be filled in with the appropriate data.
+
+\begin{description}
+\item[Delete this page] This checkbox, if checked, will cause the page to be deleted when saved. It is only displayed when a page is loaded into the form.
+\item[Page ID] is a short alphanumeric string used to uniquely identify the special page.  This shouldn't have any spaces in it, as it's used primarily in the URL.
+\item[Title] is the full title of the page, displayed in the page header.
+\item[Description] is not used anywhere else, and is just to show the admin(s) what the page is for, in a few words.
+\item[Content] is the special page itself.  Any HTML markup may be used here, but full HTML header and footer information isn't required, as the contents of this textarea are inserted into the \latexhtml{$\vert$}{|}CONTENT\latexhtml{$\vert$}{|} special block in a page template.
+\end{description}
+
+If the upload\_content perm (\ref{perm-upload-content}) is set, an upload field appears below the content textarea.  If a file name is present in that field, the contents of that file are inserted into the content textarea when the ``Save Page'' button is pressed.
+
+\subsection{Boxes}
+\label{admin-tools-boxes}
+
+The Boxes Admin Tool is where you manage boxes. To use this admin tool, you must have the edit\_boxes perm (\ref{perm-edit-boxes}) active for your group.
+
+{\bf WARNING:} any user with permission to edit boxes can run arbitrary code on the server, with Apache's user and group permissions. Be careful when giving this permission to other people.
+
+Boxes are bits of perl code that have full access to all of Scoop's data and subroutines. They range in complexity from the {\bf user\_box} which checks a few permissions to determine which items to display in the user's customized menu, to a set of boxes which handle the payment processing for advertisements and subscriptions and activate those items once they are paid.
+
+Some features exist only in boxes, and likewise, entirely new features can be added using boxes without touching the underlying code. Boxes can also call external programs on the server, as can any perl script; the {\bf fortune\_box} is a simple example of this, and calls the unix `fortune' program to fetch a random quote, then formats it for display. For more information on adding features to Scoop, see section~\ref{hacking}.
+
+To edit a box, first select the desired box from the drop-down box labelled ``Box:'' then click the ``Get Box'' button next to it. The fields below will be filled in with the appropriate information.
+
+To create a new box, leave the drop-down box set to ``Select Box'' and fill in the fields below as appropriate.
+
+To save a new box or changes to an existing box, click the ``Save Box'' button at the bottom of the form.
+
+The fields are:
+
+\begin{description}
+\item[Box] is the name of the box being edited. When creating a new box, this should be ``Select Box'', and when saving any existing box, it must match the name in the ``Box ID'' field below.
+\item[Delete this box] if checked, will cause Scoop to delete the box chosen in the above drop-down box. It is only displayed if a box is loaded into the form.
+\item[Box ID] is the name of the box being edited. When saving any existing box, it must match the name in the ``Box'' field above. When creating a new box, this field must contain a value not already used for a box name.
+\item[Title] is the display title of the box, and is used in the special key `title' in the box template, unless the title is changed in the box code.
+\item[Template] is the HTML used to contain the box's output. This is a block, and can be edited in the Blocks Admin Tool (\ref{admin-tools-blocks}). The block must contain the special key `content' and may contain the special key `title'. When a box's information is loaded into the form, an edit link appears next to this field which brings you to the Blocks Admin Tool with the box template already loaded for editing.
+\item[Allow users to toggle box off] determines whether or not this box is listed in the user's display preferences. Some boxes are integral parts of the interface and shouldn't be optional, while others, like RDF feeds, are extras and make sense as optional boxes.
+\item[Description] is, as you would expect, a description of the box and what it does.
+\item[Content] is the perl code itself. Boxes can be considered standalone scripts instead of part of a mod\_perl program, as they do not need to be in a subroutine or otherwise structurally different than what you'd find in an actual standalone perl script, except they have the advantage of having full access to all of Scoop's data and functionality, through the \$S object. (For more information on the \$S object and using it, see section~\ref{hacking}, Extending Scoop's Abilities.)
+\end{description}
+
+The code in a given box can return either one or two values; the single value, or first of a pair, is placed in the special key `content' in the box template. The second value, if present, is placed in the special key `title' in the box template. If the second value is not present, the contents of the ``Title'' field above is used instead.
+
+You should return the values as an anonymous hash.  That is,
+
+\begin{verbatim}
+return \{ content => \$content, title => '\$title' \}
+\end{verbatim}
+
+
+\subsection{Groups}
+\label{admin-tools-groups}
+
+The Groups Admin Tool is where you can manage the user groups and their permissions.  To use this admin tool, you must have the edit\_groups perm (\ref{perm-edit-groups}) active for your group.
+
+{\bf WARNING:} any user with permission to edit groups can give their group (and hence themselves) or any other group all other permissions.  Be careful when giving this permission to other people.
+
+To edit a group, first select the desired group fro mthe drop-down box then click the ``Get Group'' button.  The fields below will be filled in with the appropriate data.
+
+\begin{description}
+\item[Group ID] is the name of the group.  Since only site administrators should see the group names, there is no display name associated with a group.
+\item[Default New User Group] checkbox allows you to set which group new accounts are automatically placed into.  By default, this is the group Users.  Only one group can have this checkbox set; if you set it for a different group, it is unset on the group it marked before.
+\item[Group Description] is a description to remind the admin what the purpose of the group is, and what type of people should be in it.
+\item[Group Permissions] are a series of checkboxes, one for each individual permission available on the system.  All but one determine whether or not a user can perform an action, and the majority are for administrative actions.
+\end{description}
+
+Permissions can be added or removed using the variable perms.  Added permissions default to ``off'' for all groups; removing a permission from the variable does not remove it from a group; it must be deactivated for each group before removing it from the variable.
+
+\subsubsection{ad\_admin}
+\label{perm-ad-admin}
+
+Determines whether or not a user can manage ads using the Advertising Admin Tool (\ref{admin-tools-advertising}).  This includes approving or rejecting submitted ads, changing ad properties, and creating new ad templates and example ads.
+
+This should be reserved for administrators only.
+
+\subsubsection{ad\_opt\_out}
+\label{perm-ad-opt-out}
+
+Determines whether or not a user can hide ads shown through the Advertising Admin Tool (\ref{admin-tools-advertising}). Users with this perm have an extra user preference on their interface prefs page, if the ad system is in use.
+
+This should be reserved for registered users only.
+
+\subsubsection{admin\_search}
+\label{perm-admin-search}
+
+Determines whether or not a user can use the admin tools search engine. This searches the content and description of blocks, boxes, special pages, and vars, subject to the edit permission for each of those (i.e., somebody who doesn't not have permission to edit boxes will not be able to search boxes).
+
+This should be reserved for administrators only.
+
+\subsubsection{allow\_subscription}
+\label{perm-allow-subscription}
+
+Determines whether or not a user is permitted to buy a subscription (\ref{features-subscriptions}). Only regular users should have this permission, as buying a subscription changes the user group of the subscriber. Superusers and site editors should never have this permission.
+
+User groups created for misbehaving users should also not have this permission because they can regain the privileges they lost simply by buying the minimum subscription.
+
+This should be reserved for registered users only.
+
+\subsubsection{attach\_poll}
+\label{perm-attach-poll}
+
+Determines whether or not a user can create a poll when creating a story.  This permission depends on the perm story\_post (\ref{perm-story-post}).
+
+This may be given to any user group.
+
+\subsubsection{bypass\_safe\_mode}
+\label{perm-bypass-safe-mode}
+
+Determines whether or not a user can use the site normally when the {\bf safe\_mode} Site Control is on. Users without this permission will get an error message.
+
+\subsubsection{comment\_delete}
+\label{perm-comment-delete}
+
+Determines whether or not a user can delete comments posted by other users.  Deleting is the only comment editing available in Scoop.
+
+This should be reserved for administrators only.
+
+\subsubsection{comment\_post}
+\label{perm-comment-post}
+
+Determines whether or not a user can post comments, subject to section permissions (\ref{admin-tools-section-permissions}).
+
+This is generally given to all groups, or to all groups except Anonymous.
+
+\subsubsection{comment\_rate}
+\label{perm-comment-rate}
+
+Determines whether or not a user can assign a rating to comments posted by other users.
+
+This is generally given to all registered accounts, and not Anonymous users.  A restricted group without this permission can be created for people who abuse their rating privileges by consistently rating spam high or one person's comments low.
+
+\subsubsection{comment\_remove}
+\label{perm-comment-remove}
+
+Determines whether or not a user can `remove' comments (replace comment content and subject with text from the blocks removed\_comment\_body and removed\_comment\_subject, respectively).
+
+This should be reserved for administrators only.
+
+\subsubsection{comment\_toggle}
+\label{perm-comment-toggle}
+
+Determines whether or not a user can switch a comment between `topical' and `editorial' modes. Generally, editorial mode comments are not shown once a story is posted, unless the user has specifically chosen to see them.
+
+This should be reserved for administrators only.
+
+\subsubsection{cron\_admin}
+\label{perm-cron-admin}
+
+Determines whether or not a user can manage scheduled tasks using the Cron Admin Tool (\ref{admin-tools-cron}).  This includes creating, activing, deactivating, and changing the frequency of the scheduled tasks.
+
+This should be reserved for administrators only.
+
+\subsubsection{edit\_blocks}
+\label{perm-edit-blocks}
+
+Determines whether or not a user can edit Scoop's blocks, using the Blocks Admin Tool (\ref{admin-tools-blocks}).
+
+This should be reserved for administrators only.
+
+\subsubsection{edit\_boxes}
+\label{perm-edit-boxes}
+
+Determines whether or not a user can edit Scoop's boxes, using the Boxes Admin Tool (\ref{admin-tools-boxes}).  Users who can edit boxes can run arbitrary code on the Scoop server, since boxes can run any Scoop function as well as run system calls.
+
+This should be reserved for trusted administrators only.
+
+\subsubsection{edit\_calendars}
+\label{perm-edit-calendars}
+
+Determines whether or not a user can edit calendars other than their own, including site-wide calendars, using the Calendars Admin Tool (\ref{admin-tools-calendars}).
+
+This should be reserved for administrators only.
+
+%\subsubsection{edit\_event\_properties}
+%\label{perm-edit-event-properties}
+
+%This determines whether or not a user can edit the fields which are used on the event submission form, using 
+% FIXME ??? this isn't used in the code or a box. Must have been added then discarded during development.
+
+\subsubsection{edit\_events}
+\label{perm-edit-events}
+
+Determines whether or not a user can edit events other than their own. Note that a calendar owner can edit events submitted by another user to their calendar because the event `belongs to' the calendar as well.
+
+This should be reserved for administrators only.
+
+\subsubsection{edit\_groups}
+\label{perm-edit-groups}
+
+Determines whether or not a user can edit the user groups and their permissions using the Groups Admin Tool (\ref{admin-tools-groups}).  Users who can edit groups can give themselves or others all permissions; read any warnings on other permissions to understand what the implications could be.
+
+This should be reserved for trusted administrators only.
+
+\subsubsection{edit\_hooks}
+\label{perm-edit-hooks}
+
+Determines whether or not a user can edit Scoop's event-triggered functions, using the Hooks Admin Tool (\ref{admin-tools-hooks}).  This includes assigning an arbitrary Scoop function or box to run at any of the included events.
+
+This should be reserved for administrators only.
+
+\subsubsection{edit\_macros}
+\label{perm-edit-macros}
+
+Determines whether or not a user can manage Scoop's Macros, using the Macros Admin Tool (\ref{admin-tools-macros}). This includes giving all users access to specific Scoop boxes.
+
+This should be reserved for administrators only.
+
+\subsubsection{edit\_my\_stories}
+\label{perm-edit-my-stories}
+
+Determines whether or not a user can edit their own stories even when out of the edit queue. The perm edit\_own\_story (\ref{perm-edit-own-story}) is for the edit queue. This permission is moot for users without story\_post (\ref{perm-story-post}).
+
+This should be reserved for registered users.
+
+\subsubsection{edit\_ops}
+\label{perm-edit-ops}
+
+Determines whether or not a user can manage Scoop's Ops, using the Ops Admin Tool (\ref{admin-tools-ops}).  This includes assigning an arbitrary Scoop function or box to a URL path.
+
+This should be reserved for administrators only.
+
+\subsubsection{edit\_own\_calendar}
+\label{perm-edit-own-calendar}
+
+Determines whether or not a user can create and edit their own calendar. Users can have only one calendar.
+
+This should be reserved for registered users.
+
+\subsubsection{edit\_own\_story}
+\label{perm-edit-own-story}
+
+Determines whether or not a user can submit a story into the editing queue.  This permission depends on the perms moderate (\ref{perm-moderate}) and story\_post (\ref{perm-story-post}). To allow users to edit their stories outside of the edit queue, see edit\_my\_stories (\ref{perm-edit-my-stories}).
+
+This should be reserved for registered users.
+
+\subsubsection{edit\_polls}
+\label{perm-edit-polls}
+
+Determines whether or not a user can edit attached and unattached polls, using the New Poll Admin Tool and the edit links on each poll display.  If the variable allow\_ballot\_stuffing is set, the user can also change the number of votes for each answer in the poll.
+
+This should be reserved for administrators only.
+
+\subsubsection{edit\_prefs}
+\label{edit-prefs}
+
+Determines whether or not a user can manage user preferences using the User Preferences Admin Tool (\ref{admin-tools-user-preferences}).
+
+This should be reserved for administrators only.
+
+\subsubsection{edit\_sections}
+\label{perm-edit-sections}
+
+Determines whether or not a user can edit the site's section structure and permissions.  This includes creating subsection relationships and allowing or denying groups permission to read or post to sections.
+
+This should be reserved for administrators only.
+
+\subsubsection{edit\_special}
+\label{perm-edit-special}
+
+Determines whether or not a user can edit the site's special pages, using the Special Pages Admin Tools (\ref{admin-tools-special-pages}).
+
+This should be reserved for administrators only.
+
+\subsubsection{edit\_topics}
+\label{perm-edit-topics}
+
+Determines whether or not a user can edit the topics and reassign topic icons.  To add new topic icons, the user must have access to a server account that allows FTP, or Scoop's file uploads must be turned on, the admin upload area set to the topics subdirectory, and the user must have the upload\_admin perm (\ref{perm-upload-admin}).
+
+This should be reserved for administrators only.
+
+\subsubsection{edit\_user}
+\label{perm-edit-user}
+
+Determines whether or not a user can edit other users' preferences, user info, and user group.  Users with this permission can change their group or other users' groups to the Superuser, giving them full permissions to the site; read any warnings on other permissions to understand what the implications could be.
+
+This should be reserved for trusted administrators only.
+
+\subsubsection{edit\_vars}
+\label{perm-edit-vars}
+
+Determines whether or not a user can edit site variables, using the Site Controls Admin Tool (\ref{admin-tools-vars}).
+
+This should be reserved for administrators only.
+
+\subsubsection{editorial\_comments}
+\label{perm-editorial-comments}
+
+Determines whether or not a user can post editorial comments (suggestions for improvements) to a story in the queue.  This permission depends on the permissions moderate (\ref{perm-moderate}) and comment\_post (\ref{perm-comment-post}).
+
+This should be reserved for registered users.
+
+\subsubsection{hotlist}
+\label{perm-hotlist}
+
+Determines whether or not a user can hotlist (\ref{features-hotlist}) a favourite story.
+
+This should be reserved for registered users.  It makes no sense for anonymous users.
+
+\subsubsection{list\_polls}
+\label{perm-list-polls}
+
+Determines whether or not a user can use the Poll List Admin Tool (\ref{admin-tools-poll-list}) or see attached polls even if the stories they're attached to are hidden.
+
+This should be reserved for administrators.
+
+\subsubsection{make\_new\_accounts}
+\label{perm-make-new-accounts}
+
+Determines whether or not a user can create new accounts while still logged in. This is mainly useful when setting up a new site or creating accounts on behalf of other people.
+
+This should be reserved for the site administrator only.
+
+\subsubsection{moderate}
+\label{perm-moderate}
+
+Determines whether or not a user can view and vote on stories in the voting or editing queues.
+
+This should be reserved for registered users.
+
+\subsubsection{poll\_post\_comments}
+\label{perm-poll-post-comments}
+
+Determines whether or not a user can post comments to a non-attached poll.
+
+This is generally given to all groups, or all groups except Anonymous.
+
+\subsubsection{poll\_read\_comments}
+\label{perm-poll-read-comments}
+
+Determines whether or not a user can read comments associated with a non-attached poll.
+
+This may be given to all groups.
+
+\subsubsection{poll\_vote}
+\label{perm-poll-vote}
+
+Determines whether or not a user can vote in any poll.  Each registered user can vote only once, and if the Anonymous group is permitted to vote, each IP address of an anonymous visitor can vote only once.
+
+This is generally given to all groups, or all groups except Anonymous.
+
+\subsubsection{rdf\_admin}
+\label{perm-rdf-admin}
+
+Determines whether or not a user can administer external RDF feeds using the RDF Admin Tool (\ref{admin-tools-rdf}), including approving or rejecting user submissions, and adding, activating, and deactivating feeds.
+
+This should be reserved for administrators. 
+
+\subsubsection{show\_hidden\_sections}
+\label{perm-show-hidden-sections}
+
+Determines whether or not a user can see sections that would otherwise be hidden using the section permissions.
+
+This should be reserved for administrators.
+
+\subsubsection{story\_admin}
+\label{perm-story-admin}
+
+Determines whether or not a user can administer stories, using the New Story Admin Tool (\ref{admin-tools-new-story}) and the edit links on every story.  This includes changing display and comment status, editing all text, and editing the poll.
+
+This should be reserved for administrators.
+
+\subsubsection{story\_commentstatus\_select}
+\label{perm-story-commentstatus-select}
+
+Determines whether or not a user has the ability to enable or disable comment posting on a given story when posting that story through the normal story submission form. If all stories should have comments either enabled or disabled, the site control {\bf default\_commentstatus} should be used instead.
+
+Regardless of the setting of this perm, users with the {\bf story\_admin} perm (\ref{perm-story-admin}) have the ability to change a story's comment status when editing a story.
+
+\subsubsection{story\_displaystatus\_select}
+\label{perm-story-displaystatus-select}
+
+Determines whether or not a user has the ability to select the display status on a given story when posting that story through the normal story submission form. If all stories should go through the voting queue, this perm should not be given out. If certain groups should be able to by-pass the voting queue in specific sections, section permissions (\ref{sections-perms}, \ref{admin-tools-sections}) should be used instead.
+
+Regardless of the setting of this perm, users with the {\bf story\_admin} perm (\ref{perm-story-admin}) have the ability to change a story's display status when editing a story.
+
+\subsubsection{story\_list}
+\label{perm-story-list}
+
+Determines whether or not a user can list all stories, including those hidden from view, using the Story List Admin Tool (\ref{admin-tools-story-list}).  This includes editing the story if the user also has the story\_admin permission (\ref{perm-story-admin}), and deleting the story.
+
+This should be reserved for administrators.
+
+\subsubsection{story\_post}
+\label{perm-story-post}
+
+Determines whether or not a user can post a story or diary, subject to section permissions (\ref{admin-tools-section-permissions}).
+
+This is usually reserved for registered users, but some sites may choose to allow the Anonymous group to post stories as well.
+
+\subsubsection{story\_time\_update}
+\label{perm-story-time-update}
+
+Determines whether or not the user can use the `reset timestamp to now' checkbox on the story edit form.
+
+This should be reserved for administrators.
+
+\subsubsection{suballow\_group\_change}
+\label{perm-suballow-group-change}
+
+Determines whether or not Scoop can automatically change a user's group when a subscription is paid for. If a group has the perm {\bf allow\_subscription} (\ref{perm-allow-subscription}) but not this perm, the administrator will be emailed to manually change the subscriber's group when he pays for his subscription.
+
+This should never be given to Superusers, just to prevent accidents while testing your site's subscription setup. This is otherwise usually reserved for registered users.
+
+\subsubsection{submit\_ad}
+\label{perm-submit-ad}
+
+Determines whether or not a user can submit an ad for administrator review.  This depends on the advertising functionality being active.
+
+This is usually reserved for registered users.
+
+\subsubsection{submit\_event}
+\label{perm-submit-event}
+
+Determines whether or not a user can submit events to calendars which allow event submission.
+
+This is generally given to all groups, or all groups except Anonymous.
+
+\subsubsection{submit\_rdf}
+\label{perm-submit-rdf}
+
+Determines whether or not a user can submit an external RDF feed for administrator review.  This depends on the RDF functionality being active.
+
+This is usually reserved for registered users.
+
+\subsubsection{subscription\_admin}
+\label{perm-subscription-admin}
+
+Determines whether or not a user can create and manage subscription types through the Subscriptions Admin Tool (\ref{admin-tools-subscriptions}).
+
+This should be reserved for administrators only.
+
+\subsubsection{super\_mojo}
+\label{perm-super-mojo}
+
+Overrides mojo calculations for this user, and always gives the user the privileges and responsibilities that come with being a trusted user (\ref{features-anti-spam}).
+
+This should be reserved for administrators.
+
+\subsubsection{update\_own\_event}
+\label{perm-update-own-event}
+
+Determines whether or not a user can edit their own events after submission.
+
+This should be reserved for registered users.
+
+\subsubsection{upload\_admin}
+\label{perm-upload-admin}
+
+Determines whether or not a user may upload and manage files in the shared ``admin'' area, including renaming and deleting files, if the variable allow\_uploads is turned on.
+
+This should be reserved for administrators.
+
+\subsubsection{upload\_content}
+\label{perm-upload-content}
+
+Determines whether or not a user may upload a text file into the extended copy of a story submission (depends on the perm story\_post (\ref{perm-story-post})) or into the content field of a special page (depends on the perm edit\_special (\ref{perm-edit-special})).
+
+This may be given to any user group.
+
+\subsubsection{upload\_user}
+\label{perm-upload-user}
+
+Determines whether or not a user may upload and manage files in his personal upload space, including renaming and deleting files, if the variable allow\_uploads is turned on.  This is subject to the variable upload\_user\_quota.
+
+This should be reserved for registered users.
+
+\subsubsection{use\_spellcheck}
+\label{perm-use-spellcheck}
+
+Determines whether or not a user has access to Scoop's spellchecking functionality.  Requires the variable spellcheck\_enabled and the Aspell perl module (see section~\ref{install-recommended-programs}).
+
+This may be given to any user group.
+
+\subsubsection{view\_comment\_ip}
+\label{perm-view-comment-ip}
+
+Determines whether or not a user can see the IP address a comment was posted from.
+
+This may be given to any user group.
+
+\subsubsection{view\_log}
+\label{perm-view-log}
+
+Determines whether or not a user can see the logs generated by Scoop's internal logging facility, which logs actions performed by users and administrators, using the Log Admin Tool (\ref{admin-tools-log}).
+
+This should be reserved for administrators.
+
+\subsubsection{view\_polls}
+\label{perm-view-polls}
+
+Determines whether or not a user can see the voting results of a poll.
+
+This may be given to any user group.
+
+
+
+\subsection{RDF Feeds}
+\label{admin-tools-rdf}
+
+The RDF Feeds Admin Tool is where you manage RDF feeds fetched from other sites, and is composed of two parts: a list of feeds Scoop knows about, and the actions that can be performed on an RDF feed.
+
+The list of feeds is a table with five columns.
+
+The first column is a checkbox, allowing you to select the feeds you want to have an action apply to.  As many feeds as you like can be selected.
+
+The second column is the title of the site providing the RDF feeds, as taken from the .rdf file.  The link leads directly to the site URL, as provided in the .rdf file.
+
+The third column is the URL used to fetch the RDF feed.  The link leads to a preview of the feed as Scoop will display it in the sidebar.
+
+The fourth column is the Scoop nickname of the person who submitted the RDF feed for approval.  If the column says ``none'', the feed was added directly from the admin interface.
+
+The fifth column indicates whether or not the feed is enabled (fetched regularly and visible in the list of RDF feeds in a user's display preferences) or disabled (never fetched and not shown in a user's display preferences).
+
+Below the list of feeds is a link that displays all of the feeds together, as they would appear if a user selected every single feed in his display prefs.  
+
+The actions start with a text box labelled ``Add Feed:'' which allows you to enter the URL of a site's RDF file.
+
+Below that is a list of possible actions.  One of those must be selected for anything to happen when you click the ``Save Feeds'' button; if nothing is selected, nothing will happen.  The action selected will apply to all feeds with checked boxes in the list of feeds, unless it is ``Add'', in which case it will add the RDF feed present in the ``Add Feed'' text box just above.
+
+The actions are:
+
+\begin{description}
+\item[Add] Adds the feed present at the URL given in the ``Add Feed'' text box to the list of feeds, fetches the feed so it has the site title and URL, and enables it.  Feeds added using this function do not have a submitter listed.
+\item[Delete] Removes the selected feeds in the list of feeds from the database.
+\item[Re-fetch] Forces Scoop to fetch the selected feeds immediately, whether they're due to be fetched or not.
+\item[Clear Listing] Clears the headlines from the selected feeds, but does not delete the feed itself.  If the feeds are enabled, the headlines will be re-inserted on the next scheduled update.
+\item[Enable/Disable] Toggles whether or not the feed is fetched and displayed in the user's display preferences.
+\item[Approve] Approves RDF feeds submitted by site users.  Newly submitted and not yet approved feeds are highlighted with a different background colour in the list of feeds.  A feed that has not been approved yet is not available to users, regardless of the ``Enabled'' setting.
+\end{description}
+
+\subsection{Cron}
+\label{admin-tools-cron}
+
+The Cron Admin Tool is where you manage Scoop's scheduled tasks, those tasks which are not done in response to a user action, such as dealing with RDF feeds or cleaning up the sessions table in the database.  The Cron Admin Tool is composed of two parts: a list of cron items, and the actions that can be performed on a cron item. This provides similar but different functionality to the Hooks Admin Tool (\ref{admin-tools-hooks}), the difference being that cron items are run on a timed basis, while hooks are run based on the activities of users and administrators.
+
+To run Scoop's crons, you must have your system scheduler run the scoop/scripts/run\_cron.pl with the URL or URLs of your Scoop site's cron op as an argument.  If your Scoop site is on a virtual host, i.e., http://www.mysite.com/ displays Scoop's front page, then the URL you give the script is http://www.mysite.com/cron.  If your Scoop site is in a subdirectory, i.e., http://www.mysite.com/ is a normal website and http://www.mysite.com/scoop/ displays Scoop's front page, then the URL you give the script is http://www.mysite.com/scoop/cron.  Your system scheduler must trigger Scoop's cron system as frequently as the most frequent cron item, as Scoop cannot run its scheduled items unless it is told to, which it is when the cron op is requested.
+
+The list of cron items is a table with seven columns and one row for each item.
+
+The first column is a checkbox, allowing you to select the feeds you want to have an action apply to.  As many crons as you like can be selected.
+
+The second column is the name of the cron.  The names are usually self-explanatory, but the default crons are described below.
+
+The third column indicates whether or not the cron is a box.  Some cron items have code built into Scoop, and some run a box.  (See section~\ref{hacking}.)
+
+The fourth column is the name of the function or box the cron runs.  If the cron runs a box, the function's code can be found in the Boxes Admin Tool (\ref{admin-tools-boxes}) as a box of the same name. If the cron is not a box, the function's code is in the scoop/lib directory; you will need to search for the function name, and if you change it you will need to stop and start apache for the changes to take effect.
+
+The fifth column is the interval at which the cron should run.  The format is \latexhtml{$<$}{<}number\latexhtml{$>$}{>}\latexhtml{$<$}{<}unit\latexhtml{$>$}{>}; for example, to run a cron once a day you would enter 1d, and to run it every 5 minutes, you would enter 5m.  The possible units are s (second), m (minute), h (hour), d (day), w (week), M (month), Y (year).
+
+The sixth column is the time and date of the last time the cron item was run.
+
+The seventh column indicates whether or not the cron is enabled, or run on schedule.
+
+The last row in the table is made up of text boxes or check boxes for all of the information needed to add a new cron item.
+
+Below the table are the possible actions.  One of these must be selected when you click the ``Save crons'' button, or nothing will happen.  The action selected will apply to all cron items with checked boxes in the list of cron items, unless it is ``Add Cron'', in which case it will create a new row with the contents of the text boxes in the last row of the table.
+
+Below the actions is a link that will run whatever cron items are due to run, independantly of the trigger your system scheduler provides but using the same mechanism.
+
+The actions are:
+\begin{description}
+\item[Force Run] Runs the selected cron items whether they are due to run or not.  This can be useful if a cron item does not seem to be doing its job; you can see any error messages it produces that may help you sort out the problem.
+\item[Toggle Enabled] Turns the selected cron items on or off.  Some cron items are not relevant to some sites, and should be turned off.
+\item[Change Run Every] Changes the run interval of the selected cron items to whatever is in the text box in the fifth column.  See above for the interval format.
+\item[Clear Last Run] Clears the date and time of the last run for the selected cron items.  If the cron item is enabled, the next time Scoop's cron system is triggered, that item will be guaranteed to run.
+\item[Add Cron] Creates a new cron item using the information entered in the text boxes of the last row of the table.
+\item[Remove Cron] Deletes the selected cron items from the table.
+\end{description}
+
+\subsection{Advertising}
+\label{admin-tools-advertising}
+
+The Advertising Admin Tool is where you manage all advertisements, including creating new ad types and approving ads submitted (bought) by the users.
+
+There are six parts to the Advertising Admin Tool; by default it shows you the ad judging page, since once ads are set up that will be the most-used page.
+
+All six pages have links to the other five at the top of the page.
+
+The six parts are described below.
+
+\subsubsection{Judge Submissions}
+
+The Judge Submissions page is where you approve or disapprove of individual ads purchased by your users.  If there are no ads waiting to be approved, the message ``No ads recently submitted'' appears.  You can control whether or not you see only paid ads or both paid and unpaid ads on this page using the variable ads\_judge\_unpaid.
+
+If there are ads waiting for approval, they are shown in a two-column table.
+
+The left-hand column shows the ad, as it would appear once it is approved.
+
+The right-hand column contains the information about the ad, and controls for approving or disapproving the ad.  The information displayed is the sponsor, or user who purchased the ad, and the number of impressions purchased and their cost.
+
+To approve the ad, select ``Approve'' from the drop-down box; to disapprove, select ``Disapprove'', and to postpone the decision leave it at ``Choose Action''.  If desired, an approval or disapproval message can be entered into the text box labelled ``Message''; this will be sent to the sponsor when you approve or disapprove the ad.
+
+\subsubsection{Ad Listing}
+
+The Ad Listing page displays all ads in the system and their status in a table.  Just above the table is a summary of the number of active ads and impressions currently in the system.
+
+The ad list is a table with five columns and a row for each ad.
+
+The first column is the title of the ad, taken from the text entered in the title field when the ad was created.  It links to a preview of the ad.
+
+The second column is the nickname of the ad's sponsor.  It links to the sponsor's ad list page.
+
+The third column is the ad's status.  Possible status entries are: Unjudged, Approved, Completed, Disapproved, Active, and Inactive.
+
+The fourth column contains an edit link for each ad.  See appendix~\ref{ads-new-ad} for a description of the ad edit form.
+
+The fifth column contains the number of impressions remaining before the ad is removed from the normal rotation.  Example ads are indicated in this column with ``(example)'' instead of a number.
+
+\subsubsection{Template Listing}
+
+The Template Listing page displays all templates present in the system and provides links to edit them and the examples associated with them.
+
+The template list is a table with five columns and a row for each template.
+
+The first column is the name of the template.
+
+The second column has a link to edit the template itself, which is a block of the same name as the template name in the first column.  See section~\ref{features-textads} for details on what special blocks can be used within the templates.
+
+The third column has a link to edit the example ad that is used to show prospective advertisers what that ad type will look like.  See appendix~\ref{ads-edit-example} for a description of the example ad edit form.
+
+The fourth column has a link to preview the example ad, if one exists.
+
+The fifth column is the number of ads created using each template.  The example ads count towards this number, so each template should have at least one in this column, unless the template has just been created and the example ad hasn't yet.
+
+\subsubsection{New Advertisement}
+\label{ads-new-ad}
+
+The New Advertisement page displays the ad edit form, blank so you can create a new ad.  When editing an existing ad, the form is filled in with that ad's current values.
+
+The fields, from the top down, have the following effects:
+
+\begin{description}
+\item[Ad Template] New Advertisements must be assigned a template, so Scoop knows how to display them, and also which fields to ask for.  Only Ad Templates which have example ads will be available in this list.
+\item[Active] Whether or not an ad is active and displayed.  For the ad to be active, it must also have been judged and approved, first.
+\item[Judged] Whether or not an admin has made a decision about whether or not to approve the ad.  This must be checked for the Active checkbox above to take effect.
+\item[Approved] Whether or not an admin has approved the ad.  If this checkbox is not checked, and the Judged checkbox is, the ad has been judged and disapproved.  This must be checked for the Active checkbox above to take effect.
+\item[Perpetual] Whether or not the ad will ever run out of impressions.  Perpetual ads are most useful for filler ads when the number of real ads gets low, or for when you aren't selling ads but just want some perpetually rotating links to display using the ad system.
+\item[Paid for] Whether or not the sponsor has paid for his ad.  If the payment processing is set up properly, it can automatically set this value when a user pays via credit card or paypal; if the sponsor sends a cheque or money order as payment, this is how you would mark the ad as paid.
+\item[Views Left] How many counted impressions are left before this ad stops showing.  If the ad is Perpetual (see above) then this is best left at zero.
+\end{description}
+
+\subsubsection{Edit Example Ad}
+\label{ads-edit-example}
+
+The Edit Example Ad page allows you to create or edit an example ad for each template.  Example ads are required before an ad template can be activated and real ads can be created using it.
+
+When first loaded, this page only shows a drop-down box with all ad templates listed.  You must select the ad template you wish to work with and press ``Get''; Scoop will then build the appropriate form.  Each ad template may or may not have a given field, so Scoop cannot draw the form until it knows what template to use.
+
+Once you have fetched the form for an ad template, you can fill in the fields available.
+
+Below the form is a link to edit the ad template itself, and the HTML of the ad template is displayed just below that.
+
+\subsubsection{Edit Ad Properties}
+
+The Edit Ad Properties page allows you to set up an ad template, including how much it costs, what the maximum number of characters in a given field is, and so on.
+
+When first loaded, this page only shows a drop-down box with all ad templates listed.  You must select the ad template you wish to work with and press ``Get''; Scoop will then build the appropriate form.  Each ad template may or may not have a given field, so Scoop cannot draw the form until it knows what template to use.
+
+Once you have fetched the form, the following fields appear:
+
+\begin{description}
+\item[Activate this ad type] Allows users to create and purchase ads of this type.  If there is no example ad for this ad template, Scoop will not allow you to activate the ad type.
+\item[Allow Ad Discussions] Sets whether or not the ad can be displayed in a special ad section, where users can comment on the ad.  If on, the sponsor can choose whether to leave it on or turn it off; if off, the sponsor has no choice, it is always off.
+\item[Ad Type Name] A display name for this ad template.
+\item[CPM] The cost per 1000 impressions.  See section~\ref{features-textads} for how Scoop counts impressions.
+\item[Minimum Purchase Size] The minimum number of impressions a user must purchase to get this ad.
+\item[Maximum Purchase Size] The maximum number of impressions a user may purchase.
+\item[Ad Position (integer)] A number corresponding to an ad location.  Ad locations are passed as a parameter to the show\_ad box (\latexhtml{$\vert$}{|}BOX,ad\_box,\latexhtml{$\vert$}{|}).  If the number is not given, ``1'' is assumed.  You can use this parameter to set up different types of ads in different locations.  Any number of ad types can share an ad position; they are rotated in the same queue.  Any number of physical locations in the page can also share an ad position; they pull their ad text from the same queue.  A given ad type cannot be shared across different ad positions, however.
+\item[Maximum number of characters to allow in the \latexhtml{$<$}{<}field\latexhtml{$>$}{>} field of this ad type] Depending on which fields you have placed in the ad template, there could be a number of these lines.  Enter the number of characters you would like to allow for each field.
+\item[Short Description] This is shown next to the ad's display name and a preview of the example ad when a potential advertiser is deciding which ad type to buy.  It should be plain text and no more than 255 characters long.
+\item[Submit Instructions] This is shown when the advertiser has selected the ad type and is filling in his ad.  There is no length limit and HTML may be used.
+\end{description}
+
+\subsection{Ops}
+\label{admin-tools-ops}
+
+The Ops Admin Tool is where you control how Scoop behaves for a given ``op'', the first pseudo-directory in Scoop's virtual path.  Subsequent pseudo-directories are handled by the function assigned here, and vary depending on the op.  If you are using Scoop version 0.8, this functionality is (poorly) controlled by the Templates Admin Tool, which has been removed between 0.8 and 0.9 and is not documented here.
+
+Ops that do not exist or are not enabled are handed back to Apache to process as a normal directory.
+
+To edit an op, select the name of the op from the top drop-down list and click the ``Get'' button.  To create a new one, leave the drop-down list at its dashes and just fill in the fields below.
+
+The fields are:
+
+\begin{description}
+\item[Op] The name of the op, as it will appear in the URL.  Use lowercase letters and underscores, mostly.
+\item[Template] The page template that will be used to display the page.  Page templates are edited in the Blocks Admin Tool, and are all filed in the ``templates'' category.  (See appendix~\ref{admin-tools-blocks} and section~\ref{features-custom}.)
+\item[Function] The function that will run to produce content for the page.  For some ops, the function is built into scoop, such as the story and comment display functions.  For others, it is provided by a box.  If the former, the name of the function is put in this text box; for the latter, the name of the box is put in this text box and the checkbox below is selected.
+\item[Function is a box] If the function named above is actually a box, this checkbox should be selected.
+\item[Permission] If a permission is needed to use this op, it should be selected here.  (See appendix~\ref{admin-tools-groups} and section~\ref{admin-users}.)  If no permission is needed, this should be left at its dashes.
+\item[Enabled] Whether or not this op is enabled at all.  If disabled, Scoop acts as if the op does not exist, and hands it back to Apache.  Anyone requesting this op usually gets a 404 Page Not Found error, unless by chance you have a directory of the same name as the op available.
+\item[Op Aliases] Alternate names that this op recognizes as equivalent. For example, the {\bf displaystory} op has the alias {\bf story}, so by default the URL http://www.site.com/displaystory/nnnn/nn/nn/nnnn/nnnn gives the same page as http://www.site.com/story/nnnn/nn/nn/nnnn/nnnn.
+\item[URL Templates] Information on how Scoop should interpret the paths it gets, and how to turn them into CGI parameters. There can be multiple templates of varying path length. Each template should be on one line, and multiple templates should be separated by a comma. The details are below.
+\item[Description] A description of what the op and its function do, so you don't have to go read the code...
+\item[Delete this op] Check this only if you intend to delete the currently selected op when you save it.
+\end{description}
+
+To save any changes you have made, click the ``Write Op'' button; to clear them, click the ``Reset'' button.
+
+For more information on adding functionality to Scoop, see section~\ref{hacking}.
+
+{\bf To understand URL Templates}, the first thing you have to know is that they are generally laid out much like the paths that they are used to interpret, except the first pseudo-directory (the op) is not present in the templates. The elements between slashes are CGI parameter names (in the path that the user sees they are the parameter values), and there are various commands that allow you to customize Scoop's interpretation of the path. An overview of how to create a basic URL Template string is below the following examples.
+
+The simplest form can be found, for example, in the section op. The URL template there is {\bf /section/page/} which means that when the URL http://www.example.com/section/news/3 is requested, Scoop will first look at the section op to find out what to do with the rest of the path (first pseudo-directory) then set the CGI parameter `section' to news (second pseudo-directory), and the CGI parameter `page' to 3 (third pseudo-directory). The more familiar CGI URL, for those of you who have done web programming before, would be http://www.example.com/?op=section;section=news;page=3 and would get exactly the same page. If there are fewer pseudo-directories in the page request than in the URL template, the last few parameters are undefined.
+
+Looking at the URL template for the comments op, you can see three different `complications' in how the paths are parsed. The first template, with {\bf element.1} at the beginning, indicates that this template only applies if the first pseudo-directory after the op is `poll'. (Element 0 is the op itself.) The rest of the URL template is then used as above to assign values to CGI parameter names.
+
+The second and third templates have {\bf length=} at the beginning. This indicates that they are to apply if the path is of that particular length (again, not counting the op in that length). You can see that the entry with length=2 has two CGI parameters defined, and that the one with length=3 has three parameters defined.
+
+The fourth template shows an entirely different `complication'; sid\{5\} means that what would otherwise be five seperate items are treated as one parameter called `sid' (including the internal slashes). Story ID, or sid, values consist of five parts, separated by slashes.
+
+The most complicated form can be found in the user op. The URL template there is a block of perl code enclosed in an EVAL\{~\} statement. This perl code, like boxes, has full access to Scoop's internal functions. The value returned by the code must be a hash with CGI parameter names as the keys and CGI parameter values as the values of the hash. In the case of the user op, it must do such things as translate /my/info to use the user op and the nickname of the user making the request. It can also change the real op entirely: this is how /user/nickname/stories can return search results---the op is changed to be search, and the nickname is used as the search term for an author search.
+
+{\bf To create URL Templates}, you must first sort out what CGI parameters must be passed to your op for it to do everything it needs to do in a GET request. (CGI parameters that should be posted can be ignored here, since they never appear in the URL.) Then, in general, you should order them from most generic to most specific. For example, the sections op first lists which section (generic) then which page (specific) you are requesting. Optional parameters (like which page) should be last, so they can be left off without messing up the other parameters.
+
+Then, if none of your parameter values have slashes in them, you simply put your parameter names in the URL Templates textarea in order, separated by slashes. (Don't forget - leave off the op.)
+
+If one or more of your parameter values have slashes, such as the sid (story ID), then specify how many `parts' the parameter value has. The sid, for example, has five parts - four slashes in the value, so instead of just /sid/ you would put /sid\{5\}/ to tell Scoop to slurp up five 'directories' for that CGI parameter instead of the default one.
+
+\subsection{Subscriptions}
+\label{admin-tools-subscriptions}
+
+The Subscriptions Admin Tool is where you create subscription types and define their prices and other properties. For detailed information on setting up subscriptions, see section~\ref{features-subscriptions}.
+
+To edit a subscription, choose the name of the subscription type from the topmost drop-down box, and click the ``Get'' button. The fields below will be filled in with the appropriate information. To create a new subscription, leave the topmost drop-down box on ``New Subscription Type'' and fill in the fields below as appropriate.
+
+In both cases, to save either changes to an existing subscription or a new subscription, click on the ``Save'' button in the top row of the form.
+
+The fields are:
+
+\begin{description}
+\item[Delete?] If selected, the current subscription type will be deleted when you click the ``Save'' button.
+\item[Name] The name of the subscription type. This is used as the display name as well, when members are choosing which subscription they would like to buy.
+\item[Current Subscribers] Displays the number of people currently subscribed to the loaded subscription type.
+\item[Group] The name of the group subscribers will be placed in. The group generally has a few extra permissions. You must create the group before you can create the subscription type.
+\item[Price] The cost per month of this subscription type. If set to 0, the subscription is activated immediately; if set to some positive value, the subscription is activated once paid.
+\item[Maximum Time] The maximum time a user can be subscribed. For example, a trial subscription could have a maximum time of one month, so people don't perpetually use the trial subscription instead of getting a real subscription.
+\item[Renewable] Whether or not a subscription type is renewable. For example, a trial subscription wouldn't be renewable, so that once a user tries it they have to either get a real subscription or go back to being a non-subscriber once their subscription runs out.
+\item[Description] A description of what the subscription type allows a subscriber. This is displayed when a user is selecting which subscription type to buy, to help them make their decision.
+\end{description}
+
+\subsection{Hooks}
+\label{admin-tools-hooks}
+
+The Hooks Admin Tool is where you create and change hooks, or event triggers. Hooks are associated with events in Scoop, such as when a comment is posted or somebody creates a new account, and trigger some code that will do something based on what the event was. This provides similar but different functionality to the Cron Admin Tool (\ref{admin-tools-cron}), the difference being that cron items are run on a timed basis, while hooks are run based on the activities of users and administrators.
+
+The hooks included with Scoop are all disabled, but are set up as an example. Each row in the hooks table displays the event that will trigger an action and the function or box that performs that action.
+
+The table has five columns, with one row for each hook definition. The last row contains form elements where you can define new hooks. Below the table is a list of actions that can be performed on the hook definitions.
+
+The first column is a checkbox, used to select existing hooks for an action as described below.
+
+The second column is the event the hook is bound to. The list of available hooks is in the variable {\bf hooks}. Hooks cannot be added arbitrarily to this list; a corresponding run\_hook command must be present at the appropriate place in the code.
+
+The third column is the name of the function or box run when the event in the second column happens.  This can be a built-in function, such as the {\bf log\_activity} function used in the included hooks, or it can be a box which you write yourself.
+
+The fourth column indicates whether or not the function named in the third column is a box or not.
+
+The fifth column indicates whether or not the hook is enabled. A disabled hook will be skipped when the event it's associated with occurs.
+
+The actions are:
+
+\begin{description}
+\item[Add Hook] Takes the information in the form elements of the last row of the table above and creates a new hook. Ignores any existing hooks which are selected.
+\item[Delete Hooks] Deletes the selected existing hooks. Ignores any information entered in the new hook form elements in the table above.
+\item[Toggle Enabled] Turns the selected existing hooks either on or off, depending on their status before. Each individual hook is toggled separately.
+\end{description}
+
+A given event may have as many functions or boxes associated with it as you like, but the functions should not depend on each other because you have no control over the order in which the functions are run.
+
+Each event passes different parameters to the function or box that handles it. These parameters are listed beside the event name in both the variable {\bf hooks} and in the drop-down box in the Hooks Admin Tool table. Although not listed explicitly, the name of the event is always the first parameter given to the function or box. This allows one function to handle several hooks, as the {\bf log\_activity} function does, by tailoring its response to the hook which triggered it.
+
+When writing a box to handle a hook, then, the first line should be, using comment\_new(sid,cid) as an example:
+
+\begin{verbatim}
+my ($hookname, $sid, $cid) = @ARGS;
+\end{verbatim}
+
+The arguments are used to identify exactly what has happened. For comment\_new, the sid (story ID) and cid (comment ID) uniquely identify every comment ever posted.
+
+For more information on writing boxes, see section~\ref{hacking}.
+
+\subsection{Log}
+\label{admin-tools-log}
+
+The Log Admin Tool is where you view and manage the activity logs. The first page of the Log Admin Tool is a simple list of links to the different logged item views and actions you can take.
+
+The logged item views are:
+
+\begin{description}
+\item[View list of all logged records] This link displays a list of all log records recorded to date. The list includes information such as the action taken, the item acted upon, the person who performed the action, and the time and date. If extended logging is enabled, a `More' link leads to extra details for each specific item. This list includes the items shown in the three views below as well as any others.
+\item[View list of deleted comments] This link displays a list of all log records for comment deletion. The details are as above.
+\item[View list of deleted stories] This link displays a list of all log records for story deletion. The details are as above.
+\item[View list of updated stories] This link displays a list of all log records for story updates. The details are as above.
+\end{description}
+
+The actions are:
+
+\begin{description}
+\item[Clear logfile] This link clears all items from the log, and adds a log item indicating that the log has been cleared, by whom, and when. The log item generated by this link cannot be avoided, even if all other logging functionality is turned off.
+\item[Change logging level] This link brings you to the Site Controls Admin Tool (\ref{admin-tools-vars}) with the variable {\bf use\_logging} displayed. From there you can set the log level to none, basic, or extended.
+\item[Enable all logging hooks] This link enables all hooks that use the function {\bf log\_activity}. Hooks are defined in the Hooks Admin Tool (\ref{admin-tools-hooks}).
+\item[Disable all logging hooks] This link disables all hooks that use the function {\bf log\_activity}.
+\item[Customize logging hooks] This link brings you to the Hooks Admin Tool (\ref{admin-tools-hooks}) where you can edit any of the logging or other hooks defined there.
+\end{description}
+
+For more information on setting up activity logs, see section~\ref{features-admin-action-log}
+
+\subsection{Macros}
+\label{admin-tools-macros}
+
+The Macros Admin Tool is where you define the macros (\ref{features-macros}) that users will have access to.  To use this Admin Tool, you must have the edit\_macros perm (\ref{perm-edit-macros}) active for your group.
+
+There are two ways of editing macros; in the single macro screen, one macro at a time is fetched and displayed, edited, then saved.  In the category screen, all macros in a category are fetched and displayed, any number of them are edited, then saved all at once.
+
+The single macro screen can be reached by either clicking the ``Add New'' link at the top of the category list or by clicking a macro name from the category screen.  The category screen can be reached by clicking the name of the category in the category list from any of the screens in the Macros Admin Tool.
+
+\subsubsection{The Single Macro Screen}
+
+When you first load the Macros Admin Tool, or when you are editing a single macro, this is the form you will see.  The single macro form allows you to edit any part of a macro, including its category and name.
+
+Just below the category list are two form buttons, Save and Get.  These buttons are duplicated at the bottom of the single variable form.  
+
+Directly underneath the top Save and Get buttons is a checkbox marked ``delete''.  If a macro has been selected from the ``Select Macro'' list, checking this box then saving the macro will delete it from the database.  It doesn't have to have been loaded first.
+
+The fields are:
+
+\begin{description}
+\item[Select Macro] Contains a list of every macro contained in the database.  To load a macro, you would select its name here, then press the Get button above to fetch the macro's data.  When adding a new macro, this must be set to ``Add New Macro''; when saving an existing macro, this must match the macro name in the ``Name'' field, below.
+\item[Select Categories] Contains a list of all existing categories.  When a macro has been loaded, that macro's categories are hilighted.  When saving a macro, at least one of the categories should be selected (or a new category named in the ``New Category'' field below).  If a macro has no selected category, it will only be visible in a list of all macros, making it rather hard to find later.
+\item[Name] Contains the name of the macro, as it is used by your users.  New macros may be named anything as long as it doesn't conflict with any other macro names.
+\item[New Category] Used only when a new macro doesn't fit in any of the existing categories, or you want to add an existing macro to a newly created category.  A category only exists when a macro is filed in it; by filing a macro in a new category, that category is automatically created.  (Likewise, when the last macro in a category is removed, the category automatically disappears.)
+\item[Value] Contains the value of the macro.  It can be anything that Scoop accepts in its page output, including box and block calls, and HTML that is not otherwise permitted to users.  This is the field most often changed, and is also the only field that can be changed when in the category screen.
+\item[Description] Contains the documentation for that particular macro.
+\end{description}
+
+\subsubsection{The Category Screen}
+
+When you click on one of the category links (except for the ``Add New'' link) in the category list, this is the screen you will see.  The category form allows you to edit the value only of any number of macros at the same time.
+
+At the top and bottom of the list of the category form are the Save and Get buttons.  In this case, the Get button acts as a reset button, undoing any changes you had made (as long as you didn't save them).  The save button saves the macros that you have changed, and leaves the other ones alone.
+
+The category form itself is a series of repeating rows, one for each macro.  The first column contains the name of the macro, in the form of a link to the single macro edit form described above.  The second column contains a control for the macro's value.  The third column contains the description of the macro.
+
+The macros are sorted alphabetically by name.
+
+Any number of macros in the category form may be changed at once, and saved in one operation.  The categories also make macros much easier to find, especially when you can't remember the exact macro name.
+
+Macros cannot be created or deleted from the category screen.
+
+\subsection{User Preferences}
+\label{admin-tools-user-preferences}
+
+All user preferences (except user group, real email, and password) can be customized, modified, and enabled in the User Preferences Admin Tool. Many of the built-in user preferences are {\bf required by Scoop and should never be deleted}. If you don't want your users to change those preferences, set the default value however you like and disable the preference, but that default value is often required.
+
+User preferences can be public or private, required or optional, available to some groups but not others, allow or not allow HTML, have a specific validation process or allow any content. All of these options are set in this admin tool.
+
+Like most admin tools, the form begins with the 'save' and 'get' buttons, and a selectbox for choosing which user preference to fetch for editing.
+
+\begin{description}
+\item[Delete] This checkbox is just under the first selectbox and over on the left, and should generally not be used for Scoop's built-in preferences. As mentioned above, most of the built-in preferences are required for correct operation of the site, and should be disabled instead of deleted if you don't want users to have access to them. Checking this and saving will cause the selected preference to be removed from the database.
+\item[Name] Like most admin tools, if the selectbox is set to `Add New', a new item is created with the name entered here; to update an existing preference, the selectbox and the name field must match.
+\item[Enabled] The enabled checkbox allows you to make a preference available or not globally.
+\item[Title] This is displayed to the user as the title of the user preference. It should be a short but descriptive name.
+\item[Description] If the title is not enough to explain the preference, additional instructions can be placed in this field. The description is displayed according to the `Template' chosen (below).
+\item[Default Value] If the user has not set a value for this preference, the default value is used. This should be a value that validates correctly according to the validation filters set below, although it is not actually filtered here.
+\end{description}
+
+The next portion of the form lets you specify the display settings for this preference.
+
+\begin{description}
+\item[Shown on signup page?] This determines whether or not a particular preference is required or not, and whether or not it is displayed on the newuser page when accounts are first created. The options are:
+\begin{itemize}
+\item {\bf No} This preference is optional and does not need to be shown on the signup page
+\item {\bf Yes} This preference is optional and should be shown on the signup page
+\item {\bf Yes, and it's required} This preference is required and thus must be shown on the signup page to collect an initial value. This preference can never be saved blank, it must always have a value that validates as specified below
+\end{itemize}
+\item[Preferences page] Which preferences page to display this user preference on. The pages included by default are: User Info, Interface, and Comments. You can create new preferences pages simply by entering a value which does not yet exist in this field. The menu used for navigating between preferences pages will detect new pages and add them to its list. The preferences page named 'Protected' (display title of `Email and Password') should not be used here, as it is reserved for `protected settings', those settings which define a user: username, group, password, and realemail.
+\item[Order on page] What order to display this preference in, in relation to the other preferences on the same page. If you enter an order number which is already in use, the conflicting number and all preferences with order numbers higher than this are shifted down the page by one place.
+\item[Control to display] The form element which will collect the data for this preference. The form element should have a name setting identical to the preference name, and a default value of \latexhtml{$\vert$value$\vert$}{|value|}, so that the user's current preference is correctly displayed. This can also be a box call; for selectboxes, radio buttons, and checkboxes it typically is, so that the correct item is selected. There are generic boxes for two of the three types which can often be used for quite a few of the preferences: pref\_selectbox, which takes as its parameters the preference name, the current value, and the list of possible values and produces a selectbox with the current item selected; and pref\_checkbox, which takes as its parameters the preference name and the current value and produces a checkbox, selected or not as appropriate.
+\item[Template] A block whose name ends in `\_pref' and which formats the title, description, and control appropriately. See the block description for the two templates included by default for more information.
+\item[Visible on public user info page?] Determines whether or not the value of this preference will be displayed to any user who requests the user info page. If visible, its display is also subject to the `Perm to view' setting (below).
+\item[Formatting to apply to value] If you would like to format the value of this preference a certain way when it is displayed on the public user info page, you should specify the HTML here, and place \latexhtml{$\vert$value$\vert$}{|value|} where you want the value placed. For example, the homepage preference formats the value as a hyperlink.
+\end{description}
+
+The next portion of the form lets you specify what permissions or site controls must be satisfied before the preference can be used, if it is enabled.
+
+\begin{description}
+\item[Site Control] The site control that must be true for this preference to be available. For example, if you are not using Scoop's ad server at all, the site control `use\_ads' would be false, and the preference `ad\_open\_new\_win' would be irrelevant---and thus shouldn't be shown.
+\item[Perm to view] If a user requires a specific permission before being allowed to see a preference, that permission is selected here. For example, the `admin\_notes' preference is visible on the user's public info page, but only to admins who have permission to edit users.
+\item[Perm to edit] If a user requires a specific permission before being allowed to change a preference, that permission is selected here. As above, only admins can change the `admin\_notes' preferences.
+\item[Trusted User status] This preference is only available to `trusted users' (\ref{features-mojo}).
+\end{description}
+
+The last portion of the form deals with input validation; what values are permitted.
+
+\begin{description}
+\item[HTML allowed] This determines whether or not HTML is permitted in the preference. If it is permitted, the value is run through the HTML filter. The HTML allowed can be specified in the `allowed\_html' block; the context for user preferences is `pref' (see the block description for details).
+\item[Field length] This determines the maximum length of the value. If left blank or set to zero, no limit is imposed (although the database has a limit of 64kb).
+\item[Box or regular expression] This filters the preference for acceptable values. This can be either a box or a regular expression. For a regular expression, simply enter the regex in this field, with pipes escaped: for example, \verb!^(on\|off)$! is used for all checkboxes, as they have only two possible valid values, on or off. To use a box for advanced filtering, such as the `start\_page' preference uses to allow any defined section as a valid value, enter the box call without the surrounding pipes: \verb!BOX,boxid[,args]!. The boxes that perform validation are called with the following arguments: the name of the preference, the value the user tried to save, then any of the optional arguments listed in this field after the box ID. These boxes should only return a value if they encounter an error; a blank return value indicates success, and the value filtered will be saved.
+\end{description}
+
+\subsection{Calendars}
+\label{admin-tools-calendars}
+
+The calendars admin tool is where you can manage all calendars (\ref{features-calendar}), events, and define which fields are used for the event form.
+
+There are three tools on this admin page: Calendar List, Event List, and Event Properties. The calendar list contains links to the edit form for every calendar in the system, and allows you to create additional site-wide calendars (those without an owner). The event list contains links to the edit form for every event in the system, much as the story list and poll list do for their respective features. The event properties allows you to define the fields Scoop will use to collect information about events.
+
+\subsubsection{Calendar List}
+
+This is a basic list of calendars, with three columns: the calendar title (linked to the calendar), the calendar owner, and the admin actions available (delete and edit). Site-wide calendars have no owner, and only admins with the {\bf edit\_calendars} perm (\ref{perm-edit-calendars}) can edit them. User calendars can also be edited by their owners.
+
+Below the list is a form with which site-wide calendars can be created. There are only three fields: a title and two permissions fields. A fourth field, for the description, is available on the calendar edit form (\ref{admin-tools-calendars-edit-form}). The two permission fields determine who can see the calendar and the events contained in it, and who can submit events to the calendar.
+
+\subsubsection{Event List}
+\label{admin-tools-calendars-event-list}
+
+The event list is a three-column list which summarizes all events in the system.
+
+The first column contains the event title, linked to the event page, with an edit link if the current user can edit that event; the second column contains the nickname of the user who submitted the event; the third column contains a list of calendars the event is displayed in, linked to the calendar, with an edit link if the current user can edit that calendar and the name of the calendar owner if it's a user calendar. One calendar in the list will have an asterisk next to it; this indicates the calendar the event takes its permissions from (its `primary' calendar).
+
+\subsubsection{Event Properties}
+\label{admin-tools-calendars-event-properties}
+
+The event submission and editing form is built based on the event properties defined here. Like most admin tools forms, it starts with `Get' and `Save' buttons and a selectbox to choose which item to edit.
+
+\begin{description}
+\item[Property ID] The internal name of the event field.
+\item[Title] The display title for the event field.
+\item[Format on event page] On the single event information page, this is the HTML used to format whatever value a user enters into this field when submitting an event. If left blank, the value is displayed as-is. If anything is entered, \latexhtml{$\vert$}{|}value\latexhtml{$\vert$}{|} is replaced with the value entered by the user, and \latexhtml{$\vert$}{|}eid\latexhtml{$\vert$}{|} by the event's ID.
+\item[Format in calendar view] As above, but used in the monthly, weekly, or daily calendar view.
+\item[Enabled] This checkbox determines whether or not the event field is used. This is a global toggle.
+\item[Required] This checkbox determines whether or not the event field must be filled in when an event is submitted or edited.
+\item[HTML allowed] This checkbox determines whether or not the value entered by the user is filtered through the HTML filter. If HTML is permitted, the allowed\_html block defines what HTML is allowed. The context for this field is `event'. See the block description for allowed\_html for details.
+\item[Property is a date] This checkbox determines whether or not this event field is a date. Events are displayed on the calendar for these additional date fields as well as the start and end dates.
+\item[Display order] What order to display this event field in, in relation to the other fields. If you enter an order number which is already in use, the conflicting number and all fields with order numbers higher than this are shifted down the page by one place.
+\item[Form field] The block used to format the form field on the event submit/edit form. These are blocks whose names begin with \verb!event_property_!. See the descriptions for the blocks for more information.
+\item[Validation regex] A perl regular expression the value entered by the user is compared to. Pipes in the regular expression must be escaped. Leave this blank if you don't want to use a regex for validation.
+\item[This property requires] If this event field is used, the field named here must also be used. This is a good way to make a property `partially required'---for example, by default the `address' event field requires the `city' field, so even though neither of them are marked as required by the checkbox above, if an address is entered, a city must also be entered.
+\item[Description] The event field description shown on the event submit/edit form. For when the title alone isn't descriptive enough.
+\end{description}
+
+\subsubsection{Edit Calendar Form}
+\label{admin-tools-calendars-edit-form}
+
+The Edit Calendar form has four pages: Edit Calendar Settings, Approve Submitted Events, Event List, and Invitation List.
+
+The `Edit Calendar Settings' page is available to admins with the {\bf edit\_calendars} perm (\ref{perm-edit-calendars}) for any calendar, and to users with the {\bf edit\_own\_calendar} perm (\ref{perm-edit-own-calendar}) for their calendar only. There are only four fields: a title, a description, and two permissions fields.
+
+The `Approve Submitted Events' page contains a list of events which have been submitted and are pending approval by the calendar owner or site admin. The calendar owner can select several items by marking their checkboxes, then approving (Approve for display) or rejecting (Do not display) that group of events by choosing the appropriate radio button and clicking `Moderate'.
+
+The `Event List' page is a four-column list which summarizes all events attached to the current calendar. The first column contains the event title, linked to the event; the second column contains the nickname of the user who submitted the event, the third column contains the event date, and the fourth column contains action links (such as `edit') depending on what permissions the current user has.
+
+The `Invitation List' page lets you specify who may see or submit events to your calendar, if you have set either of the two calendar permission settings to `Only people on the invitation list'. Users are added one at a time by nickname, and can be removed via a `remove' link after their name once they are in the invitation list.
+
+\subsection{Search}
+\label{admin-tools-search}
+
+The Search Admin Tool is where you can search through some of the other admin tools and find the part of the site you want to change.
+
+To use this tool you must have the perm {\bf admin\_search}, and you may only search those admin tools which you have permission to edit.
+
+The search form allows you to choose which admin tools to search in, as well as whether you want to search for a phrase, all of the search terms in any order, or any of the search terms.
+
+Search results are displayed grouped by the admin tool they were found in and show the item name, description, and provide a link to the edit form for that item.
+
+Generally if you are searching for a specific part of the display (not including usernames and other very dynamic content) you will want to search in the `values' (Block values, Box code, or Special Pages); if you are searching for items that do a task that you can describe but do not know what specific output it creates, you will want to search in the `descriptions' (Block descriptions, Box descriptions, or Site Controls descriptions).
+
+%EOF

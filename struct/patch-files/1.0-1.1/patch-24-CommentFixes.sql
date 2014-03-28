@@ -1,0 +1,17 @@
+INSERT INTO blocks VALUES ('comment_ip_display','From: <a href=\"/iplookup/%%ip%%\">%%ip%%</a>','19','Format for the IP display/link attached to comments. \r\n<p>\r\nSpecial keys:\r\n<ul><li>ip: Replaced with the ip</li></ul>','Comments','default','en');
+INSERT INTO blocks VALUES ('delimiter_default_start','<UL>','1','','Comments','default','en');
+INSERT INTO blocks VALUES ('delimiter_default_levelstart','<UL>','1','','Comments','default','en');
+INSERT INTO blocks VALUES ('delimiter_default_end','</UL>','1','','Comments','default','en');
+INSERT INTO blocks VALUES ('delimiter_default_levelend','</UL>','1','','Comments','default','en');
+INSERT INTO blocks VALUES ('delimiter_default_itemstart','<LI>','1','','Comments','default','en');
+INSERT INTO blocks VALUES ('delimiter_default_itemend','</LI>','1','','Comments','default','en');
+INSERT INTO blocks VALUES ('delimiter_dyn_start','<DIV STYLE="margin-left: 2.5em">','1','','Comments','default','en');
+INSERT INTO blocks VALUES ('delimiter_dyn_itemstart','<TABLE><TR>\r\n<TD VALIGN="top">%%norm_font%%<TT><A ID="toggle!cid!" STYLE="text-decoration:none" HREF="javascript:void(toggle(!cid!))">$text</A></TT>&nbsp;%%norm_font_end%%</TD>\r\n<TD><DIV CLASS="$class" ID="content!cid!">','1','','Comments','default','en');
+INSERT INTO blocks VALUES ('delimiter_dyn_end','</DIV>','1','','Comments','default','en');
+INSERT INTO blocks VALUES ('delimiter_dyn_itemend','</DIV></TD></TR></TABLE>','1','','Comments','default','en');
+INSERT INTO blocks VALUES ('delimiter_nested_start','<DL>','1','','Comments','default','en');
+INSERT INTO blocks VALUES ('delimiter_nested_levelstart','<DT></DT><DD>','1','','Comments','default','en');
+INSERT INTO blocks VALUES ('delimiter_nested_end','</DL>','1','','Comments','default','en');
+INSERT INTO blocks VALUES ('delimiter_nested_levelend','</DD>','1','','Comments','default','en');
+INSERT INTO blocks VALUES ('comment_search_item','<B>%%count%%) <A HREF=\"%%rootdir%%/comments/%%sid%%/%%cid%%#%%cid%%\">%%subject%%</A></B>\r\n[<A HREF=\"%%rootdir%%/comments/%%sid%%/%%cid%%?mode=alone;showrate=1#%%cid%%\">%%score%% / %%num_rate%%</A>]\r\nReplies: <B>%%replies%%</B>\r\n<BR>posted by <A HREF=\"%%rootdir%%/user/%%urlnick%%\">%%nick%%</A> on %%ftime%%\r\n<BR>\r\nattached to <a href=\"%%attached_link%%\">%%attached_title%%</a>\r\n<p>','19','Formatting for an item in a comment search result list.\r\n<p>\r\nSpecial keys:\r\n<ul>\r\n<li> count: the result number\r\n<li> sid: story id\r\n<li> cid: comment id\r\n<li> pid: parent comments id (or 0)\r\n<li> uid: uid fo the poster\r\n<li> nick: nickname of the poster\r\n<li> urlnick: nickname of the poster escaped for url use (like \"/user/|urlnick|\")\r\n<li> date: comment posting date (raw)\r\n<li> ftime: comment post date (formatted and timezone adjusted)\r\n<li> subject: comment subject\r\n<li> comment: comment text\r\n<li> score: rating score\r\n<li> num_rate: number of ratings\r\n<li> rank: rank value (if you\'re using mysql fulltext search)\r\n<li> attached_link: url for the story or poll the comment is attached to\r\n<li> attached_title: title of the story or poll the comment is attached to\r\n</ul>','Comments','default','en');
+INSERT INTO vars VALUES ('use_editorial_comments','0','Use editorial type comments at all. If unchecked, we won\'t include anything that refers to ed comments.','bool','Comments');

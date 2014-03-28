@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>2.3 Getting Scoop</TITLE>
+<META NAME="description" CONTENT="2.3 Getting Scoop">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="2_4_Using_Installer.html">
+<LINK REL="previous" HREF="2_2_Installing_MySQL.html">
+<LINK REL="up" HREF="2_Installation.html">
+<LINK REL="next" HREF="2_4_Using_Installer.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<UL>
+<LI><A href="2_1_Dependencies.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> Dependencies</A></LI>
+<LI><A href="2_2_Installing_MySQL.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> Installing MySQL and Apache/mod_perl</A></LI>
+<LI><A href="2_3_Getting_Scoop.html" id="current"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN> Getting Scoop</A></LI>
+<LI><A href="2_4_Using_Installer.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN> Using the Installer</A></LI>
+<LI><A href="2_5_Installing_Hand.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN> Installing By Hand</A></LI>
+<LI><A href="2_6_Upgrading_Scoop.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN> Upgrading Scoop</A></LI>
+<LI><A href="2_7_System_specific_notes.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN> System-specific notes</A></LI>
+<LI><A href="2_8_Troubleshooting.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">8</SPAN> Troubleshooting</A></LI>
+</UL>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html215"
+  HREF="2_3_Getting_Scoop.html#SECTION00023100000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">1</SPAN> Getting a Tarball</A>
+<LI><A NAME="tex2html216"
+  HREF="2_3_Getting_Scoop.html#SECTION00023200000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN> Getting From CVS</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H2><A NAME="SECTION00023000000000000000">
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN> Getting Scoop</A>
+</H2>
+
+<P>
+Before you can start installing and using Scoop, you're going to need to get it. Of course, if you already have it, then you can probably skip this section. Note that, while you'd usually want to get a stable version of any program, the nature of development with Scoop (at least, currently) results in a lot of new features being in the CVS development version, which is almost always stable. You'll probably want to get the development version.
+
+<P>
+
+<H3><A NAME="SECTION00023100000000000000">
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">1</SPAN> Getting a Tarball</A>
+</H3>
+
+<P>
+Probably the easiest way to get Scoop is to download a tarball from the development site at <A HREF="http://scoop.kuro5hin.org/">http://scoop.kuro5hin.org/</A>. You'll be able to get the current stable, numbered Scoop release from there, or one built nightly from CVS. You'll also find instructions for using CVS.
+
+<P>
+Once you've downloaded Scoop, you'll want to decompress it. Copy the tarball to someplace where Apache can read it (such as ``/usr/local/apache/''), though not in the document root (such as under ``htdocs/'') because you don't want people downloading the code through your website. Decompress it (``tar zxf &lt;filename&gt;''), which will create a new directory called ``scoop''. You can then remove the tarball, or move it somewhere else.
+
+<P>
+You do not need to have the code unpacked in the same location as you are using as the documentroot for your Scoop site; however, the directory you are using as a documentroot must exist, even if nothing is in it.  
+
+<P>
+
+<H3><A NAME="SECTION00023200000000000000">
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN> Getting From CVS</A>
+</H3>
+
+<P>
+To checkout manually, first make sure you have the ``cvs'' program, which you can get from <A HREF="http://www.cvshome.org/downloads.html">http://www.cvshome.org/downloads.html</A>. After that, switch to a directory where Apache can read (such as ``/usr/local/apache/''), though not in the document root (such as under ``htdocs/''). Then issue the following commands:
+
+<P>
+<PRE>
+$ cvs -d:pserver:anonymous@scoop.versionhost.com:/cvs/scoop login
+password: anonymous
+$ cvs -z3 -d:pserver:anonymous@scoop.versionhost.com:/cvs/scoop co scoop
+</PRE>
+
+<P>
+This will appear to do nothing for awhile, then several lines will scroll by. When it finishes, you'll have a new directory called ``scoop'', which is the same as the one you get from downloading a tarball.
+
+<P>
+When you're using the CVS version, you should keep up with the latest features and bug fixes.  See section&nbsp;<A HREF="2_6_Upgrading_Scoop.html#upgrading-code">2.6.2</A> for details.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

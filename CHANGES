@@ -1,0 +1,254 @@
+Scoop 1.1 -> 1.2
+not released yet
+----------------
+Features:
+* You can now use radio buttons instead of the drop-down box to rate comments
+* You can now use memcached instead of the built-in Scoop caching system to
+  cache objects. This has a variety of advantages.
+* Support for master/slave database setups
+
+Bug fixes:
+* Display bug in dynamic comments where $text was displayed instead of the
+  value being interpolated
+* Login form posts to current page so you stay where you are
+* Boxtool stamps the block cache properly now, so changes take effect immediately
+* Boxtool theoretically works with postgres. Takes a -d option if you want to
+  try it, otherwise defaults to mysql.
+* XSS security fixes (in 1.1.8).
+
+Scoop 1.0 -> 1.1
+released 02/08/2006
+----------------
+Features:
+* Polls optionally allow approval voting (users can make multiple selections)
+* Scoop now integrates its own session module instead of requiring
+  Apache::Session
+* Added flexible and admin-configurable user preferences
+* Added collaborative event calendar module
+* Comment "remove" in addition to the existing "delete". ("Remove" replaces
+  the comment with some text indicating that it's been deleted, while "delete"
+  makes the comment disappear entirely.)
+* Added favicon.ico and robots.txt with decent defaults.
+* Dropped ForumZilla support.
+* You can now restrict where macros are run in the same way as you restrict 
+  HTML tag use - by location and user group.
+* You can have custom submission/post messages per section. Submission messages
+  are for when the story goes to the queue, post messages are for when it's
+  auto-posted (via section perms).
+* Tag categorization: on story submission, the author can specify a series of
+  keywords to use for filing their story. Stories can be browsed by tag in
+  addition to (or instead of) the traditional sections and topics.
+* Special pages can now be optionally accessed directly by |rootdir|/pageid
+  instead of via |rootdir|/special/pageid (subject to the pageid not being an
+  existing scoop op)
+* Shared database support
+* Changes in new user signups, where they can set their own initial password
+  and receive a confirmation link.
+
+Bug Fixes:
+* HTML removal:
+  * Comment post form
+  * User/Interface/Comment preference forms
+  * Special pages format
+  * Special pages admin tool
+* Fixed DB quoting, date format, and other things that were MySQL-specific
+* Special key parsing can now handle commas inside quoted (single or double)
+  arguments, and spaces after commas between arguments
+* Removed use_diaries, use section permissions instead
+* Updated Bundle::Scoop to reflect Scoop's current dependencies
+* Fixed a bug in the startpage_validation box
+* Fixed the minimal preview bug - now you can see what your comment will look
+  like if you use minimal mode
+* Fixed a precedence bug in boxtool so it actually pays attention to your
+  $EDITOR environment variable instead of always using vi.
+
+Scoop 0.9 -> 1.0
+released: 06/17/2004
+--------------------
+Features:
+* Archive support, so old stories and comments can be stored seperately
+* Themes support, which blocks being set by a number of criteria.
+* Admin logging features to record updates to stories and comments.
+* Account creation and mail password no longer require confirmation steps.
+* Support for uploading and managing files.
+* Edit categories can be enabled to split queue stories into categories. Useful
+  for a closed queue.
+* Optional auto voting of zero when a story is viewed. Also useful for a site
+  with a closed queue.
+* Polls can be put on the main page when they are created, instead of requiring
+  extra steps
+* Installer creates a seperate DB user for Scoop use
+* "Safe mode" var that, when enabled, allows only Superusers to access the
+  site, for maintenance purposes
+* Revised, more flexible comment rating system
+* Op aliases and URL templates now stored alongside the ops, instead of
+  seperately
+* New documentation, including a re-written Scoop Admin Guide and updated
+  descriptions for blocks and site controls
+* Admin tools search which helps admins locate those hard to remember blocks,
+  vars, boxes, and special pages.
+
+Bug Fixes:
+* Ads and subscriptions have gone through numerous fixes, so they should work
+  out of the box now
+* More bug fixes uncovered during documenting, mostly related to ads and
+  payment processing
+* Too many bug fixes and tweaks to list, all uncovered during the writing of
+  documentation
+* Updated code for mod_perl2 support.
+* Added various vars which were missing from the database.
+* Added a confirm stage to deleting comments.
+* HTML parser and checker catch more possible exploits.
+* Edit queue no longer leaves off the poll when a story is edited.
+* Disabling topic images in display prefs no longer disables topics everywhere.
+* No more caching issues in blocks admin tool, so changes appear in the block
+  list immediately, without requiring a reload.
+* Theme's patch didn't check if it had been applied, so it could cause an
+  infite loop at page render time. Fixed now.
+* Editorial comments being posted as topical fixed.
+* Hooks now has an enabled flag.
+* All blocks under 'block_programs' moved over to vars.
+
+
+Scoop 0.8 -> 0.9
+released 12 October 2002
+------------------------
+Features:
+* A user can be set as the default which new users will copy preferences from.
+* Admins can now change user's nicknames
+* Support for hooking code in to run after certain actions, such as posting
+  comments or stories.
+* Re-written cache code which runs twice as fast.
+* New blocks admin tool that supports multiple categories, themes, and
+  languages.
+* Overhauled op and admin tools so that they are easier to configure and expand.
+* New auto-format posting mode which marks up posts without having to know HTML
+* New javascript-based dynamic comment mode.
+* New support for renewing ads.
+* Support for Subsections.
+* Ability to track the ip of the comment posters.
+* Static caching of stories.
+* Admin can allow users to turn some boxes off in their display prefs.
+* New Ad server code put in.  Still in development. 
+* Added the var 'paranoid_logging' to turn on paranoid logging without having
+  to restart the server.
+* Added the ability to send mail using your system's sendmail command, if you
+  set your SMTP host in httpd.conf to '-' and set the var 'sendmail_program'
+  correctly.
+* Spellchecker added. Requires the Pspell module and some extra configuration.
+* Easier control over allowed_html and groups.
+* The permission list is now stored in a block, such as ops are.
+* Scoop will now let Apache handle requests for things it doesn't recognize
+  (such as images).
+* Users can choose which page they want to see when they first visit the site.
+* The cron system can now run boxes in addition to functions within the code.
+* Admins can add and remove crons from the admin interface now.
+* ad info working
+* Fulltext searching added.  Only works with mysql 3.23.23+
+* Op aliases are now matched using regexp's
+* User page is available via /~username/
+* Added the var 'nofity_author' to let admins choose whether or not to email
+  authors if their story has been posted/dropped
+
+Bug Fixes:
+* Topic admin tool now does proper sanity checks on its input.
+* Subject lengths are checked so that they are no longer cut off.
+* Spellchecker changed, once again, to use Text::Aspell. Still highly unstable,
+  though
+* Commentstatus is now implemented and controlled with a var.
+* Op 'default' has been replaced with 'main' for the two places it was used.
+* The RSS file will use the correct character set for encoding.
+* Comments attached to polls are now marked as new when appropriate.
+* Section permissions are now handled correctly for stories accessed directly.
+* Caching bug (finally) eliminated.
+* Hotlisting or deHotlisting a story from the front page will not display that
+  story's poll anymore, rather the front page poll like it should
+* No more voting on polls in the edit queue, works out funny when they edit the
+  poll.
+* No more stories that the Anonymous user doesn't have permission to view will
+  show up in the site rdf feed anymore
+* A link to see the users' advertisements won't show up unless use_ads is 1
+  now.
+* setting post_story_threshold to 0 won't make diaries post to the front page
+  anymore
+* removed an unneeded select statement to set the subtitle for story
+  views.
+* Updated Vars.pm, Polls.pm, Polls/Format.pm to use new urls
+* fixed bug in upgrade-db so it isn't confused by spaces
+* removed all the CRAP from rand_stuff
+* Reversed semantics of box preferences, so that new boxes are on by default 
+  now.
+* Fixed the overescaping of blocks when you created a new one.
+* Updated default httpd.conf's so that scoop doesn't handle requests for
+  robots.txt or favicon.ico.
+* Fixed HTML parser so that it recognizes single-quotes in attributes
+* Added in op 'main', which was missing from both lists, yet still managed to
+  work
+* Fixed a small bug in CGI.pm that comes up if you call param() expecting
+  an array and there is nothing on the url for you
+* Multiple formkeys are stored at once, so a user can edit more than 1 comment
+  or story at a time.
+* Textareas on the user preferences page are now properly escaped.
+
+Scoop 0.6 -> 0.8
+released 7 August 2001
+----------------------
+Features:
+* New var interface, Site Controls.   Might want to install the new
+  admin_tools box from the scoop.sql
+* Scoop supports RDF's now! Users' can submit them, admins can add them,
+  and users can choose which to show on the main page (or wherever 
+  rdf_box is)
+* Users' are allowed to choose sig behavior now, whether its sticky (where
+  the sig at the time you post is with that comment forever) or retroactive
+  (changes when you change it on every comment)
+* Users' can also set comment preferences, how they post by default (sticky
+  retro, etc), and how the comments are displayed, will need to add to the
+  user_box for this
+* Admin Notes textarea in each users' preferences page, which only admins
+  can see (have to have 'edit_user' permission). Toggle this with the var
+  'allow_admin_notes'
+* New Hotlist 
+* Scoop keeps track of when people rate a comment now.
+* New Section permission scheme.  Can set which groups can read/post comments
+  and stories on which sections.  Can also set whether scoop should just deny
+  them the privelage, or hide the whole section from them, and whether that
+  group gets auto-post permissions to that section
+* more logging of user creating process, time and ip
+* max_accounts_per_day var sets how many accounts 1 ip can create per day
+* Indexing has been cleaned up and optimized a bit
+* links to next and previous stories have been added (blocks 
+  next_page_link and prev_page_link 
+* Clean URLs!!!  Now you don't have to have op=foo;sid=lllladfadfadf in your
+  urls, stories can be accessed like http://.../story/sid and comments via
+  http://.../comments/sid/cid  much much easier and cleaner
+* Scoop supports basic subscriptions now, like on kuro5hin.org
+* similar permissions as for stories, but for polls.  This is in the Group
+  admin tool
+* new database upgrade script
+* support for Apache::Filter, so post processing with Apache::SSI works
+* Admins can choose allowed html now, using allowed_html block, and allow
+  different HTML for different groups.
+* lets you about new comments on stories
+
+Bug Fixes:
+* many many not listed here
+* story post/drop emails only emailed once now
+* topic url escape bugs fixed 
+* many install.pl fixed
+* stronger url escaping  
+* double quote escaping while editing stories
+* [ED] and [UPDATE] fixes
+* cookies should work for multiple scoop sites under the same domain now
+* more POD added.
+* anonymous posting throttling fix
+* changed Y in cron to be 365 instead of 366
+* small bug fix with comments at the end of boxes
+* formkey fixes
+* no more empty sids can be added to hotlist
+* new user confirm email uses |site_url| instead of SERVER_NAME
+* search cleanups
+* assertions for scoop
+* changed & in urls to ;
+* mail password now checks confirm key, and keya are only valid for a certain
+  amount of time. also can't request a lot of mail passes.

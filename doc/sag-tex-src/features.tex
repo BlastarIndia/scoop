@@ -1,0 +1,811 @@
+\section{Scoop Features and Customization}
+\label{features}
+
+Scoop has a lot of features that make it both a great content management system and software suitable for a mostly self-policing community.  This section describes the features and how to set up and manage them.
+
+\subsection{Story Selection}
+\label{features-modsub}
+
+Scoop's original concept was to make a discussion site where {\bf all users had a say} in what stories were published, instead of one where only a few editors determined what was of interest.
+
+To this end, Scoop has the ability to allow every user to submit an article for publication, and every user to vote on which articles they would like to see published or not.  
+
+Submitted stories go into one of two queues; the ``edit'' queue is for stories that are seeking editorial feedback and are subject to editing by the author, and the ``voting'' queue is for stories that the author is satisfied with and is where the decision to publish or not is made.
+
+All parameters relating to both queues can be changed by the site administrator, including:
+\begin{itemize}
+\item who may submit stories
+\item who may vote on stories
+\item who may make changes to their own stories in the edit queue
+\item how many votes it takes to publish or delete a story
+\item how long stories are allowed to stay in either queue
+\end{itemize}
+
+All of the variables referenced in the subsections below should be in the Stories category of the Site Controls.
+
+\subsubsection{Story Queues}
+\label{moderation-queues}
+
+Permission to submit stories to the queue is given by the perm {\bf story\_post} (\ref{perm-story-post}), while permission to submit stories to the edit queue is given by the perm {\bf edit\_own\_story} (\ref{perm-edit-own-story}).  
+
+Depending on your site, you may want to allow anybody, even anonymous users, to submit stories; registered users only; or administrators only.
+
+The voting queue is by default always turned on, but you can restrict who may vote by giving or removing the perm {\bf moderate} (\ref{perm-moderate}) to select groups.  If you are using an ``open'' queue, where any member may vote on stories, the default group (Users, generally) should have this perm; if you are using a ``closed'' queue, where only administrators may vote on stories, the default group shouldn't have this perm, but the admins, or editors, or whichever group you are using for story selection, should.  Generally, the Anonymous group shouldn't have access to the voting queue, but you can do that if you find some reason for it.  Users place their votes for the story, and when one of the configurable thresholds (see section~\ref{moderation-autopost}) is reached, the story is either posted or dropped, according to the site configuration.
+
+The edit queue is turned on by giving the perm {\bf edit\_own\_story} (\ref{perm-edit-own-story}) to the user groups who should have access to the edit queue.  Stories in the edit queue are subject to change at any time, so voting in the poll and voting to post the story are both disabled.  Once the author chooses to move the story to voting, the edit queue time limit set in the variable {\bf queue\_edit\_max\_time} is reached, or a certain threshold of ``spam'' votes is reached (see section~\ref{moderation-autopost}), the story is moved to the edit queue and the author can no longer change anything.
+
+If you are using a closed queue, ``edit categories'' may be useful.  Basically, it turns off the story voting mechanism; stories are posted when one of the editors makes an executive decision to post it by editing its properties (see appendix~\ref{admin-tools-new-story} for a description of the story edit form).  Several categories are created in the moderation queue, which the editors can use to keep track of which stories are at which stage of their evolution.  Edit categories only really work with a closed queue, because everything is done by editing the stories, which requires the perm {\bf story\_admin} (\ref{perm-story-admin}).
+
+\subsubsection{Vote Thresholds and Auto-post}
+\label{moderation-autopost}
+
+Scoop has several configurable thresholds that determine story handling while in the queue.
+
+The simplest is {\bf the maximum time a story is allowed to stay in the edit queue}, which is set using the variable {\bf queue\_edit\_max\_time}.  If the time difference between ``now'' and when the story was created is greater than {\bf queue\_edit\_max\_time}, the story is moved to the voting queue.  If you need to put the story back into the edit queue after the time limit, you can edit the story (as an admin) and choose the ``Set Timestamp to Now'' checkbox while moving it into the edit queue.  If the timestamp is not changed, the story will not stay in the edit queue because Scoop will think it's been there too long.
+
+The other edit queue threshold is the {\bf anti-spam vote calculation}.  Because a story in the edit queue can't be voted down and would stay until the time limit is reached, a malicious author can be guaranteed his spam story will be visible for the duration of the edit queue time limit---which still needs to be long enough to be useful for editing.  To prevent this, there is a ``Spam'' button for a story in the edit queue, which users may click if they think a story is spam.  Each user visiting the story casts a neutral vote (per account, not per visit), and each user that clicks the spam button casts a spam vote (again, per account).  Once the number of spam votes set in the variable {\bf spam\_votes\_threshold} is reached, on every subsequent vote Scoop divides the number of spam votes by the number of neutral votes and compares the resulting ratio to the ratio entered in the variable {\bf spam\_votes\_percentage}.  If the calculated ratio is greater than the variable, the story is pushed directly into the voting queue.  At this point, it's generally voted down very quickly.
+
+In the voting queue, there are several ways Scoop can decide when a story should be posted.  In the following descriptions, a vote to post the story, whether to the front page or to section, is counted as a value of +1; a vote to drop the story is counted as -1; and a vote to abstain (sometimes marked ``don't care'') is counted as 0.
+
+{\bf In the default posting calculation}, Scoop sums all the votes cast, then compares them to two variables.  If the sum of all votes is lower than or equal to the value in the variable {\bf hide\_story\_threshold} the story is dropped.  If the sum of all votes is greater than or equal to the value in the variable {\bf post\_story\_threshold}, Scoop then decides if it should be posted to the front page or the section.  The number of front page votes is divided by the total number of positive votes, and the resulting ratio is compared to the ratio entered in the variable {\bf front\_page\_ratio}.  If the calculated ratio is greater than or equal to the variable, the story is posted to the front page.
+
+If the variable {\bf use\_alternate\_scoring} is turned on, Scoop compares positive votes and negative votes to the post and drop thresholds described above separately, instead of the sum of all votes.  This means that if a number of positive votes are cast that equal the number given in the variable post\_story\_threshold the story is posted, regardless of the number of negative votes---unless the negative votes reach their threshold first, regardless of positive votes.
+
+There are also two possible ``auto-post'' triggers used when a story appears deadlocked in voting (this can never happen when {\bf use\_alternate\_scoring} is turned on) and is unlikely to reach either of the thresholds.  The first is based on the number of votes cast, total; the second is based on the time the story has been in the voting queue.
+
+If the variable {\bf use\_auto\_post} is on and the variable {\bf auto\_post\_use\_time} is off, Scoop will start its auto-post calculations when the total number of votes reaches the number in the variable {\bf end\_voting\_threshold}.
+
+If the variable {\bf use\_auto\_post} is on and the variable {\bf auto\_post\_use\_time} is also on, Scoop will start its auto-post calculations when the story has been in the voting queue for longer than the number of minutes in the variable {\bf auto\_post\_max\_minutes}.
+
+Once the auto-post has been triggered by one of the above two methods, the calculations are the same; however, if the story's current score is less than the variable {\bf auto\_post\_floor} the following calculations are skipped and the story is simply dropped.  
+
+Scoop calculates an overall score for the story (described below) based on the votes it has gained so far, and an overall score for the comments (described below) based on the comments rated so far.  These two scores are averaged, then compared to the thresholds set in several variables to determine whether or not the story posts.
+
+Scoop scales the overall story score so the two scores are using the same scale.  It assumes that normal comment rating starts at 1 and goes to the value set in the variable {\bf rating\_max}, so if your comment rating starts somewhere other than 1, you'll need to be careful of your threshold levels.
+
+If the calculated average of the overall scores is greater than or equal to the value in the variable {\bf auto\_post\_frontpage}, the story is posted to the front page.  If the average is greater than or equal to the value in the variable {\bf auto\_post\_section}, the story is posted to the section page.  If the story's voting score is greater than the value in the variable {\bf auto\_post\_ceiling} and the calculated average is so low the story would be dropped, the calculated average is overridden so that the story posts to the section.  This way, stories with a poor comment score that are very close to posting normally when they hit the auto-post wall will not be dropped.  The {\bf auto\_post\_ceiling} variable should be set fairly close to the {\bf post\_story\_threshold} variable so that the story is clearly about to post for this feature to take effect.
+
+The {\bf overall comment score} is a weighted average of the comment ratings; comments that have been rated more times affect the overall comment score more.  The individual comment score is multiplied by the number of ratings for that comment to get a weighted value for each comment.  The weighted values for all rated comments are then added together, then divided by the total number of ratings on all comments attached to the story.  If the total number of ratings is lower than the value in {\bf auto\_post\_min\_ratings}, the variable is used instead (the ``boring story penalty''; if not many comments are rated, it must not be a very interesting story).  Note that hidden comments are not counted toward either the overall comment score or the number of ratings total.
+
+The {\bf overall story score} is an average calculated from the post or drop votes cast in the voting queue.  Each of the possible votes (+1 front page, +1 section, abstain, -1 hide) is assigned a numerical value, with +1 front page being worth the same as the maximum comment rating, and -1 hide being worth 1.  The two other votes are assigned intermediate values based on {\bf rating\_max}.  For each vote option, the numerical value of the vote as described above is multiplied by the number of votes cast for that option.  These four values are added together, then divided by the total number of votes cast.
+
+\subsubsection{Overriding the Voting Process}
+\label{moderation-override}
+
+As an admin, you can override the voting process in a couple of ways.
+
+If you feel a story has been {\bf voted into the wrong place}, or if there {\bf aren't enough voters yet} to make a voting queue meaningful, you can edit the story using the ``Edit'' link (see appendix~\ref{admin-tools-new-story} to familiarize yourself with the story edit form) and set the drop-down box to, for example, ``Always Display'' if you feel it should be on the front page.  This is the preferred method if it's a one-time thing, or a temporary situation (such as not having enough users yet on a brand new site).
+
+If you want to {\bf bypass the queue entirely}, either for the entire site or just a specific section, for everybody or just certain groups, you can set the section permissions (see section~\ref{sections-perms} and appendix~\ref{admin-tools-sections} for details) to allow the appropriate groups to auto-post to either section or front page for each relevant section.  This is a different auto-post than described above; this one does no calculations, but bypasses the queue entirely and automatically posts the story wherever the permissions specify.  This is the preferred method if you always want to bypass the queue in certain situations.
+
+\subsection{User Diaries}
+\label{features-diaries}
+
+Every user can post their own musings in their own section.  Basically, it's as if every user has his own personal weblog on your site.  The Diaries section can be used for anything the users want to use it for: getting to know each other, venting, or requesting feedback on a draft of an article they're working on.
+
+The Diary section is set up so that all users submissions will auto-post to section (see section~\ref{sections-perms} and appendix~\ref{admin-tools-sections} for details). This means that Diaries are not sent through the queue. Apart from that, diaries have all the same features as stories and are edited in the same way. Diaries are not shown on the ``Everything'' index page by default, but this can be changed by settings the {\bf sections\_excluded\_from\_all} variable. The RDF feed (see section~\ref{features-rdf} for RDF information) also uses this variable to control what stories are shown in the RDF file.
+
+\subsection{Story Archiving}
+\label{features-archive}
+
+For large, busy sites, the database can become too large for the server to handle; specifically, the indexes become too large to keep in memory, and the whole thing {\bf slows down drastically}.  Story and comment archiving addresses that by moving older stories and comments to a secondary database.
+
+The primary database is used for new and still-active stories and their comments; the archive database is used for older stories, and {\bf does not allow new comments}, ratings, or poll votes.  Archived stories are available at the same URL as they were before being archived, to prevent links bringing people to your site from breaking.  To search the archive for comments and stories, the user must check the ``Search Archive'' box in the search form as the regular and archive databases are searched separately.
+
+To {\bf set up the archive database}, you must first create the database and set the access rules for it as described in section~\ref{manual-db}.  This is the same procedure as for the regular database, but you must substitute the name of the archive database and its sql file in the command.  The sql file for the archive database is in your scoop/struct/archive directory.  You may use the same database username and password for the regular and archive databases.
+
+For Scoop to {\bf access the archive database} properly, you have to tell Apache about it in the httpd.conf file, or wherever your main Scoop config directives are:
+
+\begin{verbatim}
+# Archive config:
+# Set these vars if you use an archive database
+
+# The name of the archive database
+PerlSetVar db_name_archive __DBNAMEARCHIVE__
+
+# The host where mySQL is running
+PerlSetVar db_host_archive __DBHOSTARCHIVE__
+
+# The user to connect as
+PerlSetVar db_user_archive __DBUSERARCHIVE__
+
+# The user's database password
+PerlSetVar db_pass_archive __DBPASSARCHIVE__
+\end{verbatim}
+
+Substitute the correct values for the name, host, user, and password, then stop and start Apache (never restart).  A good place to paste these commands in your config file is right after the commands for your regular database; that way they're all together.
+
+Archiving is controlled through the variables in the Site Controls Admin Tool (\ref{admin-tools-vars}).
+
+Stories and their comments are archived together; polls, even those attached to stories, are archived separately.
+
+Stories are archived based on their age and optionally their activity.  The variable {\bf story\_archive\_age} sets the age of a story in days before it will be considered for archiving.  Any story posted (not submitted) more days ago than this value will be archived or considered for archiving.  To disable story archiving, set {\bf story\_archive\_age} to 0.
+
+If you wish to {\bf protect old but active stories} from archiving, the variable {\bf comment\_archive\_age} is what you want.  Stories considered for archiving are tested for new comments; if they have any comments newer than the age in this variable, they are not archived.  If the newest comment is older than the age in this variable, then the story is archived.  To disable this check and archive stories purely on their age, set {\bf comment\_archive\_age} to 0.
+
+In addition to archiving stories and their comments, you have the option of {\bf archiving a story's voting record} instead of just its displaystatus (Front Page or Section).  You also have the option of {\bf archiving a comment's rating history}, instead of just its score and the number of ratings.  Both of these are informational only, and archiving and display will work equally well with or without them.  They are set using the variables {\bf archive\_moderations} and {\bf archive\_ratings}, respectively.
+
+Polls are archived based purely on their age; there is no option to protect active polls.  The variable {\bf poll\_archive\_age} sets the age of a poll in days before it will be archived.  To disable poll archiving, set {\bf poll\_archive\_age} to 0.
+
+Once the archive database and archiving configuration are set, the actual {\bf process of archiving} is started using the Cron Admin Tool (\ref{admin-tools-cron}).  The cron item {\bf archive\_stories} runs the code that checks the age of stories and comments, then archives those that match the criteria set in the Site Controls.  The cron item {\bf poll\_archive} runs the code that checks the age of polls, then archives those that match the criteria set it the Site Controls.
+
+\subsection{Story Digest Emails}
+\label{features-digest}
+
+Scoop can send headlines and summaries of stories posted to either front page or section since the last scheduled digest email.  Daily digests are sent every day, weekly digests are sent on Sunday, and monthly digests are sent on the first of the month.
+
+To configure story digests, set the variable {\bf digest\_subject} to the desired subject line of the email.  The content of the digest email is set using the blocks {\bf digest\_header}, {\bf digest\_footer}, and {\bf digest\_storyformat}.  If you want the header and footer of your digest email to be the same, you can also use {\bf digest\_headerfooter}.  If the blocks for both the separate and combined header and footer exist, the separate header and footer blocks are used.
+
+The subject is sent as-is to the digest recipients.  The blocks used to format the content of the digest contain special keys documented in the block descriptions which are used to place the relevant information.  HTML and regular block references should not be used in these blocks as the HTML in the stories is removed and the email sent as plain text.
+
+Once the digests are configured as you want them, set the variable {\bf enable\_story\_digests} to 1, and in the Cron Admin Tool (\ref{admin-tools-cron}) activate the {\bf digest} cron item.  It should run no more than once per day, as the code does not check if it has already run that day, it simply sends the last day's (or week's, or month's) worth of stories.
+
+When {\bf enable\_story\_digests} is turned on, users are given a control which allows them to choose at what frequency they wish to receive story digests, if at all.
+
+\subsection{Story Syndication (RDF)}
+\label{features-rdf}
+
+Many sites syndicate their headlines so other sites can link to their latest content easily.  Scoop can fetch headlines from any number of other sites and allows users to choose which of those headlines they would like to see in their sidebar.
+
+Scoop can also create its own RDF feeds, and instead of just the headlines it includes the story's introduction as well.
+
+All of the variables referenced below should be in the RDF category of Site Controls.
+
+\subsubsection{Fetching Headlines}
+\label{rdf-fetching}
+
+RDF feeds to be fetched regularly are handled using the RDF Admin Tool (\ref{admin-tools-rdf}), and managing them requires the perm {\bf rdf\_admin} (\ref{perm-rdf-admin}).  Enabled feeds are fetched on a schedule set in the {\bf rdf\_fetch} cron item (\ref{admin-tools-cron}).
+
+If the variable {\bf use\_rdf\_feeds} is on, then users may select from the enabled feeds for display in their sidebar.  RDF feeds can be either added directly or submitted by users with the perm {\bf submit\_rdf} (\ref{perm-submit-rdf}).  Submitted RDF {\bf feeds must be approved by the admin} before users can see them.
+
+Some RDF feeds include images, such as their site logo, in the feed; the variable {\bf rdf\_use\_images} determines whether or not Scoop will display that image with the RDF feed.  Similarly, some feeds include text inputs, such as a search box that directs to the RDF source site; the variable {\bf rdf\_use\_forms} determines whether or not Scoop will display that form with the RDF feed.
+
+RDF feeds all include a different number of headlines, some of them quite large.  You can restrict the number of headlines displayed with the variable {\bf rdf\_max\_headlines}; this number can be overridden by a user preference if the user wishes to see more headlines.
+
+\subsubsection{Publishing Headlines}
+\label{rdf-publishing}
+
+Scoop creates its RDF feed on a schedule set by the rdf cron item (\ref{admin-tools-cron}).
+
+The number of headlines included is determined by the number of stories posted either to front page or section in a certain time, set by the variable {\bf rdf\_days\_to\_show}, up to a maximum set in the variable {\bf rdf\_max\_stories}.
+
+Some meta-information can be included in the RDF file created, all set by variables.  The copyright notice is set by the variable {\bf rdf\_copyright}; the RDF creator and publisher default to the site name as set in the variable sitename unless the variables {\bf rdf\_creator} and {\bf rdf\_publisher} are set, respectively.  If you wish to include your site logo in the RDF feed, enter its full URL---including the http://---into the variable {\bf rdf\_image}.  You should probably only include a small, button-sized image, just to avoid annoying the admins of other sites; they may reject your feed altogether if you include a large image.
+
+Finally, the file that the RDF feed is saved to is set in the variable {\bf rdf\_file}.  This must be an absolute local pathname; the file {\bf must be writeable by the Apache server}'s user; and the file must be accessible from the internet.
+
+If you are using a location-based install, add an Alias line by the images Alias as below (the images Alias line is shown for reference):
+\begin{verbatim}
+Alias /scoop/ "/www/scoop/html/"
+Alias /scoop/images/ "/www/scoop/html/images/"
+\end{verbatim}
+
+Then stop and start Apache.  Paths should be adjusted as necessary for your setup.  This will allow files in the scoop/html directory, such as robots.txt, backend.rdf, and dynamic-comments.js to be fetched normally.
+
+\subsection{Story hotlisting/bookmarking}
+\label{features-hotlist}
+
+Scoop offers a `hotlist' feature which allows users to mark stories they would like to watch. Hotlisted stories are listed in a menu in the sidebar on every page via the {\bf hotlist} box, for easy access, and display the number of new comments (\ref{comments-unread}) since the story was last viewed. The hotlist box disappears entirely if no stories are hotlisted, unless the {\bf hotlist\_flex} or one of its variants (available from the Scoop Box Exchange: \ref{sbe}) is used.
+
+The hotlist add/remove link is placed in the {\bf story\_summary} block using the special key {\bf \latexhtml{$\vert$}{|}hotlist\latexhtml{$\vert$}{|}}. The actual text (or image) of the hotlist link is set in the blocks {\bf hotlist\_link} and {\bf hotlist\_remove\_link}.
+
+The {\bf hotlist} perm (\ref{perm-hotlist}) determines who can use the hotlist function and see the hotlist add/remove links.
+
+Note that story hotlisting is distinct from diary subscriptions (\ref{sbe-diarysub}), although many people use `hotlist' to describe them both; story hotlisting does not notify you of new stories, it allows you to track specific existing stories.
+
+\subsection{Automatic `Related Links' listing}
+\label{features-autorelated}
+
+For every story, Scoop provides a `Related Links' box in the sidebar which collects all of the links in the story plus a few internal links to more similar stories based on the author and topic of the story. This is done automatically by scanning the story's HTML for links.
+
+There is also an `autorelated' feature, where certain keywords cause links to appear in the Related Links box, even if the story author didn't link them to anything. This does not affect the display of the story itself and does not insert any links into the story; it only adds links to the Related Links box. Words and phrases which trigger the `autorelated' feature and their links are defined in the Site Control {\bf autorelated}. By default only a few are defined, as an example of the format. When creating your own autorelated entries, try to keep the words specific and the phrases short, to decrease the chance of them appearing inappropriately and increase the chance of them being used, respectively.
+
+For example, the default autorelated list includes \verb!Scoop, http://scoop.kuro5hin.org/!. Any mention of the name of the software will generate a link to Scoop's home page in the related links box. If \verb!gutenberg, http://www.gutenberg.org/! were added, any reference to Gutenberg's press, Project Gutenberg, or Gutenberg himself would generate a link to Project Gutenberg's home page. (If there are common misspellings of a word you want to link automatically, they should also be included as keywords.)
+
+\subsection{Comments and Comment Views}
+\label{features-comment-views}
+
+Comments are attached to either stories or polls, and are displayed below the story text or the poll graph when the full story or the poll results are viewed.  If a poll is attached to a story, the same comments will display whether it's the story or its attached poll which is displayed.
+
+All of the variables referenced below should be in the Comments section of the Site Controls.
+
+\subsubsection{Comment Display}
+\label{comments-display}
+
+There are two kinds of comments: editorial and topical.  
+
+{\bf Editorial comments} are only displayed while the story they're attached to is in the queue, unless the user changes his comment view settings to explicitly include them, and top-level editorial comments can only be posted in the queue.  Editorial comments are for suggestions to the author to improve the story, or reasons for voting the way the comment poster did.  They shouldn't be used to discuss the topic of the story, because they will be hidden when (if) the story is posted.  
+
+{\bf Topical comments} are displayed both in and out of the queue, and can be posted both in and out of the queue.  Topical comments are for discussing the topic of the story, and not for providing suggestions for improvement, as they are displayed after posting when no changes are possible.  
+
+Replies to any comment take on the comment type of their parent; top-level comments allow the poster to choose whether it's topical or editorial if the story is still in the queue. Once out of the queue, only topical comments can be posted.
+
+If you feel {\bf a comment is wrongly marked topical or editorial}, you can change it using the ``toggle'' link at the end of the comment, right beside the ``delete'' link.  Both require the perm {\bf comment\_delete} (\ref{perm-comment-delete}).  Deleting a comment with replies leaves the replies but makes them all top-level comments.
+
+The two types of comments are formatted using the block {\bf comment} for topical comments, and the block {\bf moderation\_comment} for editorial comments.  These blocks contain a number of special keys, such as for the subject, author, score, and date posted.  The special keys are detailed in the block description, on your site.  It's a good idea to {\bf make the two types of comments visually distinct}; by default, topical comments have a blue border around the grey comment header information, while editorial comments have a red border.
+
+Users can put a signature on every one of their comments if they like.  If the variable {\bf allow\_sig\_behavior} is on, users can choose to have them either ``stuck'' to the comment (ie, always displaying as originally posted), changed retroactivally whenever they change their sig (ie, always displaying the current sig, regardless of the sig in use when the comment was posted), or not display at all.  This behavior can be set on a per-comment basis, with a default set in the user preferences.  The default for new users is set in the variable {\bf default\_sig\_behavior}.
+
+Comments can be ordered in one of several ways.  The user can change the view using the comment controls above and below the comment tree, and can set the preferred view in user preferences.  The default for new and anonymous users are set in the variables {\bf default\_comment\_display}, {\bf default\_comment\_order}, and {\bf default\_comment\_sort}.
+
+default\_comment\_display can be set to one of the following comment views:
+
+\begin{description}
+\item[flat] ``Flat'' view sorts the comments in their threaded order, but displays them all as top-level posts.
+\item[threaded] ``Threaded'' view sorts the comments in their threads, indenting replies, and displays top-level comments in full and all replies as just titles, authors, dates, and scores with a link to the full comment.
+\item[nested] ``Nested'' view sorts the comments in their threads, indenting replies, and displays all comments in full.
+\item[minimal] ``Minimal'' view sorts the comments in their threads, indenting replies, but only displays titles, authors, dates, and scores for all comments.
+\item[dthreaded] ``Dynamic Threaded'' view starts out like normal threaded view, but every comment has a small expand/collapse button next to it.  If you expand a comment, that comment is fetched and displayed without reloading the entire page.  You can also expand and collapse entire subthreads at a time.
+\item[dminimal] ``Dynamic Minimal'' view starts out like normal minimal view, but can be expanded or collapsed as in dynamic threaded view.  The two dynamic modes are the only use of javascript in Scoop. 
+\end{description}
+
+Since searchbots will be registered as anonymous users and only the latest browsers support the javascript used in the dynamic comments, the two {\bf dynamic modes are strongly not recommended as defaults}.
+
+The other sorting rules (sorting by age or rating) act as you would expect, but only sort the top-level comments.  All replies are sorted by thread.
+
+\subsubsection{Unread Comment Tracking}
+\label{comments-unread}
+
+{\bf Unread comments} can be marked as new for registered users, and the index pages can display the number of new comments in a story since a user last read it.  The read/unread status is based on the highest comment number the last time the user displayed the story and comments; the system assumes that all comments displayed have been read.  Displaying comments alone does not mark them as read.
+
+The variable {\bf show\_new\_comments} determines whether all, none, or only that user's hotlisted stories (\ref{features-hotlist}) track which comments have been read, and the block {\bf new\_comment\_marker} is displayed on the new comments.
+
+The {\bf Scoop Box Exchange} (see appendix~\ref{sbe}) has a box that will notify users if there is an unread reply to one of their comments.  If you use this box, let your users know that comments are only marked read if they view the story; this has caused confusion in the past.
+
+\subsubsection{Comment Posting}
+\label{comments-post}
+
+Comments can be posted using HTML, plain text, or ``autoformat'', a mode that translates common markup, such as what most people use in email, into HTML formatting. For example, it changes words surrounded by asterisks into bold text; *this* becomes {\bf this}.  A full description of the autoformat mode is included in your Scoop database; it can be found at {\bf \latexhtml{$\vert$}{|}rootdir\latexhtml{$\vert$}{|}/special/autoformat\_syntax}  Each user can select their preferred mode and can change the mode for a single comment when posting.  You can set the default for new and anonymous users to any of the three modes using the variable {\bf default\_post\_type}.  The default post type applies to both stories and comments.
+
+The {\bf HTML tags permitted} in stories and comments can be changed as desired, in the variable {\bf allowed\_html}.  This has a specific format, described in the variable description, but basically you enter one HTML tag per line, follow it with any permitted attributes in a comma-separated list, and end it with ``-close'' if it must have a matching closing tag.
+
+{\bf Permission to post} topical comments is given with the perm {\bf comment\_post} (\ref{perm-comment-post}), and permission to post editorial comments is given with both {\bf editorial\_comments} (\ref{perm-editorial-comments}) and {\bf comment\_post}.  
+
+You can also give permission to post comments in certain sections using the Sections Admin Tool (\ref{admin-tools-sections}).  To post a comment, a user must have both the comment\_post general permission and the section-specific permission set.  Removing either of those removes the user's ability to post; the former overall, and the latter in the specific section.  
+
+Comments in reply to polls are handled with the perm {\bf poll\_post\_comments} (\ref{perm-poll-post-comments}) as well as comment\_post; as with section permissions, both must be turned on for the user to be able to post comments to polls.
+
+\subsubsection{Comment Rating}
+\label{comments-rate}
+
+Comment rating uses an averaging, not an additive, system.  Rather than having three people rate a comment ``up'' at the same time and have the comment end up with a higher score than any of them think it deserves, those three people can rate it at the value they think it should be, and their ratings are averaged, giving it a score much closer to the one it deserves.  Fractional scores are very common, and are displayed to two decimal places.
+
+Everybody with the perm {\bf comment\_rate} (\ref{perm-comment-rate}) can rate all comments except their own.  Individual ratings are an integer value between the values set in the variables {\bf rating\_min} and {\bf rating\_max}, inclusive.  The average rating of a user's comments determines his ``mojo'' (see section~\ref{features-mojo} for a full description), which, if it gets high enough, can make the user ``trusted'' and able to rate comments one point below rating\_min; all comments with an {\bf average rating below rating\_min are hidden} from everybody except trusted users.
+
+To give unrated comments a fighting chance when users choose to display comments sorted by rating, you can have comments start with a default rating.  The first person to rate the comment completely overrides the default rating, and from there on ratings are averaged as usual.  To give comments an initial rating, turn the variable {\bf use\_initial\_rating} on, and set the variables {\bf anonymous\_default\_points} and {\bf user\_default\_points} to the values you want anonymous (if permitted) and registered user comments to start with.
+
+\subsubsection{Setting up Dynamic Comments}
+\label{comments-dynamic}
+
+Scoop's dynamic comment modes are truly neat.  They do not load all comments then merely toggle the visibility of the appropriate sections of HTML; they actually request the individual comment from the server when you click to view it, and insert it into the page in the appropriate spot without reloading the entire page.
+
+Dynamic comment mode is done using javascript, and only modern ``fifth-generation'' browsers can deal with it properly.  That is, Netscape \latexhtml{$>$}{>} 6; IE \latexhtml{$>$}{>} 5; Mozilla and other gecko-based browsers, and later versions of Opera. Some other browsers may work with it, but those listed here are those known to work.
+
+On a brand-new install, dynamic mode comments should be as easy to turn on as switching on the variable {\bf allow\_dynamic\_comment\_mode}.  Older installs will take a bit more work, as information must be added to certain blocks, and that is hard to do automatically without clobbering your customizations.
+
+The following items should be set as described below; if dynamic mode comments are turned on but not working properly, confirm that everything below is set correctly.
+
+\begin{itemize}
+\item The file {\bf dynamic-comments.js} must be present in the site's documentroot and fetchable from the internet with no errors.  Note its path.  Older location-based installs don't map the base scoop directory to a filesystem location, so the file can't be fetched.  To fix this, add the following to your httpd configuration, right by the Alias line that sets your images directory (the images directory line is also shown, for reference):
+\begin{verbatim}
+Alias /scoop/ "/www/scoop/html/"
+Alias /scoop/images/ "/www/scoop/html/images/"
+\end{verbatim}
+Then stop and start Apache.  Paths should be adjusted as necessary for your setup.  This will allow files in the scoop/html directory, such as robots.txt, backend.rdf, and dynamic-comments.js to be fetched normally.
+\item A block called {\bf dynamic\_js\_tag} must be present and must contain the following:
+\begin{verbatim}
+<script type="text/javascript" src="|rootdir|/dynamic-comments.js"></script>
+\end{verbatim}
+Confirm that the path to dynamic-comments.js in this block is correct and leads to the file as noted in the first step.
+\item The blocks {\bf story\_template} and {\bf default\_template} must both contain \latexhtml{$\vert$}{|}dynamicmode\_javascript\latexhtml{$\vert$}{|} at the end of the HEAD section of their HTML ({\bf not} in the BODY section, nor between HEAD and BODY).
+\item The block {\bf header} contains \latexhtml{$\vert$}{|}dynamicmode\_iframe\latexhtml{$\vert$}{|} at the end of the block.  This key has no effect on the display as it is an invisible iframe, so it can actually be placed anywhere in the header block.
+\end{itemize}
+
+When you have made sure that all of the above items are set correctly, the variable {\bf allow\_dynamic\_comment\_mode} may be turned on to allow users to choose dynamic comment display modes.
+
+Note that the dynamic modes should {\bf never be set as default} in the variable {\bf default\_comment\_display}, because it does not work for older browsers or search spiders.
+
+\subsection{Polls}
+\label{features-polls}
+
+Polls can be posted either on the front and section index pages as a site-wide, independant poll, or attached to a story as a story-specific poll by the story author.  Independant polls have their own comments associated with them, with all of the comment features present in stories, while story-specific polls share comments with the story; that is, whether you're viewing the story or the poll results, you see the same comments.
+
+To post site-wide polls, you must have the perm {\bf edit\_polls} (\ref{perm-edit-polls}).  This perm also gives you the ability to edit existing polls, including polls attached to stories.  To post polls attached to stories, you must have the perm {\bf attach\_poll} (\ref{perm-attach-poll}) and {\bf story\_post} (\ref{perm-story-post}).
+
+All polls can handle {\bf any number of possible answers} up to the maximum number of answer fields displayed on the form, which is set with the variable {\bf poll\_num\_ans}.  If poll\_num\_ans is reduced, existing polls with more than the new number of answers are not affected.
+
+If the variable {\bf allow\_ballot\_stuffing} is on, users with the perm edit\_polls can change the number of answers to each possible result at will.  This does not affect tracking who has voted in which poll, and if you zero the poll people who have already voted will not be able to vote again.
+
+For information on comments attached to polls, see section~\ref{comments-post}.
+
+\subsection{Spell-checking Stories and Comments}
+\label{features-spellcheck}
+
+Spell-checking requires an extra (optional) perl module installed before it will work, but no other changes to the site, beyond configuration in the admin interface.  The only language currently supported is English.
+
+You will need the aspell program and the Text::Aspell perl module, which provides a perl interface to aspell.  Aspell, its dictionary, and Text::Aspell should be installed according to the instructions in the install section (\ref{install-recommended-programs}).
+
+Once the aspell program and perl module are installed, Apache must be stopped then started so it will find the spellchecking module in its initialization.  No further Apache configuration is necessary.
+
+Spellchecking is configured through the Site Controls Admin Tool (\ref{admin-tools-vars}), in the Spellchecker category.  It is turned on using the variable {\bf spellcheck\_enabled}.
+
+Whether spellchecking is on by default or must be explicitly turned on by the user at comment posting time is set using the variable {\bf spellcheck\_default}.  The specific English variant used by default is set in the variable {\bf spellcheck\_spelling}.  Both of these can be overridden by a user preference.
+
+Permission to use the spellchecker is given using the perm {\bf use\_spellcheck}, in the Groups Admin Tool (\ref{admin-tools-groups}).
+
+\subsection{Macros in Stories and Comments}
+\label{features-macros}
+
+Macros are at heart a bit like HTML tags. Instead of telling the browser what to do, though, macros tell Scoop what to do. This allows you to give users limited access to functions that could, if not limited, leave you with a security problem or stuff on your site that you don't want.
+
+To configure the macro system, create the macro definitions you want to use, then set the variable {\bf use\_macros} to 1. Macro definitions are created in the Macros Admin Tool (\ref{admin-tools-macros}).
+
+Macros can be either rendered when the story is saved or every time it's viewed using the variable {\bf macro\_render\_on\_save}. Which setting you want will depend on what your macros do. If all your macros do something completely static, then having them render on save can reduce the load on your server. If your macros are dynamic, or you want them to run with the environment and preferences of the user viewing the page instead of the story author, then macros should be rendered every time they're viewed.
+
+When using the edit queue (\ref{moderation-queues}) keep in mind that the author can edit the story after it's been saved, so if macros render on saving, when the author edits the story, he will be presented with the output of the macro rather than the macro command.
+
+Macros can also be rendered `verbosely' by turning on the variable {\bf macro\_render\_verbose}, that is, extra comments will be added around the macro and the original macro command will be preserved in an HTML comment when the rendered macro is displayed.
+
+When the macro system is enabled, Scoop will scan stories and comments for existing macros and replace them with the macro definition you have created. Macros are indicated in stories and comments with double parentheses around the macro name. To use the included example macro, {\bf macro\_test}, you would put {\bf ((macro\_test))} where you want the text of that macro to appear.
+
+For example, if you have a box that you want users to be able to embed in a story or comment, you would do this via a macro. Normally, boxes and blocks are not substituted in stories for security reasons. If you created a macro with the box key (\latexhtml{$\vert$}{|}BOX,boxid\latexhtml{$\vert$}{|}) as the value, then that one box can be embedded in a story while denying access to the other boxes. Any box, block, or site control that can be interpolated into a regular block via vertical pipes is available to macros.
+
+Macros can take arguments as well. If, for example, you want to allow users to embed images in their stories and comments but don't want them linking to any arbitrary picture out on the internet, you can create a macro with one argument that allows the user to specify the filename of an image in the directory you set. Arguments are used in the macro definition as {\bf ((1))} for the first argument, {\bf ((2))} for the second argument, and so on. With file uploads (\ref{features-file-uploads}) and this macro, users could put images in their upload directory into their stories but no other images.
+
+If you created a macro called {\bf img} and gave it the definition {\bf \latexhtml{$<$}{<}IMG src="\latexhtml{$\vert$}{|}upload\_link\_user\latexhtml{$\vert$}{|}((1))"\latexhtml{$>$}{>}} then a user could put {\bf ((img 2/filename.jpg))} in their story or comment, and that image would appear in their story. (The 2 in this example is the user's numeric UID.)
+
+If macros don't seem to be working, try putting {\bf ((macro\_test))} in a story or comment. If the system is active, that will be replaced by some red text telling you that the macro system is active. This macro is included by default as an example.
+
+\subsection{Spam and Crapflood Prevention}
+\label{features-anti-spam}
+
+There will inevitably be people who enjoy posting garbage, spam, or offensive comments on your site.  Scoop has several ways of making this manageable.
+
+{\bf Spam in the story queue} is usually voted down very quickly, and never sees publication; spam in the edit queue, if active, can be sent to voting using the ``spam'' button.  For details on both, see section~\ref{moderation-autopost}.
+
+{\bf Spam in comments} is usually rated very low, and often hidden by the site's trusted users.  Users who consistently post spam may become untrusted, and their comments hidden by default.  For details on rating and trusted and untrusted user status, see section~\ref{features-mojo}.
+
+Crapflooding, the process of {\bf posting too many garbage comments or stories} (often using a script) for the normal voting or rating mechanism to handle normally, is handled with a post throttle mechanism.  Both stories and comments have a {\bf maximum post rate}, which should be set to a value that most normal users will rarely or never exceed.  Both are defined as a number of posts, set in the variables {\bf max\_comments\_submit} and {\bf max\_stories\_submit}, over a time period, set in the variable {\bf rate\_limit\_minutes}.  If a user (or script) posts more than that number of comments or stories in that time period, he is redirected to a page notifying him that he has been temporarily locked out of posting and advising him to walk away for a few minutes.
+
+If a user is locked out of posting and {\bf tries to post again during the timeout period}, whatever the timeout was will double and restart until it reaches a number of minutes set in the variable {\bf max\_timeout}, at which point the user is banned from posting at all by moving him into the user group specified in the variable {\bf untrusted\_group} if it exists, and the Anonymous group if it doesn't.  The untrusted group should not have either of the perms {\bf comment\_post} (\ref{perm-comment-post}) or {\bf story\_post} (\ref{perm-story-post}).
+
+\subsection{Trusted Users and Mojo}
+\label{features-mojo}
+
+``Mojo'' is the system Scoop uses to give or take certain {\bf comment-related privileges}.  A user's mojo is not shown; the only way they can know approximately what it is is by whether or not they have those privileges---assuming they know what the mojo level required for the privileges is.  A user's mojo is always a number in the range of possible comment ratings, set by the variables {\bf rating\_max} and {\bf rating\_min}.  The perm {\bf super\_mojo} (\ref{perm-super-mojo}) overrides the mojo calculations and gives a user all the privileges gained by having high mojo.
+
+Users with mojo higher than the number in the variable {\bf mojo\_rating\_trusted} are known as ``trusted users'', and uses with mojo lower than the number in the variable {\bf rating\_min} are known as ``untrusted users''.  Users with mojo between these two numbers have no special name, they're just normal users.  
+
+\begin{itemize}
+\item {\bf Trusted users} have the ability to see and rate comments one point below the minimum rating set in {\bf rating\_min}.  
+\item {\bf Untrusted users} post with an initial rating matching their mojo; since by definition their mojo is below {\bf rating\_min}, only trusted users can see their comments.  If a trusted user then rates the comment, the initial rating is overridden and the comment is either hidden or not, depending on the rating.
+\end{itemize}
+
+Mojo is a {\bf time-weighted average of a user's comment ratings}, so a user must continually maintain his mojo level to remain trusted (or untrusted).  Scoop fetches the user's most recent rated comments, limited by both number and date as set in the variables {\bf mojo\_max\_comments} and {\bf mojo\_max\_days}, respectively.  If the variable {\bf mojo\_ignore\_diaries} is set, comments posted in a diary do not count towards either mojo or the maximum number of comments fetched.
+
+Comments used in mojo calculations are weighted, with the most recent comments counting for the most; the most recent rated comment is given a weight equal to {\bf mojo\_max\_comments}, the second most recent is given a weight equal to mojo\_max\_comments - 1, and so on down until the last fetched comment.  Both the number of ratings and the value of those ratings are multiplied by the weighting factor.  
+
+The weighted number of ratings and the sum of the weighted rating values are added independantly, then the value is divided by the number of ratings, to give the user's mojo.
+
+A user's trusted or untrusted status does not take effect unless the number of rated comments posted in the time limit set in the variable {\bf mojo\_max\_days} is greater than the number in the variable {\bf mojo\_min\_trusted} for trusted status, or {\bf mojo\_min\_untrusted} for untrusted status.
+
+If user abuses his privileges and {\bf rates good comments down or bad comments up} in a consistent pattern, his ratings can be reversed and rating privileges taken away with one click by the admin from the user's ``show user ratings'' page.  The group the abusive user is transferred to is named in the variable {\bf rating\_wipe\_group}.  This group must exist and shouldn't have the perm {\bf comment\_rate} (\ref{perm-comment-rate}).  This doesn't affect that user's mojo calculation, but all users whose comments had been rated have their mojo recalculated.
+
+\subsection{Per-user File Uploads}
+\label{features-file-uploads}
+
+Scoop allows three types of file uploads.  To have any file uploads at all, the variable {\bf allow\_uploads} must be turned on. The different types of uploads are given to specific user groups using Scoop's permission system.
+
+\subsubsection{Story Text Uploads}
+
+Story text uploading allows users to write stories in their favourite program and upload the text file when posting the article; the uploaded file is then placed into the ``Extended Copy'' textarea on the submit story form when they preview. The file is not displayed in the previewed story until they preview again, it is only placed in the ``Extended Copy'' textarea.
+
+If a file is uploaded when there is already content in the ``Extended Copy'' textarea, the content is replaced with the contents of the file. This can be useful for long articles when the author sees errors when previewing; the author can fix the error in the external program, save the file, then re-upload the corrected file and preview.
+
+Permission to upload files into the submit story form is given using the perm {\bf upload\_content} in the Groups Admin Tool. This feature is given on a per-group basis.
+
+\subsubsection{File Uploads}
+
+File upload gives the user their own directory on the server where they can upload any file, subject to the limits imposed by the admin on upload size and total directory size.
+
+Each user has his own directory and can only change his own directory, but all users can browse a user's files through the files link on the user info page.
+
+To set up the upload area, the variable {\bf upload\_path\_user} must be set to an absolute local path. Apache must have full write permissions to the directory, so it can manage files in it. The directory must also be accessible from outside via the web. The variable {\bf upload\_link\_user} must be set to an absolute external path or URL, the external address of the directory named in the previous variable. The directory named in the above two variables is used as a base directory; each user gets a subdirectory for his own files.
+
+Permission to use the upload area is given using the perm {\bf upload\_user} in the Groups Admin Tool. This feature is given on a per-group basis.
+
+The variables {\bf upload\_delete} and {\bf upload\_rename} determine whether or not users with permission to use the upload area can also delete and rename their files, respectively. Since the file upload feature can be used to store files used by the user in stories published on the site, refusing to allow the user to delete or rename uploaded files can prevent broken links within the site.
+
+To set {\bf file size and disk space limits}, the variables {\bf upload\_max\_file\_size} and {\bf upload\_user\_quota} are set to a positive number. In both cases, a value of zero disables the size limits and allows any size file to upload.
+
+\subsubsection{Admin Upload Area}
+
+The admin upload area is a shared upload directory. Each user with permission to manage this directory sees the same set of files. Permission to use the admin upload directory is given using the perm {\bf upload\_admin} in the Groups Admin Tool. This permission should only be given to administrative users, such as those in the Admin or Superuser groups.
+
+To set up the upload area, the variable {\bf upload\_path\_admin} must be set to an absolute local path.  Apache must have full write permissions to the directory, so it can manage files in it. The directory must also be accessible from outside via the web. The variable {\bf upload\_link\_admin} must be set to an absolute external path or URL, the external address of the directory named in the previous variable.
+
+The variable {\bf upload\_max\_file\_size} applies to admin uploads as well as user uploads.
+
+\subsection{User Subscriptions}
+\label{features-subscriptions}
+
+Subscribers can be given extra features, such as the ability to turn ads off, or permission to read private sections, or even just a token such as an icon next to their name on comments.  You can also give permission to use an ``expensive'' (that is, computationally expensive and generally slow) Scoop box in their sidebar, such as the ``Who's online?'' box, available on the Scoop Box Exchange.
+
+You will almost certainly want to have payment processing (\ref{features-cc-paypal}) set up to handle payment for those subscriptions.
+
+\subsubsection{Setting up Subscriptions}
+
+The first step in setting up subscriptions is to {\bf create a new user group for the subscribers} and giving it the appropriate permissions.  Basing it on the Users group then adding permissions is probably a good idea, as nobody will be pleased about losing permissions due to subscribing.
+
+If you will have several levels of subscriptions, you will need to create {\bf one user group per subscription level}, with the appropriate permissions for each.  It's probably a good idea to make each subscription level include the permissions for all levels below, but nothing requires it.  Again, nobody will be pleased about losing permissions due to upgrading a subscription.
+
+The second step is to {\bf create the subscription type}, using the Subscriptions Admin Tool (\ref{admin-tools-subscriptions}).  You can specify the price per month, the user group (which you created in step 1) a subscriber is moved to, and so on.  Save the subscription type once all the boxes are filled in the way you want.
+
+Third, the users {\bf must have permission} to subscribe; this is set using the {\bf allow\_subscription} perm.  This may not be all groups, especially if you have a restricted group for abusive users.  See \ref{subscription-security} for such considerations.
+
+If you want Scoop to move people to the subscriber group(s) automatically (this only makes sense if you have payment processing (\ref{features-cc-paypal}) set up), you should give the permission {\bf sub\_allow\_group\_change} to the groups for which you want to allow automated subscriptions.  Groups which do not have this permission trigger an email to the site administrator requesting a manual group change to the subscriber group.
+
+Finally, you can activate the subscription system by turning the variable {\bf use\_subscriptions} on in the Site Controls Admin Tool (\ref{admin-tools-vars}).
+
+\subsubsection{Giving Special Privileges}
+
+You can give subscribers special permissions (such as the use of the spellchecker) which the regular users don't have simply by selecting the appropriate perms in the Groups Admin Tool (\ref{admin-tools-groups}).
+
+You can also give them access to certain boxes, allowing you to effectively give subscribers access to any feature Scoop could ever have added through the box system.  (See sections~\ref{sbe} and~\ref{hacking} for details on adding features using boxes.)
+
+If you want to give access to a sidebar box, such as the database-intensive ``Who's Online?'' box, only to subscribers, you first create a perm for that box.  Add the perm to the variable {\bf perms} in the Site Controls Admin Tool, in the Security category.  Then, in the Groups Admin Tool, load the desired subscriber group, select the new perm, and save.  The subscriber group now has permission to do whatever that perm allows.
+
+The perm must then be checked in the relevant box, or it's rather pointless.  In the Boxes Admin Tool, load the box with the feature you are giving to subscribers.  At the beginning of the box, add the line:
+
+\begin{verbatim}
+return '' unless( $S->have_perm("new_perm_name") );
+\end{verbatim}
+
+and replace new\_perm\_name with the name of the perm you just created.
+
+This will cause the box to exit immediately (returning an empty string as its final output) unless the user is in a group with the permission named.  Boxes that produce no output disappear without a trace, and a user will never know that it is there until they subscribe.
+
+Once the box has been created and tested, place it on the page template where appropriate (such as in the sidebar in the block index\_template).  Subscribers will then see the box where you placed it; non-subscribers will not be aware of its presence or absence.
+
+You can create a general permission that says that the user is a subscriber, but if you want to have levels of subscriptions, or if you may someday change which box features are avail to which subscriber group, having an appropriately named perm for each would be easier to manage, as you can just check and uncheck the permissions for the different groups, instead of having to edit the boxes.
+
+\subsubsection{Some Security Considerations}
+\label{subscription-security}
+
+When giving out extra permissions to subscribers, pay close attention to the descriptions in the Groups Admin Tool documentation (\ref{admin-tools-groups}) as some permissions should only be given to trusted users, not just anybody who pays for a subscription.
+
+{\bf If you have a restricted group}, such as a ratings-prohibited or commenting-prohibited group, created for rating or commenting abuse, they should not have the perm {\bf allow\_subscription} or they will be able to leave their restricted group simply by purchasing the minimum subscription.
+
+\subsection{User-submitted Advertisements}
+\label{features-textads}
+
+Since reading interesting text and clicking links are what visitors to a Scoop site are generally there for, unobtrusive text ads generally have a much higher click-through rate than flashy graphical banner ads. Scoop's built-in ad server can handle both text, graphical, and mixed text and graphical ads.
+
+The ad system is turned on using the variable {\bf use\_ads}. Whether you are using free ads or paid ads, the line
+\begin{verbatim}
+use Scoop::Billing;
+\end{verbatim}
+must be uncommented in etc/startup.pl. If you want paid ads, see section~\ref{features-cc-paypal} for details on setting up payment processing.
+
+All advertisement configuration and approval is handled through the Advertising Admin Tool (\ref{admin-tools-advertising}).
+
+\subsubsection{Creating Ad Templates}
+
+Ad template creation is a five-step process.
+\begin{itemize}
+\item Create the block that formats the ad
+\item Create the ad template and set its properties
+\item Create an example ad using the ad template
+\item Place a display location for the ad on your page templates
+\item Activate the ad
+\end{itemize}
+
+Using the Blocks Admin Tool, {\bf create a little self-contained block of HTML} that could be inserted anywhere.  Usually this is a little table, but if you're going CSS it could just as easily be a DIV.  This block can contain any of the special keys {\bf TITLE}, {\bf TEXT1}, {\bf TEXT2}, {\bf LINK\_URL}, or {\bf FILE\_PATH}.  No special processing is done on any of these keys apart from sanitizing them; they are replaced with whatever the advertiser enters.  Leaving a special key out means that the advertiser isn't given a text box for that field.
+
+Using the Advertising Admin Tool, go to Edit Ad Properties and {\bf fill in the properties for your new template} to whatever is appropriate for this particular ad.  You will not be able to activate it yet.
+
+Still in the Advertising Admin Tool, go to Edit Example Ad and {\bf create an example ad} for your new template.  Show off its layout.
+
+Back in the Blocks Admin Tool, pick the appropriate page template and {\bf put the box ad\_box where the ad should display}, specifying the ad's position number (see below for some tips on the ad position) if it's other than 1.
+
+In the Advertising Admin Tool again, go to Edit Ad Properties and {\bf activate the ad}.
+
+The different types of ads and the different page locations can {\bf draw from the same or different pools of ads}, using the ``Ad Position'' property.  Each Ad Position number represents a distinct pool of ads, which can be filled from several different ad templates and poured into several different locations on a page.
+
+One type of ad can only have one ``Ad Position'' number, but several types of ads can share a position number and hence be mixed into the same pool.  Similarly, a given ad box placed on a page can have only one position number and draw only from that pool, but several ad boxes in different locations on the page can share a position number and hence draw from the same pool of ads.  
+
+\subsubsection{Graphical Ads}
+
+If you want to use {\bf graphical ads} or ads with a mixture of text and graphics, there are only a few extra things to watch while following the instructions above. Before you start working with graphical ads at all, the variables {\bf ad\_files\_base} and {\bf ad\_server\_url} and that directory's permissions must be correctly set so Scoop can successfully save and retrieve image files.
+
+The ad template that you create in the first step above must use as its image source ``\latexhtml{$\vert$}{|}ad\_server\_url\latexhtml{$\vert$$\vert$}{||}FILE\_PATH\latexhtml{$\vert$}{|}'' so the link to the ad image works properly. You may also want to specify the width and height of the ad image so the page layout doesn't get altered by a user submitting an image that is entirely the wrong size. 
+
+When setting the ads properties in the second step above, you should put a reasonable file size limit on the files that can be uploaded.
+
+The above information can actually apply to any ads that require a separate file, such as embedded java or flash; you will then simply use the appropriate HTML tag instead of the IMG tag. Scoop does not actually check what type of file is being uploaded.
+
+\subsubsection{Approving and Managing Ads}
+
+When an advertiser buys an ad, it must be approved before it enters the ad pool for display.  Ads waiting to be approved are listed in the Advertising Admin Tool, under Judge Submissions (also the first page to appear when you enter the Advertising Admin Tool).
+
+If you have the variable {\bf ads\_judge\_unpaid} turned on, you will see both paid and unpaid ads on the judging page; if off, only paid ads will be shown.
+
+Ads must be both approved and activated before they start appearing in the normal ad rotation.  If you aren't getting payments for the ads via paypal or credit card, you may want to turn the variable {\bf activate\_upon\_approve} on so the ads are activated as soon as you approve them.  If you are getting payment through Paypal or credit card, Scoop will activate approved and paid ads from the cc\_bill\_orders and paypal\_bill\_orders crons (\ref{admin-tools-cron}), depending on payment method.
+
+\subsubsection{Ad Comments}
+
+Ads in Scoop are each filed into a story, with all the features that implies---including comments.
+
+For each type of ad, the admin can {\bf turn ad comments on or off} on the Edit Ad Properties page, then when an advertiser buys an ad (if the ad type has comments available) the advertiser can leave comments on or turn them off for that one ad.
+
+A smart advertiser will leave comments on, because not only do ad impressions on the story and comment view for the ad not count towards what he's paying for, he also has the reader's full attention directed to his ad, and can explain, clarify, and expand on what the ad or the advertised product is all about.
+
+The ads available for commenting are filed in the section named in the variable {\bf ad\_story\_section}.  You will have to create this section in the Sections Admin Tool before it will list the ad stories, and set its Post Story section permissions to ``Hide'' for all groups except Superuser to prevent people from posting regular stories to that section.  Both Read permissions and the Post Comment permission should all still be ``Allow''.  Ads will not show up on the ``Everything'' section page unless you remove the ad section from the variable {\bf sections\_excluded\_from\_all}.
+
+\subsection{Calendar}
+\label{features-calendar}
+
+Scoop's calendar feature permits multiple public and private calendars and events, as well as allowing users to maintain their own personal calendars in addition to the site-wide calendars.
+
+Calendars are turned on using the Site Control {\bf use\_calendars}. See the sections below for details on configuring the specific behaviour you want. Global calendar configuration is handled by the site controls in the `Events' category; calendar display is handled by the blocks in the `Calendars and Events' category. Per-calendar configuration and global event configuration are managed in the Calendars Admin Tool (\ref{admin-tools-calendars}).
+
+Site-wide calendars can be managed by anyone with the {\bf edit\_calendars} perm (\ref{perm-edit-calendars}). One site-wide calendar is included by default, but you may create as many as you like. 
+
+If the Site Control {\bf allow\_user\_calendars} is on, users may create their own calendars, but only one calendar may be created per account. Users may set the access controls (\ref{features-calendar-access}) on their calendar however they choose, but admins always have the ability to see all calendars.
+
+If a user has the {\bf submit\_event} perm (\ref{perm-submit-event}) and the calendar permissions allow it, they may submit events to a calendar for display to all other users. On submitting the event, they are marked as the `organizer' of that event and they (and the owner of the calender the event is submitted to) are able to invite site members to view the event and see the RSVP status, and, if they have the {\bf update\_own\_event} perm (\ref{perm-update-own-event}) can change the event.
+
+If there is more than one site-wide calendar, or if users can have their own calendars, you probably want to enable calendar subscriptions (\ref{features-calendar-subscription}). Users are automatically subscribed to their own calendar when it is created.
+
+The mini-calendar that can be displayed on the front page (the box {\bf mini\_calendar}) contains the same events as the full-sized calendar displayed on the /calendar URL, when no calendar ID is specified. If calendar subscriptions (\ref{features-calendar-subscription}) are on, this is the current user's personal calendar view; otherwise it is the calendar named in the site control {\bf default\_calendar\_id}.
+
+\subsubsection{Access control}
+\label{features-calendar-access}
+
+Calendars and events each have a system of access control that can be as fine-grained as the calendar or event owner likes. Each calendar and event has a trio of permissions associated with it, two of which the calendar or event owner can change.
+
+\begin{description}
+\item[View] This determines who can view the calendar or event. The three options are: everybody (public), only people on the invitation list, and only me (private). Whenever a calendar or event is viewed, this permission is checked to make sure the current user has permission to see it. For calendars, somebody with the {\bf edit\_calendars} perm (\ref{perm-edit-calendars}) can see the calendar regardless of permissions. For events, somebody with the {\bf edit\_events} perm (\ref{perm-edit-events}) OR the owner of the calendar the event was submitted to can see the event regardless of permissions.
+\item[Submit] This determines who can submit events to the calendar, or stories to the event. The five options are: everybody (public); everybody, but I will review the events before they're visible; only people on the invitation list; only people on the invitation list, but I will review the events before they're visible; and only me (private). This is checked when building the menus attached to a calendar or event so only appropriate links are shown, and also when somebody attempts to submit. For calendars, somebody with the {\bf edit\_calendars} perm (\ref{perm-edit-calendars}) can submit events to the calendar regardless of permissions. For events, somebody with the {\bf edit\_events} perm (\ref{perm-edit-events}) OR the owner of the calendar the event was submitted to can submit to the event regardless of permissions.
+\item[Edit] This determines who can edit the calendar or event. For calendars, users with the {\bf edit\_calendars} perm (\ref{perm-edit-calendars}) or the owner of the calendar can edit the calendar settings, moderate event submissions, and manage the calendar's invitation list. For events, users with the {\bf edit\_events} perm (\ref{perm-edit-events}), the owner of the calendar the event was submitted to, or the user who submitted the event if that user has the {\bf update\_own\_event} perm (\ref{perm-update-own-event}) can edit the event and its invitation lists.
+\end{description}
+
+Events submitted to a private or invitation-only calendar will only be visible to people who have permission to see that calendar, and may be restricted further. To have an event visible to all as well as visible in a private or invitation-only calendar, it must be submitted to a public calendar then included in the private calendar afterward.
+
+\subsubsection{Subscriptions}
+\label{features-calendar-subscription}
+
+If the site control {\bf allow\_personal\_calendar\_view} is on (and the user has the edit\_own\_calendar perm (\ref{perm-edit-own-calendar}) - wtf? FIXME: rusty added that), users can subscribe to multiple calendars and have their events displayed all at once in a `personal calendar view'. The personal calendar view is displayed when a user requests /my/calendar or otherwise doesn't specify a particular calendar ID. If the user is not subscribed to any calendars, the calendar named in the site control {\bf default\_calendar\_id} is displayed.
+
+When viewing a specified calendar, a subscribe/unsubscribe link is provided as appropriate. Clicking the link will subscribe or unsubscribe the user as required.
+
+When viewing the personal calendar view, all calendars available for the user's subscription are listed beside checkboxes. Checked calendars are currently subscribed; unchecked calendars are not. Multiple calendars can be subscribed and unsubscribed simultaneously by adjusting the checkboxes as desired and clicking the `Update Calendar' button.
+
+Users can also subscribe to events by clicking the `notify me of changes to this event' link on the event page. If you place the box {\bf event\_notify} on a page template, it will appear to let the user know that the event has changed since they last looked at it.
+
+\subsubsection{Event RSVP}
+\label{features-calendar-rsvp}
+
+Each event tracks RSVPs and volunteers (if volunteers are requested when the event is submitted). The event owner can see who has indicated via the RSVP form that they are coming, and whether or not they have volunteered. The event owner is emailed if somebody indicates that they would like to volunteer so they can get in touch and start planning duties. The volunteer form lets users know that their `realemail' will be emailed to the event owner for this purpose prior to them submitting it.
+
+The RSVP list is sorted with volunteers at the top and everybody else below, to help the event organizer.
+
+\subsubsection{Event stories}
+\label{features-calendar-stories}
+
+Stories can be attached to particular events, to provide updates, more details, summaries, and a place to talk about the event both before and after the fact. They are displayed below the event details on the event's page, and are filed in the `events' section. Users must have the {\bf story\_post} perm (\ref{perm-story-post}) to post stories to events, and: the event must be set to allow anybody to post stories to it, the user is on the invitation list, or the user is the owner of the event.
+
+The `events' section should be listed in the Site Control {\bf sections\_excluded\_from\_all} so event stories do not appear on the `Everything' page or in the site's RSS feed. The section's `story post' permissions should be set to `Hide' for all groups so it does not appear in the normal story submit form, only when posting a story specifically to a particular event.
+
+By placing {\bf \latexhtml{$\vert$}{|}BOX,event,\latexhtml{$\vert$}{|}sid\latexhtml{$\vert$}{|}\latexhtml{$\vert$}{|}} in the story\_summary block, stories associated with events will have a link added to the relevant event's page. All other stories will have nothing added.
+
+\subsection{Site Layout and Themes}
+\label{features-custom}
+
+Most of {\bf Scoop's layout is in the database}, accessible through the Blocks Admin Tool (\ref{admin-tools-blocks}).  Any of the blocks can be altered in any way to change the entire layout of the site; some Scoop sites look nothing like Scoop's default install.  Any block can insert any other block simply by calling it by name using the {\bf \latexhtml{$\vert$}{|}block\_name\latexhtml{$\vert$}{|}} convention.  Please note that any vertical pipes (\latexhtml{$\vert$}{|}) you want displayed literally must be escaped with a backslash (\latexhtml{$\backslash$$\vert$}{\\|}).
+
+Blocks can also insert boxes, by using the {\bf \latexhtml{$\vert$}{|}BOX,box\_name\latexhtml{$\vert$}{|}} convention.  Scoop has to be told when the item to insert is a box, because {\bf boxes and blocks are treated very differently}.  Blocks are simply inserted verbatim, replacing their reference; boxes are executed by the mod\_perl interpreter, and their output is placed into the {\bf content} and {\bf title} special keys of a box template, which then replaces the box key.  Boxes are often used when part of a display is conditional, such as the user menu, which shows or hides menu items depending on the user's group permissions.
+
+For most blocks, you can put anything you like in them and just see how it comes out; however, when altering the page templates, keep in mind that the admin pages---specifically, the Blocks Admin Tool---are created using the block {\bf admin\_template}, so if that's screwed up to the point where you can't use the page, you'll have to go into the database to fix it.  So take care, ok?
+
+For boxes, if an error appears that is not noticed at compile time, it can cause your site to return a {\bf 500 Internal Server Error}, so it's good practice to test all boxes on a page template other than the admin\_template, which is used to create the admin pages.
+
+\subsubsection{Block interactions}
+\label{blocks-interactions}
+
+Not every block is called directly using keys in other blocks, so tracing how the blocks interact can be difficult.  Some block calls appear to call nonexistant blocks, yet content appears in that place; those are special keys, and are specific to the block in which they appear.  {\bf Most special keys are described in the block descriptions} in the database, but some important ones are described here.
+
+The simplest case is when one block calls another; the text {\bf \latexhtml{$\vert$}{|}block\_name\latexhtml{$\vert$}{|}} in the calling block is replaced with the contents of the block {\bf block\_name}.  Because tracing blocks and their interactions can be so tricky, it is recommended practice to {\bf make all blocks quite self-contained}; that is, don't open a tag in one block and close it in another, because that's just a nightmare to debug. 
+
+The exceptions to the self-contained rule are things like the font tag blocks; those come in pairs, one that opens the tag and the other that closes it. Nothing but a font (or header, or span) indicator should be in those blocks, and the start and end tags must be balanced.
+
+The first stage of block interaction is when Scoop determines which {\bf page template} to use for a particular op (the first pseudo-directory), set using the Ops Admin Tool (\ref{admin-tools-ops}).  The front page, with no visible op, actually uses the op ``main''.  The page template is a full HTML page, and provides the core layout and positioning of content.  It generally includes a standard {\bf header} and {\bf footer} (both also blocks), the sidebar(s), and a special block called {\bf CONTENT}, but no actual content of its own.
+
+{\bf CONTENT} is where the output of whichever function (set in the Ops Admin Tool) is called to build the page is placed.  The function grabs whichever blocks are needed to build the page, handles any special keys, then puts the whole thing in the place of {\bf \latexhtml{$\vert$}{|}CONTENT\latexhtml{$\vert$}{|}}, after which the normal keys are interpolated normally.
+
+For example, when you request the front page, Scoop builds the front page using the block {\bf story\_summary} once for each story on the front page.  The number of stories to be displayed is fetched from the variable {\bf maxstories}, and Scoop limits the number of stories pulled from the database accordingly.  All the special keys in the {\bf story\_summary} block are filled in with the appropriate information from the database.
+
+Similarly, when you request a specific story, Scoop uses the {\bf story\_summary}, {\bf story\_separator}, and {\bf story\_body} blocks; then it starts and ends the comments with {\bf story\_info}, which has information on the story and comments as well as the comment controls, then displays the comments themselves using the block {\bf comment} or {\bf moderation\_comment}, depending on whether the comment is topical or editorial.  Again, most special keys are filled in with information from the database as described in the block descriptions.
+
+\subsubsection{Themed Layout}
+\label{blocks-themes}
+
+In addition to fully customizing the layout, you can have a different set of customizations appear based on several criteria using Scoop's theme engine.
+
+Using themes, {\bf any block at all can be replaced with a themed one}, and themes can be layered.  A theme can have as few as one block, or can replace all blocks.  Themes can be applied based on several criteria: which section is being viewed, both in story and section index views; what user group the visitor is in; what user agent the visitor's browser reports, the site's site\_id variable, from the Apache configuration, and the visitor's user preference.  More criteria can be added fairly easily with a bit of perl-fu in the {\bf theme\_chooser} box.
+
+{\bf Themes are created through the normal block interface}.  To create a new theme, just add a new block with the name of the theme in the ``Theme'' text box; when you save the new block, the theme will be automatically created.  Similarly, to delete a theme, simply delete all the blocks in that theme; when the last block is deleted, the theme will be automatically removed.
+
+Themes are layered by the simple method of replacing any blocks in the parent theme with the block of the same name in the child theme.  If more than one layer of theming is desired, debugging is simplified by having the layered themes replace non-overlapping sets of blocks from the default (base) theme.  
+
+Non-overlapping themes also allow, for example, a structural theme, modifying the layout of the page, and a `colour' theme, only modifying colours, to be set independantly but apply seamlessly at the same time.  For example, a structural theme using tables and one using CSS can both call the same colour theme for a given section.  A theme may include blocks not present in the default theme; if that theme is then not applied, any references to blocks only present in that theme are treated as if they don't exist, that is, replaced silently with an empty string.
+
+{\bf To manage themes}, the variables in the ``Themes'' category of the Site Controls Admin Tool (\ref{admin-tools-vars}) contain all the variables you will be using.  Themes in general are turned on or off by the variable {\bf use\_themes}.  Users may be permitted to select a theme to be layered with any others you have configured if the variable {\bf allow\_user\_themes} is turned on.  This only allows them to select between ``none'' and the themes listed in the variable {\bf user\_themes}.  If the user has not selected a theme, the theme named in the variable {\bf user\_theme\_default} is used.
+
+To activate a theme selection criterion, its name must appear in the variable {\bf order}, which also specifies the order in which themes are layered.  The default theme (named in the variable {\bf default\_theme}) is always applied first, to provide a complete foundation for the site.  If your themes have been carefully constructed to be non-overlapping, the order will not matter and the order variable simply names the criteria to be used in theme selection.  If they do overlap, however, the order in which theme criteria names appear is critical, as {\bf themes applied earlier may be overwritten by themes applied later}, if there are any duplicate blocks between them.
+
+Once you have decided on the order and criteria to use when applying themes, you must create variables to {\bf specify which themes to apply where}.  (Make sure you file these new variables in the ``Themes'' category so they are easy to find later.)
+
+The variables used to assign themes to criteria contain the name of a single theme as their value, and must be named according to a specific format, namely \latexhtml{$<$}{<}criterion\latexhtml{$>$}{>}\_\latexhtml{$<$}{<}item\latexhtml{$>$}{>}.  
+
+For example, if you have a section with the display name ``Site News'' and the internal name ``site\_news'', and you want a theme to apply to the section index page and all stories filed in that section, you would create a text variable called section\_site\_news and give it the name of the theme you want to use as a value.  You must create one such variable for each section you want to apply a theme to.  The front page is not assigned a section, so the default theme should contain its specific blocks.
+
+The criterion portion of the variable name must match the criterion name listed in the order variable, and the item portion of the variable name must match the internal name Scoop uses for its sections, user groups, and site ID (set in the httpd.conf file).  For the user agent theme, the item must match one of the strings the box {\bf detect\_agent} returns.  
+
+User agent detection is currently not functional and always returns an empty string. User agent detection is generally not considered a good idea, as you're not likely to think of every possible user agent that might reach your site. If there is one particular browser that chokes on a particular part of your site, though, you may want to detect that one browser and give it a theme with the troublesome part done in a way it can understand.
+
+\subsection{Flexible Sections and Categorization}
+\label{features-sections}
+
+Scoop's sections are designed to categorise the stories, but also have the ability to put one story in multiple sections, or restrict access to particular sections based on user group.  Most section configuration is done using the Sections Admin Tool (\ref{admin-tools-sections}).
+
+Topics are a different way of categorising stories, and are represented by the image icon shown with the story.  The topic and the section are completely independant of one another.  Most topic configuration is done using the Topics Admin Tool (\ref{admin-tools-topics}).
+
+\subsubsection{Basic Sections and Topics}
+\label{sections-basic}
+
+For basic separation of content, topics and simple sections are all that is needed.  You'll want to think carefully when creating your sections, because they can make content easy to find if they're set up properly, but incredibly hard to find if not.
+
+For most sites, you will want to split your sections based on the type of story that will go into it; for example, news, opinion or reviews.  Such a split makes it instantly clear what will be found in each section.  For more specialized sites, this may not be adequate; for example, a music or literature catalog may have sections for each genre, or if a single-genre catalogue, for each author.
+
+You will have to {\bf decide what set of sections best suits your site}, but it's worth thinking carefully over.  If you decide to change your sections later, you will need to re-file all existing stories into their new proper sections.
+
+Topics are less constrained, but also have fewer options; for example, you can't restrict posting to a give topic the way you can with sections.
+
+\subsubsection{Subsections and Stories in Multiple Sections}
+\label{sections-subsections}
+
+Sometimes you would prefer a {\bf heirarchical section structure}, rather than a flat section structure as described above.  To turn on Scoop's subsection functionality, turn the variable {\bf enable\_subsections} on.
+
+Stories filed in a heirarchical section behave much the same as stories filed in a flat section; that is, they are still posted to either the front page or the section.  The navigation and display used to sort them is slightly different, however.  If your {\bf index\_template} uses the box {\bf section\_title\_subsections} to display the section title, the path to the current section will be displayed in a familiar slash-delimited format, with each parent section name displayed as a link to the parent section's index page.  There are no links to any child sections, however.
+
+Subsections can have {\bf more than one parent section}; in this case, the section title will have as many paths as the subsection has parents, recursively (that is, if a parent also has more than one parent section, it will also display all possible paths).
+
+If you want a story to {\bf show up in multiple sections}, you can create a subsection and set each section you want the story to appear in as parents, then set that subsection as ``inheritable'' in the section configuration for each parent.  Any story filed in the child section will then appear in each of the parent sections, even though the story's section link will be for the child section.  
+
+Yes, the inheritance is backward; parents get stories from their children.
+
+\subsubsection{Section Permissions}
+\label{sections-perms}
+
+If desired, {\bf sections of the site can be made private}, denying access or even hiding the section's existence entirely, using section permissions.  A section can be hidden from any user group, including just anonymous users.  
+
+There are two ways of hiding sections: 
+\begin{itemize}
+\item Scoop can return a ``permission denied'' error when the user tries to access it (Deny) 
+\item Scoop can pretend the section doesn't exist if the user tries to access it (Hide)
+\end{itemize}
+
+Scoop shows the same behaviour for individual stories within the sections if the user finds a link directly to the story.
+
+Some sections can also {\bf bypass the queue} entirely, for certain user groups, by giving those user groups ``Auto-post Front Page'' or ``Auto-post to Section'' permission.  Those will automatically post a submitted story to the location indicated.
+
+You can also {\bf make sections read-only} for either comments or articles, based on the user group, by giving read but not post permission.
+
+When creating your sections, if most of them will have the same permissions, you can set the first one's permissions and check the "Make Default Section Permissions" box so those permissions are used for every newly created section after that.
+
+Some {\bf examples of useful applications} of this feature include: 
+
+\begin{itemize}
+\item A ``Site News'' section, where only admins can post stories updating users of what's happening behind the scenes.  Read and comment access is granted to all groups; Story Post permission is only given to admins, and they ``auto-post'' the story instead of sending it to the queue.
+\item An admin-only section, where only admins can post and read both comments and stories, where admins can discuss policy and problems, and all permissions are either denied or hidden to regular users.
+\item Keeping bots and casual passers-by (anonymous users) out of certain sections, but allowing registered users full access.
+\end{itemize}
+
+\subsection{Searching by Relevance}
+\label{features-fulltext}
+
+FULLTEXT indexes allow search results scored and sorted by relevance based on the semantic value of the search terms. As such, the most frequently used words are completely ignored and less frequently used words are assigned progresively higher values when scoring search results. When this functionality is turned on users are given the option to sort by date or relevance, with relevance being the default.
+
+Before turning on this functionality be sure to create the two required FULLTEXT indexes in the database:
+\begin{verbatim}
+alter table stories add FULLTEXT storysearch_idx (title,introtext,bodytext)
+alter table comments add FULLTEXT commentsearch_idx (subject,comment)
+\end{verbatim}
+
+\subsection{Page Caching}
+\label{features-static-page-caching}
+
+To improve performance, stories and their associated comments can be cached in the filesystem for anonymous users.  Only story pages with comments are cached; index pages are still fully generated on each page request.  Scoop maintains a timestamp for each cached page, and if there has been no change (ie, no comments posted) since the static page was generated, it is sent; if there has been a change, a new static page is generated and saved to the cache directory.
+
+Generally speaking, a large proportion of site traffic is anonymous, so enabling static page caching will reduce the database load quite a bit.  When traffic spikes, such as when a popular weblog posts a link to one of your stories, essentially all of the extra visitors will be anonymous---in this case, static page caching could be the difference between a very slow site and the database having a nervous breakdown.
+
+To turn on static page caching, first create an empty directory fully writeable by the apache user.  Enter the absolute filesystem path of that directory (with no trailing slash) in the variable {\bf page\_path}.  Then, turn on the variable {\bf use\_static\_pages}.
+
+Keep in mind that Scoop {\bf does not manage the size of the cache}, although it does delete old versions of the pages when regenerating them due to a change.  Make sure you have plenty of free disk space available, and keep an eye on it; if the disks get full and Scoop (or rather, Apache) can't write to disk, things start breaking.  Your users will often get {\bf page contained no data} errors.  
+
+This is an Apache issue; Apache tends to have fits when it can't write to its log files. If Scoop's cache directory is on a separate partition, so that filling it up doesn't affect any files Apache needs to write to, Scoop will simply stop caching new pages and will happily run with those pages it has cached already. If you have a busy site, you should keep an eye on the page cache and delete pages that haven't been accessed in a long time, to free up space for pages that are still read frequently and would benefit the most from a cached version.
+
+\subsection{Payment Processing}
+\label{features-cc-paypal}
+
+Scoop supports two methods of payment processing: Paypal, which requires nothing more than a paypal account, and Credit Card processing, which requires a secure server and a merchant account.
+
+\subsubsection{Paypal}
+
+To use payment processing, you must first add another prerequisite to Scoop's list: Crypt::SSLeay. This perl module allows LWP::UserAgent to make requests to https servers, and therefore allows Scoop to talk to Paypal's servers to confirm payments. Crypt::SSLeay requires the openssl libraries, which you probably already have. If you don't, you can get openssl from your install disk or, failing that, \hturl{http://www.openssl.org/}. Crypt::SSLeay installs from CPAN.
+
+Once Crypt::SSLeay is properly installed, open up scoop/etc/startup.pl and uncomment the lines
+\begin{verbatim}
+use Scoop::Billing;
+use Scoop::Billing::Paypal;
+\end{verbatim}
+but leave the LPERL and Linkpoint lines alone as they're specific to the credit card processing and aren't needed for paypal payments.
+
+For those two modules to be activated in Scoop, you must fully stop, then start Apache. They will not be brought in with a restart.
+
+In the Site Controls Admin Tool (\ref{admin-tools-vars}) set the variable {\bf paypal\_business\_id} to the email address of your paypal account and the variable {\bf secure\_site\_url} to the address of your secure Scoop site. (If you do not have an SSL-enabled server, you can put a non-secure URL here, but then your half of the payment process won't be encrypted. Since the actual payment is done on Paypal's secure servers this isn't too bad, but you really should have a secure server if you're doing payment processing.)
+
+In the Cron Admin Tool (\ref{admin-tools-cron}) enable the cron item {\bf paypal\_bill\_orders} and make sure your system cron is hitting Scoop's cron frequently enough. See section~\ref{admin-routine} for more information on Scoop's cron.
+
+Finally, turn on the variable {\bf ads\_use\_paypal} so paypal appears as an option at the payment stage.
+
+%FIXME: paypal donations are available on the back end, but how to turn them on? Boxes to handle this haven't been included in scoop.
+
+\subsubsection{Credit cards}
+
+If you'd like to set up credit card processing, contact rusty@kuro5hin.org for very reasonable hourly rates.
+
+Credit card processing requires a merchant account. Scoop currently works with Linkpoint, which requires you to purchase a proprietary perl module. Talk to rusty about how to set it up.
+
+\subsection{Admin Action Logging}
+\label{features-admin-action-log}
+
+If your site has multiple admins, you may want to turn on the admin action log, just so everybody can keep track of who did what, when.
+
+There are three logging levels: off, basic, and extended, represented in the variable {\bf use\_logging} as the numbers 0, 1, and 2, respectively.  With logging off, as you'd expect, nothing is logged.  With basic logging turned on, the user, date, and action are logged.  With extended logging turned on, everything logged in basic logging plus the contents of the item an admin dealt with (such as the text of a deleted comment) are also recorded.
+
+To determine which admin actions are logged, you must set them in the Hooks Admin Tool (\ref{admin-tools-hooks}).  The hooks directly recognised and handled specially are: comment\_delete, story\_new, story\_update, and story\_delete.  If you wish to log any other activities, the logging tool will log up to two arbitrary pieces of information it is given.  For all action logging, a hook must bind to the function {\bf log\_activity} and be enabled.  The two pieces of information logged by the log\_activity function for actions other than those listed above are the first two parameters sent by the hook definition.
+
+This features is primarily meant to log administrator actions, not everyday user actions.  If you want to log every move every visitor makes, use the variable {\bf paranoid\_logging} and read your server logs.  Generally, the only actions you will log are those restricted to administrators, such as deleting comments.
+
+\subsection{Access Control While Upgrading}
+\label{features-safemode}
+
+When configuring a new site or upgrading an existing one, you may want to allow yourself full access but keep other people out temporarily. Scoop's ``safe mode'' allows Superuser accounts and those with the perm {\bf bypass\_safe\_mode} normal access, and returns a 503 service temporarily unavailable to everybody else, logged in or not. 
+
+To turn ``safe mode'' on, the variable {\bf safe\_mode} should be set to 1. To return the site to normal operation when you're ready to open to the world, it should be set to 0.
+
+Apache can be easily configured to return a custom error message along with the 503 error by including the following line in the apache configuration file:
+
+\begin{verbatim}
+ErrorDocument 503 /oops.html
+\end{verbatim}
+
+That command will return the file /oops.html with the 503 error code. You can put any content in the file, such as explaining what's up with the server and when you expect to have the site back to normal.
+
+If you prefer not to modify your apache configuration, you can put the full URL of an error page in the variable {\bf safe\_mode\_redirect}. If this variable is used, Scoop will send a 302 Redirect to send the visitor to the error page. If you use this, make sure the URL of your error page is not a page controlled by Scoop, otherwise visitors will end up in a never-ending redirect loop as safe mode is triggered every time they try to access the error page.
+
+Scoop will process logins before determining whether or not to let you in when safe mode is active, so if you put a login form on the error page you will be able to get into your site after your login expires.
+
+\subsection{Boxtool}
+\label{features-boxtool}
+
+Boxtool is a perl script that lets you work with blocks, boxes, site controls, and special pages in your favourite text editor instead of through the web interface. It is found in Scoop's scripts/ directory. For any of those, but especially the longer items, this allows you to take advantage of your text editor's features like syntax hilighting and text searching, and makes changing them much easier.
+
+Changing the database directly, either through the mysql shell or an sql patch, is not recommended on a live site, because Apache must be stopped and started for the changes to be noticed by Scoop's cache. Most of the site-wide data, such as blocks, boxes, and so on are cached in the Apache process to reduce the load on the database. The cache's timestamp is updated when changing any of those items via the web interface, and therefore doesn't require a fresh start for Apache. Directly changing the database does not update the cache's timestamp and leads to a very confusing experience as different Apache processes update their cache at different times; the same page request will get different results depending on which apache process handles it.
+
+Boxtool updates the cache when it saves information to the database, notifying all apache processes to get the new information immediately.
+
+For details on the different options and commands boxtool accepts, run it as `boxtool help' or `boxtool --help'.
+
+

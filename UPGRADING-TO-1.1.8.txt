@@ -1,0 +1,25 @@
+If you're upgrading a version of Scoop < 1.1.8, be aware that some XSS vulnerabilities were fixed in that release, and when you upgrade, you need to fix these boxes that are known to have vulnerabilities by hand:
+
+comment_controls
+addtag
+tag_listing
+
+For comment_controls, add these lines right below where $sid, $cid, $pid, and $qid are defined:
+
+$sid = $S->filter_param($sid);
+$pid = $S->filter_param($pid);
+$cid = $S->filter_param($cid);
+$qid = $S->filter_param($qid);
+
+Add them below these lines:
+my $sid = $S->{CGI}->param('sid');
+my $pid = $S->{CGI}->param('pid');
+my $cid = $S->{CGI}->param('cid');
+my $qid = $S->{CGI}->param('qid');
+
+For addtag and tag_listing, add this line:
+$sid = $S->filter_param($sid);
+
+below this one:
+my $sid = $S->cgi->param('sid');
+

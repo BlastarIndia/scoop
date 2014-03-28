@@ -1,0 +1,63 @@
+\section{Introduction}
+
+Scoop is a web-based program primarily used for running community-based weblog-style sites.  However, because it is extremely customizable, it can be used for purposes ranging from simple content management with no comments or reader submissions to magazine-style publishing to the discussion site mentioned above.  Nearly all customization can be done through the web interface.
+
+%This document covers version 1.1 of Scoop.
+
+This document covers the CVS version of Scoop as of the date at the bottom of the page.  If you are using a prior numbered release or an older version of the CVS code, you may not be able to find some of the features described here.
+
+\subsection{Read This Section First!}
+
+This section answers the most common questions about Scoop which are seen by the developers. Please read this section first.
+
+First, a few things you should know about Scoop.  
+\begin{itemize}
+\item There are {\bf no .html files} for you to edit.  All customization is done through the web interface.
+\item You must have {\bf root or root-equivalent} access to the web server.  If you don't and can't get it, there are a few companies that will host a Scoop site for you.
+\item You will need to either know a lot about Apache or be prepared to learn. If you don't and don't want to, there are a few companies that will host a Scoop site for you.
+\item `apachectl restart' or `apachectl graceful' won't work, despite the Apache documentation's insistence otherwise. They do not free the memory used by Scoop for its cache; if you don't do a full `apachectl stop' and wait for it to terminate completely before doing an `apachectl start', your Scoop install will still have the old cache running and you will get some very very strange effects if you change anything in the database (such as during an upgrade). Some of these very strange effects can make you think that {\bf Scoop broke during an upgrade}.
+\item If you have Scoop running but {\bf can't create accounts}, there's probably a problem with your mail server.  Check that your SMTP settings are correct; if so, make sure that the SMTP server referenced allows your web server to relay through it.
+\item If Scoop starts but you {\bf can't stay logged in}, or you can {\bf log in but get ``Permission Denied''} when you try to do something, check the cookie\_host setting in the Scoop section of your Apache config file.  It should match the string you are currently using as a domain name to access your Scoop site, and it must have at least two dots in it.  If you are using www.example.com you may omit the `www' and use just .example.com but if you are using test.example.com do {\em not} use .test.example.com because that extra period screws things up for some browsers.  If you don't have a domain name, you can use the IP address as your cookie\_host and as long as you then access your Scoop site using the IP address it will work, but when you get a domain name you'll have to remember to change it.
+\end{itemize} 
+
+Scoop has a lot of dependencies, and if any of them aren't set up just right, Scoop will not work, or will not work properly.
+
+To start with, though it sounds small, you need the {\bf full expat}.  Scoop will run deceptively well without it, but anything RDF (both fetching headlines from other sites and producing your own headline feed) will not work.  To add RDF later, you'd basically need to reinstall from scratch, as several things need expat at compile-time.  See section~\ref{install-require} for more details.
+
+Scoop requires {\bf Apache 1.3.x with mod\_perl}, as it is a mod\_perl program.  If Scoop does nothing but give you a directory listing and you're {\em sure} you set it up properly, you probably don't have mod\_perl working.  We strongly recommend that you compile this yourself as described in section~\ref{install-apache-modperl}, as {\bf many packaged versions don't work} with Scoop properly.  The mod\_perl may be compiled into Apache, or loaded as a DSO (dynamic shared object).
+
+For those running Apache 2.x, sorry; if you want to run Scoop you'll have to downgrade, as Scoop has not yet been ported to mod\_perl 2.0 yet. Some work has been done to make it work with Apache 2, but it is not considered suitable for a live site.
+
+Scoop requires {\bf MySQL 3.22 or higher} (including 4.0) to provide its database.  There isn't really any special configuration required for Scoop, just follow the mySQL install instructions.  Packaged versions work fine.  As long as you can log in and get at the database from the webserver (Scoop and the db can be on separate machines if you like) you're fine.
+
+Next, for Scoop to run it will need {\bf perl 5.005 or newer} and the perl modules listed in section~\ref{install-modules}.  The install script should take care of most of them, but some are notoriously problematic and need to be installed by hand.  If you run into any trouble with the perl modules, read section~\ref{install-modules} because it describes your problem.
+
+\subsection{The Scoop License}
+
+Scoop is released under the terms of the GNU General Public License, which you'll find in the LICENSE file located in the main Scoop directory. You may also read the license online at \hturl{http://www.gnu.org/copyleft/gpl.html}. If you intend to use free software, then it's a good idea to read the GPL at least once.
+
+\subsection{System Requirements}
+
+Scoop should run on any OS that Apache with mod\_perl and mySQL will run on, though some take extra tweaking.  It has been run on basically every flavour of Linux, some other Unixes, Mac OS X, and Windows 2000 and XP.  There are currently issues with sending email (required to create new accounts) under Windows.
+
+The computer power you need will depend directly on the number of hits your site gets and especially how big your database is.  Once the database indexes get too large for available memory, performance goes all to hell and one person on dialup can DoS the site easily.  That's where you either get more RAM (if practical) and/or turn on archiving.
+
+\begin{itemize}
+\item A P133/64Mb RAM can run a very low traffic site with a small database, and still work as a desktop computer, although it is sluggish.
+\item A dual 800MHz PIII/1Gb RAM can run a site that gets between 70 thousand and 90 thousand hits per day and has a 450Mb database.
+\item Two beefy load-balanced Scoop servers and a database server with 1Gb RAM will handle a site that gets about 180,000 hits per day and has a big database, but only if story and comment archiving are active and most stories and comments are archived.
+\end{itemize}
+
+Scoop is pretty easy to move between computers since all of the configuration is in the database, so you can start with what you have handy and move to more powerful computers as needed.
+
+\subsection{Where To Get Help}
+\label{get-help}
+
+If you need help with anything Scoop-related, the first place you want to look is in this document.  After that, you can take a look at section~\ref{faq} for the FAQ and past problem descriptions to see if your question is answered there.  There's also the scoop-help and scoop-dev mailing lists; the first is for users and general questions about Scoop, and the second is for developers to discuss new features.
+
+You can subscribe at \hturl{http://lists.kuro5hin.org/mailman/listinfo/scoop-help} or \hturl{http://lists.kuro5hin.org/mailman/listinfo/scoop-dev} and read the archives at \hturl{http://lists.kuro5hin.org/pipermail/scoop-help/} or \hturl{http://lists.kuro5hin.org/pipermail/scoop-dev} to see if your question has already been asked and answered.
+
+Actually, if you run Scoop it's a good idea to subscribe to scoop-help even if you don't have a problem, because then you get announcements about updates to scoop and how to use them.  It's a very low traffic list.
+
+If you've searched all of the above and still can't figure it out, you can go to the slashnet IRC server (irc.slashnet.org) and join channel \#scoop to talk to the developers.  If you do, you may have to be patient; many of the developers idle there all the time, and sometimes forget to indicate that they're away.  If you ask a question then stick around, someone will eventually look at their chat window and realize there's a question waiting to be answered.
+

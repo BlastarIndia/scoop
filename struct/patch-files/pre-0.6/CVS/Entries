@@ -1,0 +1,26 @@
+/README/1.1/Sat Apr 24 02:03:08 2004//Tscoop-1_1_8
+/patch-0.5-0.6-sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-0.5.2.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-0.6pre2-0.6.sql/1.1/Thu Mar 22 01:38:28 2001//Tscoop-1_1_8
+/patch-004-seclev.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-005-modcomment.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-006-newvars.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-007-TableReorg.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-008-CommentDefaults.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-AttachPoll.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-EditBoxes.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-ForumZilla.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-Indexes1.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-Mojo.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-NewCache.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-Perms.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-PostThrottle.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-SectionVote.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-Sections.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-Session.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-StoryVoteBug.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-Templates.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-UserTable.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-VarChars.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+/patch-polls.sql/1.1/Wed Mar 21 20:54:29 2001//Tscoop-1_1_8
+D

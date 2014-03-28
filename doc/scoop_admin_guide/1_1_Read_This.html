@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>1.1 Read This Section First!</TITLE>
+<META NAME="description" CONTENT="1.1 Read This Section First!">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="1_2_Scoop_License.html">
+<LINK REL="previous" HREF="1_Introduction.html">
+<LINK REL="up" HREF="1_Introduction.html">
+<LINK REL="next" HREF="1_2_Scoop_License.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<UL>
+<LI><A href="1_1_Read_This.html" id="current"><SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">1</SPAN> Read This Section First!</A></LI>
+<LI><A href="1_2_Scoop_License.html"><SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">2</SPAN> The Scoop License</A></LI>
+<LI><A href="1_3_System_Requirements.html"><SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">3</SPAN> System Requirements</A></LI>
+<LI><A href="1_4_Where_Get.html"><SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">4</SPAN> Where To Get Help</A></LI>
+</UL>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00011000000000000000">
+<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">1</SPAN> Read This Section First!</A>
+</H2>
+
+<P>
+This section answers the most common questions about Scoop which are seen by the developers. Please read this section first.
+
+<P>
+First, a few things you should know about Scoop.  
+
+<UL>
+<LI>There are <B>no .html files</B> for you to edit.  All customization is done through the web interface.
+</LI>
+<LI>You must have <B>root or root-equivalent</B> access to the web server.  If you don't and can't get it, there are a few companies that will host a Scoop site for you.
+</LI>
+<LI>You will need to either know a lot about Apache or be prepared to learn. If you don't and don't want to, there are a few companies that will host a Scoop site for you.
+</LI>
+<LI>`apachectl restart' or `apachectl graceful' won't work, despite the Apache documentation's insistence otherwise. They do not free the memory used by Scoop for its cache; if you don't do a full `apachectl stop' and wait for it to terminate completely before doing an `apachectl start', your Scoop install will still have the old cache running and you will get some very very strange effects if you change anything in the database (such as during an upgrade). Some of these very strange effects can make you think that <B>Scoop broke during an upgrade</B>.
+</LI>
+<LI>If you have Scoop running but <B>can't create accounts</B>, there's probably a problem with your mail server.  Check that your SMTP settings are correct; if so, make sure that the SMTP server referenced allows your web server to relay through it.
+</LI>
+<LI>If Scoop starts but you <B>can't stay logged in</B>, or you can <B>log in but get ``Permission Denied''</B> when you try to do something, check the cookie_host setting in the Scoop section of your Apache config file.  It should match the string you are currently using as a domain name to access your Scoop site, and it must have at least two dots in it.  If you are using www.example.com you may omit the `www' and use just .example.com but if you are using test.example.com do <EM>not</EM> use .test.example.com because that extra period screws things up for some browsers.  If you don't have a domain name, you can use the IP address as your cookie_host and as long as you then access your Scoop site using the IP address it will work, but when you get a domain name you'll have to remember to change it.
+</LI>
+</UL> 
+
+<P>
+Scoop has a lot of dependencies, and if any of them aren't set up just right, Scoop will not work, or will not work properly.
+
+<P>
+To start with, though it sounds small, you need the <B>full expat</B>.  Scoop will run deceptively well without it, but anything RDF (both fetching headlines from other sites and producing your own headline feed) will not work.  To add RDF later, you'd basically need to reinstall from scratch, as several things need expat at compile-time.  See section&nbsp;<A HREF="2_1_Dependencies.html#install-require">2.1.1</A> for more details.
+
+<P>
+Scoop requires <B>Apache 1.3.x with mod_perl</B>, as it is a mod_perl program.  If Scoop does nothing but give you a directory listing and you're <EM>sure</EM> you set it up properly, you probably don't have mod_perl working.  We strongly recommend that you compile this yourself as described in section&nbsp;<A HREF="2_2_Installing_MySQL.html#install-apache-modperl">2.2</A>, as <B>many packaged versions don't work</B> with Scoop properly.  The mod_perl may be compiled into Apache, or loaded as a DSO (dynamic shared object).
+
+<P>
+For those running Apache 2.x, sorry; if you want to run Scoop you'll have to downgrade, as Scoop has not yet been ported to mod_perl 2.0 yet. Some work has been done to make it work with Apache 2, but it is not considered suitable for a live site.
+
+<P>
+Scoop requires <B>MySQL 3.22 or higher</B> (including 4.0) to provide its database.  There isn't really any special configuration required for Scoop, just follow the mySQL install instructions.  Packaged versions work fine.  As long as you can log in and get at the database from the webserver (Scoop and the db can be on separate machines if you like) you're fine.
+
+<P>
+Next, for Scoop to run it will need <B>perl 5.005 or newer</B> and the perl modules listed in section&nbsp;<A HREF="2_1_Dependencies.html#install-modules">2.1.2</A>.  The install script should take care of most of them, but some are notoriously problematic and need to be installed by hand.  If you run into any trouble with the perl modules, read section&nbsp;<A HREF="2_1_Dependencies.html#install-modules">2.1.2</A> because it describes your problem.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

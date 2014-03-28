@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>2.7 System-specific notes</TITLE>
+<META NAME="description" CONTENT="2.7 System-specific notes">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="2_8_Troubleshooting.html">
+<LINK REL="previous" HREF="2_6_Upgrading_Scoop.html">
+<LINK REL="up" HREF="2_Installation.html">
+<LINK REL="next" HREF="2_8_Troubleshooting.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<UL>
+<LI><A href="2_1_Dependencies.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> Dependencies</A></LI>
+<LI><A href="2_2_Installing_MySQL.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> Installing MySQL and Apache/mod_perl</A></LI>
+<LI><A href="2_3_Getting_Scoop.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN> Getting Scoop</A></LI>
+<LI><A href="2_4_Using_Installer.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN> Using the Installer</A></LI>
+<LI><A href="2_5_Installing_Hand.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN> Installing By Hand</A></LI>
+<LI><A href="2_6_Upgrading_Scoop.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN> Upgrading Scoop</A></LI>
+<LI><A href="2_7_System_specific_notes.html" id="current"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN> System-specific notes</A></LI>
+<LI><A href="2_8_Troubleshooting.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">8</SPAN> Troubleshooting</A></LI>
+</UL>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html265"
+  HREF="2_7_System_specific_notes.html#SECTION00027100000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN> Debian Linux</A>
+<LI><A NAME="tex2html266"
+  HREF="2_7_System_specific_notes.html#SECTION00027200000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">2</SPAN> Mac OS X (Panther)</A>
+<LI><A NAME="tex2html267"
+  HREF="2_7_System_specific_notes.html#SECTION00027300000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">3</SPAN> Solaris</A>
+<LI><A NAME="tex2html268"
+  HREF="2_7_System_specific_notes.html#SECTION00027400000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">4</SPAN> Windows 2000/XP</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H2><A NAME="SECTION00027000000000000000"></A>
+<A NAME="install-system-notes"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN> System-specific notes
+</H2>
+
+<P>
+Some operating systems have issues or quirks that need to be worked around.  If your OS is listed here, make sure you read its section before installing.
+
+<P>
+Many thanks to the users and developers who have contributed the notes below.
+
+<P>
+
+<H3><A NAME="SECTION00027100000000000000">
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN> Debian Linux</A>
+</H3>
+
+<P>
+
+<UL>
+<LI>libz.so needs to be softlinked to libz.so.1 if it doesn't exist
+</LI>
+</UL>
+
+<P>
+
+<H3><A NAME="SECTION00027200000000000000">
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">2</SPAN> Mac OS X (Panther)</A>
+</H3>
+
+<P>
+
+<UL>
+<LI>Before you can install Scoop you will need the developer tools (XCode) or you won't be able to compile any of the perl modules.
+</LI>
+<LI>The default Apache included with OS X works fine just by having it load mod_perl
+</LI>
+<LI>CPAN does not seem to like making all the perl modules; make fails with no useful error message. If you find this to be the case installing them by hand (outside of CPAN) works fine. It's tedious, but not particularly complicated, as most perl modules have the same install instructions, differing only in their prerequisites (which are listed in their README files). See the items below for a few prerequisite quirks.
+</LI>
+<LI>Once the modules are installed, CPAN recognizes them and the install script works fine.
+</LI>
+<LI>MySQL is not in your path, so you'll have to edit the perl module's Makefile.PL (line 174) and put in the full path to mysql_config.
+</LI>
+<LI>fink has an expat package, but installs it in a non-standard location so you'll have to make sure the XML modules find it when compiling them
+</LI>
+</UL>
+
+<P>
+
+<H3><A NAME="SECTION00027300000000000000">
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">3</SPAN> Solaris</A>
+</H3>
+
+<P>
+
+<UL>
+<LI>The perl that comes with Solaris won't work properly. You should build your own perl using the same compiler you use to build mod_perl. (perl has a notion of how it was built, and it tries to keep using that notion for future building.)
+</LI>
+<LI>Make sure your perl install is in your path <EM>before</EM> the perl installed by Solaris, so that it's used when compiling apache/mod_perl.
+</LI>
+<LI>gcc-3.2 (Solaris package from sunfreeware) is the recommended compiler.
+</LI>
+</UL>
+
+<P>
+
+<H3><A NAME="SECTION00027400000000000000">
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">4</SPAN> Windows 2000/XP</A>
+</H3>
+
+<P>
+
+<UL>
+<LI>Mail sending is notoriously troublesome under Windows.  Some people have reported that Scoop can send only one email before email stops working. No fix has been reported yet.
+</LI>
+<LI>You'll need to get and install ActiveState's Perl, which is available from <A HREF="http://www.activestate.com/Products/ActivePerl/">http://www.activestate.com/Products/ActivePerl/</A>.
+</LI>
+<LI>There is no CPAN for Windows, and therefore Bundle::Scoop won't work. Use ppm instead:
+<PRE>
+ppm install (module name)
+</PRE>
+for each module.
+</LI>
+</UL>
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

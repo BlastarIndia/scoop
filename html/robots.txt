@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /~
+Disallow: /my
+Disallow: /user
+Disallow: /poll
+Disallow: /search
+Disallow: /newuser
+Disallow: /comments
+Disallow: /?op=

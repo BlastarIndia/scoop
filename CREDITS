@@ -1,0 +1,60 @@
+The following is a listing of the developers who have directly contributed to
+the Scoop source code.  Forgive me if you've been left out.
+
+    Name               #scoop nick      Address
+    ----               -----------      -------
+    Rusty Foster       rusty            <rusty@kuro5hin.org>
+    Brent Metzler      bmetzler         <bmetzler@geeky.org>
+    Chad Kreimendahl   sallgeud         <chad@phish.org>
+    Andrew Hurst       hurstdog         <abhurst@ucdavis.edu>
+    David Veatch       dvicci           <dvicci@reckoning.org>
+    Eric Ries          eries            <eries@CatalystRecruiting.com>
+    Keith Smiley       panner           <panner@perlmonkey.net>
+    Dylan Griffiths    Inoshiro         <Inoshiro@kuro5hin.org>
+    Srijith K          Mystic           <scoop@srijith.net>
+    Jeremy Bingham     Captain_Tenille  <jeremy@satanosphere.com>
+    Colin Hill         hillct           <hillct@colinhill.com>
+    Joe Groff          jcg              <joe@pknet.com>
+    Ryan Thiessen      theantix         <theantix@shaw.ca>
+    Erik Moeller                        <e.moeller@fokus.gmd.de>
+    Matthew Collins    hulver           <hulver@janes.demon.co.uk>
+    Steve Linberg                       <steve@silicongoblin.com>
+    Rhonda Hyslop      janra            <janra@write-on.org>
+    Michael Bain       MostlyHarmless   <mike@mostly-harmless.ca>
+    Scott Lockwood     Vladinator (brought to you by the letter 'o', and the number 0.7)
+
+* Other contributors listed below
+
+While the current state of the tables differs slightly, in some cases
+significantly, some table formats were inspired by slash 0.3, by Rob Malda
+(and many others).
+
+Thanks also to slashdot for inspiration and concepts, and for providing us with
+a motivation to write a system that isn't as bloated as theirs ;-)
+
+Many thanks to Brent Metzler for running scoop.kuro5hin.org and stepping up to
+maintain the open source project.  Check out http://www.geeky.org/ :-)
+
+Thanks to John Havard, Head Geek at The Seven Sages Project
+(http://www.sevensages.org/) for suggesting the user creation scheme, and
+assuring me it would prevent story spamming.  If it doesn't work, blame him. ;-)
+And thanks to John also for fixing my fscked-up zone file.
+
+Dylan Griffiths <Inoshiro@kuro5hin.org> suggested a great many features, found
+some bugs, has helped keep me sane, and introduce me to Slackware.  He also is
+responsible for some of the documentation, as well as attempting to improve
+the commenting within the code itself.
+
+Karsten Self <kmself@ix.netcom.com> provided a great lot of feedback and ideas, 
+and pretty much designed the comment rating system.  He has also gone way out
+of his way to promote Scoop everywhere.
+
+Chris Ainsworth has done heaps of graphics work for free, and deserves a big
+hand.
+
+Eveyone else at http://www.kuro5hin.org/ has also been a huge help in ferreting 
+out bugs and "features" and in making this as "stable" as it is now, and for 
+continuing to give me a standard to live up to.
+
+And thanks to everyone on slashdot.org, technocrat.net, and advogato.org who
+gave us good ideas and plans for the future.

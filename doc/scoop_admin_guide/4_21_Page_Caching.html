@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.21 Page Caching</TITLE>
+<META NAME="description" CONTENT="4.21 Page Caching">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="4_22_Payment_Processing.html">
+<LINK REL="previous" HREF="4_20_Searching_Relevance.html">
+<LINK REL="up" HREF="4_Scoop_Features.html">
+<LINK REL="next" HREF="4_22_Payment_Processing.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<UL>
+<LI><A href="4_1_Story_Selection.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN> Story Selection</A></LI>
+<LI><A href="4_2_User_Diaries.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> User Diaries</A></LI>
+<LI><A href="4_3_Story_Archiving.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN> Story Archiving</A></LI>
+<LI><A href="4_4_Story_Digest.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">4</SPAN> Story Digest Emails</A></LI>
+<LI><A href="4_5_Story_Syndication.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">5</SPAN> Story Syndication (RDF)</A></LI>
+<LI><A href="4_6_Story_hotlisting_bookma.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">6</SPAN> Story hotlisting/bookmarking</A></LI>
+<LI><A href="4_7_Automatic_Related.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">7</SPAN> Automatic `Related Links' listing</A></LI>
+<LI><A href="4_8_Comments_Comment.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">8</SPAN> Comments and Comment Views</A></LI>
+<LI><A href="4_9_Polls.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">9</SPAN> Polls</A></LI>
+<LI><A href="4_10_Spell_checking_Stories.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">10</SPAN> Spell-checking Stories and Comments</A></LI>
+<LI><A href="4_11_Macros_in.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">11</SPAN> Macros in Stories and Comments</A></LI>
+<LI><A href="4_12_Spam_Crapflood.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">12</SPAN> Spam and Crapflood Prevention</A></LI>
+<LI><A href="4_13_Trusted_Users.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">13</SPAN> Trusted Users and Mojo</A></LI>
+<LI><A href="4_14_Per_user_File.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">14</SPAN> Per-user File Uploads</A></LI>
+<LI><A href="4_15_User_Subscriptions.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">15</SPAN> User Subscriptions</A></LI>
+<LI><A href="4_16_User_submitted_Adverti.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">16</SPAN> User-submitted Advertisements</A></LI>
+<LI><A href="4_17_Calendar.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">17</SPAN> Calendar</A></LI>
+<LI><A href="4_18_Site_Layout.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">18</SPAN> Site Layout and Themes</A></LI>
+<LI><A href="4_19_Flexible_Sections.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">19</SPAN> Flexible Sections and Categorization</A></LI>
+<LI><A href="4_20_Searching_Relevance.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">20</SPAN> Searching by Relevance</A></LI>
+<LI><A href="4_21_Page_Caching.html" id="current"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">21</SPAN> Page Caching</A></LI>
+<LI><A href="4_22_Payment_Processing.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">22</SPAN> Payment Processing</A></LI>
+<LI><A href="4_23_Admin_Action.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">23</SPAN> Admin Action Logging</A></LI>
+<LI><A href="4_24_Access_Control.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">24</SPAN> Access Control While Upgrading</A></LI>
+<LI><A href="4_25_Boxtool.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">25</SPAN> Boxtool</A></LI>
+</UL>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000421000000000000000"></A>
+<A NAME="features-static-page-caching"></A>
+<BR>
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">21</SPAN> Page Caching
+</H2>
+
+<P>
+To improve performance, stories and their associated comments can be cached in the filesystem for anonymous users.  Only story pages with comments are cached; index pages are still fully generated on each page request.  Scoop maintains a timestamp for each cached page, and if there has been no change (ie, no comments posted) since the static page was generated, it is sent; if there has been a change, a new static page is generated and saved to the cache directory.
+
+<P>
+Generally speaking, a large proportion of site traffic is anonymous, so enabling static page caching will reduce the database load quite a bit.  When traffic spikes, such as when a popular weblog posts a link to one of your stories, essentially all of the extra visitors will be anonymous--in this case, static page caching could be the difference between a very slow site and the database having a nervous breakdown.
+
+<P>
+To turn on static page caching, first create an empty directory fully writeable by the apache user.  Enter the absolute filesystem path of that directory (with no trailing slash) in the variable <B>page_path</B>.  Then, turn on the variable <B>use_static_pages</B>.
+
+<P>
+Keep in mind that Scoop <B>does not manage the size of the cache</B>, although it does delete old versions of the pages when regenerating them due to a change.  Make sure you have plenty of free disk space available, and keep an eye on it; if the disks get full and Scoop (or rather, Apache) can't write to disk, things start breaking.  Your users will often get <B>page contained no data</B> errors.  
+
+<P>
+This is an Apache issue; Apache tends to have fits when it can't write to its log files. If Scoop's cache directory is on a separate partition, so that filling it up doesn't affect any files Apache needs to write to, Scoop will simply stop caching new pages and will happily run with those pages it has cached already. If you have a busy site, you should keep an eye on the page cache and delete pages that haven't been accessed in a long time, to free up space for pages that are still read frequently and would benefit the most from a cached version.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

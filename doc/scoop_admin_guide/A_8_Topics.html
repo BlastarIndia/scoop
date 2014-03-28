@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>A..8 Topics</TITLE>
+<META NAME="description" CONTENT="A..8 Topics">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="A_9_Sections.html">
+<LINK REL="previous" HREF="A_7_Blocks.html">
+<LINK REL="up" HREF="A_Admin_Tools.html">
+<LINK REL="next" HREF="A_9_Sections.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<UL>
+<LI><A href="A_1_New_Story.html">A..<SPAN CLASS="arabic">1</SPAN> New Story</A></LI>
+<LI><A href="A_2_Story_List.html">A..<SPAN CLASS="arabic">2</SPAN> Story List</A></LI>
+<LI><A href="A_3_Archived_Story.html">A..<SPAN CLASS="arabic">3</SPAN> Archived Story List</A></LI>
+<LI><A href="A_4_New_Poll.html">A..<SPAN CLASS="arabic">4</SPAN> New Poll</A></LI>
+<LI><A href="A_5_Poll_List.html">A..<SPAN CLASS="arabic">5</SPAN> Poll List</A></LI>
+<LI><A href="A_6_Site_Controls.html">A..<SPAN CLASS="arabic">6</SPAN> Site Controls</A></LI>
+<LI><A href="A_7_Blocks.html">A..<SPAN CLASS="arabic">7</SPAN> Blocks</A></LI>
+<LI><A href="A_8_Topics.html" id="current">A..<SPAN CLASS="arabic">8</SPAN> Topics</A></LI>
+<LI><A href="A_9_Sections.html">A..<SPAN CLASS="arabic">9</SPAN> Sections</A></LI>
+<LI><A href="A_10_Special_Pages.html">A..<SPAN CLASS="arabic">10</SPAN> Special Pages</A></LI>
+<LI><A href="A_11_Boxes.html">A..<SPAN CLASS="arabic">11</SPAN> Boxes</A></LI>
+<LI><A href="A_12_Groups.html">A..<SPAN CLASS="arabic">12</SPAN> Groups</A></LI>
+<LI><A href="A_13_RDF_Feeds.html">A..<SPAN CLASS="arabic">13</SPAN> RDF Feeds</A></LI>
+<LI><A href="A_14_Cron.html">A..<SPAN CLASS="arabic">14</SPAN> Cron</A></LI>
+<LI><A href="A_15_Advertising.html">A..<SPAN CLASS="arabic">15</SPAN> Advertising</A></LI>
+<LI><A href="A_16_Ops.html">A..<SPAN CLASS="arabic">16</SPAN> Ops</A></LI>
+<LI><A href="A_17_Subscriptions.html">A..<SPAN CLASS="arabic">17</SPAN> Subscriptions</A></LI>
+<LI><A href="A_18_Hooks.html">A..<SPAN CLASS="arabic">18</SPAN> Hooks</A></LI>
+<LI><A href="A_19_Log.html">A..<SPAN CLASS="arabic">19</SPAN> Log</A></LI>
+<LI><A href="A_20_Macros.html">A..<SPAN CLASS="arabic">20</SPAN> Macros</A></LI>
+<LI><A href="A_21_User_Preferences.html">A..<SPAN CLASS="arabic">21</SPAN> User Preferences</A></LI>
+<LI><A href="A_22_Calendars.html">A..<SPAN CLASS="arabic">22</SPAN> Calendars</A></LI>
+<LI><A href="A_23_Search.html">A..<SPAN CLASS="arabic">23</SPAN> Search</A></LI>
+</UL>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00068000000000000000"></A>
+<A NAME="admin-tools-topics"></A>
+<BR>
+A..<SPAN CLASS="arabic">8</SPAN> Topics
+</H2>
+
+<P>
+The Topics Admin Tool is where you edit the topics and associated topic images.  To use this Admin Tool, you must have the edit_topics perm (<A HREF="A_12_Groups.html#perm-edit-topics">A.12.28</A>) active for your group.
+
+<P>
+To turn topics on and off, see the variable use_topics.
+
+<P>
+On the Topics admin page, all topics are listed with their images to the right of the page, and the topic detail form for the currently selected topic is to the left.  Clicking on a topic will bring its details into the form to the left.
+
+<P>
+<DL>
+<DT><STRONG>TID</STRONG></DT>
+<DD>The topic ID, a short alphanumeric string used to uniquely identify the topic.
+</DD>
+<DT><STRONG>Dimensions</STRONG></DT>
+<DD>Used when displaying the image in a story.  Enter the pixel width in the first box and the pixel height in the second.
+</DD>
+<DT><STRONG>Alt Text</STRONG></DT>
+<DD>Used both as the alt attribute when displaying the topic icon and also as the descriptive name in the select box when a new story is being posted.
+</DD>
+<DT><STRONG>Image Name</STRONG></DT>
+<DD>The filename of the topic image, with no path information.  Scoop assumes that all topic images are in the subdirectory named in the variable topics of the directory named in the variable imagedir and will prepend that path to whatever image name you supply.
+</DD>
+</DL>
+
+<P>
+If you are editing an existing topic, an additional option is shown, used if you are deleting the topic.  Another topic should be selected, and all stories using the deleted topic will be reassigned to the topic selected here.
+
+<P>
+The ``Write'' button either saves changes or creates a new topic, depending on whether the topic ID exists already or not.  The ``Delete'' button deletes the topic and reassigns stories as required.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

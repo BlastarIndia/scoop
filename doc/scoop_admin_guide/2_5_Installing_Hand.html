@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>2.5 Installing By Hand</TITLE>
+<META NAME="description" CONTENT="2.5 Installing By Hand">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="2_6_Upgrading_Scoop.html">
+<LINK REL="previous" HREF="2_4_Using_Installer.html">
+<LINK REL="up" HREF="2_Installation.html">
+<LINK REL="next" HREF="2_6_Upgrading_Scoop.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<UL>
+<LI><A href="2_1_Dependencies.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> Dependencies</A></LI>
+<LI><A href="2_2_Installing_MySQL.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> Installing MySQL and Apache/mod_perl</A></LI>
+<LI><A href="2_3_Getting_Scoop.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN> Getting Scoop</A></LI>
+<LI><A href="2_4_Using_Installer.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN> Using the Installer</A></LI>
+<LI><A href="2_5_Installing_Hand.html" id="current"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN> Installing By Hand</A></LI>
+<LI><A href="2_6_Upgrading_Scoop.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN> Upgrading Scoop</A></LI>
+<LI><A href="2_7_System_specific_notes.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN> System-specific notes</A></LI>
+<LI><A href="2_8_Troubleshooting.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">8</SPAN> Troubleshooting</A></LI>
+</UL>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html240"
+  HREF="2_5_Installing_Hand.html#SECTION00025100000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN> Configure the Database</A>
+<LI><A NAME="tex2html241"
+  HREF="2_5_Installing_Hand.html#SECTION00025200000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">2</SPAN> Configure Apache</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H2><A NAME="SECTION00025000000000000000"></A>
+<A NAME="by-hand"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN> Installing By Hand
+</H2>
+
+<P>
+If you choose not to use the install.pl script to install Scoop, it can be done by hand.  These instructions assume you have installed perl, mysql, apache/mod_perl, and the required perl modules as described in previous sections.
+
+<P>
+First, make sure you have the Scoop distribution unpacked in its directory.
+
+<P>
+
+<H3><A NAME="SECTION00025100000000000000"></A>
+<A NAME="manual-db"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN> Configure the Database
+</H3>
+
+<P>
+You'll have to log in to the database as root (database root, not system root) or as another database user with the ability to grant privileges to other users, as well as the ability to create and modify databases.  If you have just set up MySQL, please <B>make sure that the database root account has a password</B> on it - MySQL allows you to get away without one, but it's very bad practice.
+
+<P>
+You may substitute values to suit your setup for the words in &lt;brackets&gt;, as needed; for example, if you are running more than one Scoop site, you won't want to call either of them `scoop'.  And definitely change &lt;password&gt; to something more secure.
+
+<P>
+<PRE>
+shell$ mysql -u root -p
+Enter password: 
+mysql&gt; create database &lt;scoop&gt;;
+mysql&gt; grant insert, update, delete, select on &lt;scoop&gt;.* 
+    -&gt; to &lt;nobody&gt;@&lt;localhost&gt; identified by '&lt;password&gt;';
+mysql&gt; exit
+</PRE>
+
+<P>
+Note: the grant statement might have to be modified if you run MySQL 3.22.x, but if you have a choice, you shouldn't run that version.
+
+<P>
+Once the database is created, you need to dump the scoop.sql file into your new database.  In the struct/ directory, issue the following command (it will prompt you for the password):
+
+<P>
+<PRE>
+shell$ mysql -u root -p &lt;scoop&gt; &lt; scoop.sql
+</PRE>
+
+<P>
+If you are doing a path-based install (http://www.mysite.org/scoop/ instead of http://scoop.mysite.org/) you'll have to set the path in the database.
+
+<P>
+<PRE>
+mysql&gt; update vars set value='/&lt;path&gt;' where name='rootdir';
+</PRE>
+
+<P>
+&lt;path&gt; should reflect your URL path; using the above example, '/&lt;path&gt;' should be '/scoop' (do not add a trailing slash!)  If you are doing a virtual-host install, do not do this step.
+
+<P>
+Other important settings are described in section&nbsp;<A HREF="3_1_Initial_Setup.html#initial-setup">3.1</A>; rootdir is the only one that cannot be set through Scoop's normal administrative interface, and it must be set before starting Apache.
+
+<P>
+
+<H3><A NAME="SECTION00025200000000000000"></A>
+<A NAME="apache-config"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">2</SPAN> Configure Apache
+</H3>
+
+<P>
+Once MySQL has the Scoop database set up with the proper permissions, Apache needs to know about it, as well as several other things.
+
+<P>
+If you will run Scoop as a virtual host or as the sole website on the server, open etc/httpd-vhost.conf; if you will run Scoop in a subdirectory, open etc/httpd-location.conf.  The files are pretty well self-documented; read the one you chose carefully to set all the variables and options properly.
+
+<P>
+Some extra notes on the options:
+
+<UL>
+<LI>__URL_PATH__ is the external path after your domain name and not the internal filesystem path.
+</LI>
+<LI>The database username and password should be the ones you used in your `grant' statement while creating the Scoop database, and <B>should not be a highly-priviledged user</B>.
+</LI>
+<LI>If you set the server name in MySQL to `localhost' then the database server name in Apache should also be `localhost'; if you set the first to the actual DNS name of the webserver, then the second should use the DNS name of the SQL server, even if they are the same computer.
+</LI>
+<LI>The cookie_host variable must <B>match the domain you will use</B> to access the Scoop site, and it must have two dots in it.  Using mysite.org won't work; .mysite.org or scoop.mysite.org will, but the first will allow any third-level domain.  Using .scoop.mysite.org can cause problems with some browsers but seems to work in most.  If you don't have a domain and are accessing your Scoop site using its IP address, put the IP address in the cookie_host variable. If you are doing a local install for testing, localhost won't work as the domain name, because there are no dots. Make an entry similar to machinename.home.local (or other three-part, invalid domain) in your hosts file and use that as the domain for your Scoop site.
+</LI>
+<LI>If you will be using a mail server running on the same computer as Scoop to send email, set the SMTP variable to that computer's DNS name if it runs as a daemon, or to ``-'' if it doesn't (and is sendmail).  If this variable is set to ``-'', Scoop will look for the variable sendmail_program so it can make sendmail send an email.
+</LI>
+<LI>To use an SMTP server that is not on the same computer, you must make sure that the server allows Scoop to relay mail through it, or stuff like account creation will not work.
+</LI>
+<LI>If you (or other people) can't create accounts but everything seems to be set up properly, make sure your SMTP server isn't blacklisted by the intended recipient of the email before mucking with the configuration.  Try a different email address, possibly one on the same server as your SMTP server, first.
+</LI>
+<LI>If your Scoop server is behind a proxy or a NATing firewall, you must use the internal IP address in your VirtualHost setup.  In all cases, you must use the IP address that your Scoop server thinks it lives at.  Check this with /sbin/ifconfig or a similar tool if necessary.
+</LI>
+</UL>
+
+<P>
+Once you've set all the variables to fit your requirements, copy the entire file into your httpd.conf file, or include it in your httpd.conf with
+
+<P>
+<PRE>
+Include /path/to/httpd-&lt;blah&gt;.conf
+</PRE>
+
+<P>
+Once Apache is configured, make sure MySQL is running (it should be, you've just been messing around in it) and start Apache.  Using your web browser, go to the URL you set up in your httpd.conf file as Scoop's main page.
+
+<P>
+If the page comes up and you see the headline ``Welcome to Scoop!'' then you successfully installed Scoop, and you should go on to section&nbsp;<A HREF="3_Setup_Administration.html#admin">3</A> to finish setting up and start customizing.
+
+<P>
+If it doesn't, review the install procedure to make sure you didn't forget anything, check to see if your problem is described in section&nbsp;<A HREF="2_8_Troubleshooting.html#install-troubleshooting">2.8</A>, then if you still can't figure it out, ask for help at one of the places listed in section&nbsp;<A HREF="1_4_Where_Get.html#get-help">1.4</A>.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

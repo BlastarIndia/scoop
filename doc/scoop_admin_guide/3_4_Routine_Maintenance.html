@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.4 Routine Maintenance</TITLE>
+<META NAME="description" CONTENT="3.4 Routine Maintenance">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="3_5_Performance_Monitoring.html">
+<LINK REL="previous" HREF="3_3_Users_Stories.html">
+<LINK REL="up" HREF="3_Setup_Administration.html">
+<LINK REL="next" HREF="3_5_Performance_Monitoring.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<UL>
+<LI><A href="3_1_Initial_Setup.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">1</SPAN> Initial Setup</A></LI>
+<LI><A href="3_2_Basic_Customization.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN> Basic Customization</A></LI>
+<LI><A href="3_3_Users_Stories.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN> Users and Stories</A></LI>
+<LI><A href="3_4_Routine_Maintenance.html" id="current"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN> Routine Maintenance</A></LI>
+<LI><A href="3_5_Performance_Monitoring.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">5</SPAN> Performance Monitoring</A></LI>
+<LI><A href="3_6_General_Administrative.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">6</SPAN> General Administrative Tips</A></LI>
+</UL>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html352"
+  HREF="3_4_Routine_Maintenance.html#SECTION00034100000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN> Scheduled Tasks</A>
+<LI><A NAME="tex2html353"
+  HREF="3_4_Routine_Maintenance.html#SECTION00034200000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> Required Admin Approvals</A>
+<LI><A NAME="tex2html354"
+  HREF="3_4_Routine_Maintenance.html#SECTION00034300000000000000"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN> Event notification and logging</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H2><A NAME="SECTION00034000000000000000"></A>
+<A NAME="admin-routine"></A>
+<BR>
+<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN> Routine Maintenance
+</H2>
+
+<P>
+Scoop doesn't require a lot of admin intervention once it's set up and running smoothly.  It is entirely possible for the site to function completely normally when the sole administrator has gone on vacation, in fact.
+
+<P>
+
+<H3><A NAME="SECTION00034100000000000000">
+<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN> Scheduled Tasks</A>
+</H3>
+
+<P>
+Scoop has a built-in scheduler that will handle quite a bit of routine maintenance for you, such as fetching headlines from other sites, sending your headline digest to anybody who requested it, and cleaning out unused items in the database.  This can be administered via the Cron Admin Tool (see appendix&nbsp;<A HREF="A_14_Cron.html#admin-tools-cron">A.14</A>).
+
+<P>
+To have Scoop's cron run, you need to set your system to request the path /cron on your Scoop site more frequently than the most frequent item in Scoop's cron list.  When the path /cron is requested, Scoop will check to see if it is due to run any cron items.
+
+<P>
+In unix, using wget or something similar in your system cron works well.  You can also use the run_cron.pl script available in the scoop/scripts/ directory from your system cron.
+
+<P>
+The crons turned on by default are the generally useful ones, that you probably really want to run, like rdf (to create your rdf feed) and sessionreap (to remove old unused sessions from the session table, which can get quite large).
+
+<P>
+You may want to use Apache's log rotation to avoid filling up your hard drive.  This is not set up via Scoop, but in the Apache configuration. See the apache documentation at <A HREF="http://httpd.apache.org/docs/logs.html#rotation">http://httpd.apache.org/docs/logs.html#rotation</A> to set it up to suit your site.
+
+<P>
+
+<H3><A NAME="SECTION00034200000000000000">
+<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> Required Admin Approvals</A>
+</H3>
+
+<P>
+Only RDF feeds and advertisements require your approval as administrator before they are published on the site.
+
+<P>
+If you're allowing users to see and submit RDF feeds, make sure you visit the RDF Feeds Admin Tool every so often to approve or reject newly submitted feeds.
+
+<P>
+Similarly, if you are serving ads on your pages, make sure you visit the Advertising Admin Tool every so often to approve or reject any ads that have been purchased.
+
+<P>
+
+<H3><A NAME="SECTION00034300000000000000"></A>
+<A NAME="routine-hooks"></A>
+<BR>
+<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN> Event notification and logging
+</H3>
+
+<P>
+Scoop has the ability to run a box when certain events occur; the box can then do anything any Scoop box or function can do.  This can be administered in the Hooks Admin Tool.
+
+<P>
+A few of the events that are included but not activated by default log admin actions such as comment deletion.  If you activate the hooks that log admin events and set the variable use_logging to either 1 (normal logging) or 2 (extended logging), the logs it creates can be viewed using the Log Admin Tool.
+
+<P>
+For example, if you wanted Scoop to email you when a story was posted, you could create a box that sends the email, and then bind the hook story_post to your new box.
+
+<P>
+A given hook can have as many functions as you want bound to it; however, you can't control what order they're run in, so none of them should depend on another of the hooks. Hooks are given specified parameters which are relevent to the event; story_post, for example, has two parameters: sid (the Story ID, a five-part numeric code) and where (the location the story is posted: either 'front' or 'Section').
+
+<P>
+See section&nbsp;<A HREF="A_18_Hooks.html#admin-tools-hooks">A.18</A> for more information on hooks, when they are run, and tips on writing boxes for them.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

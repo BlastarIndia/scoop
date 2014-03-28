@@ -1,0 +1,96 @@
+-------------------------------------
+Scoop 1.1 development
+by Rusty Foster <rusty@kuro5hin.org>
+
+README:
+$Revision: 1.27 $
+$Date: 2006/04/26 20:56:47 $
+$Author: jeremy $
+-------------------------------------
+
+Scoop (which stands for "Scoop Is Not A Recursive Acronym", by the way) started
+out as an improved replacement for the Slash weblog system.  It has since grown
+into a fairly full-featured content management/discussion engine.
+
+This tarball will function as a CVS checkout (as it is literally a tarball of
+exactly that).  If it's much past the date above, try doing:
+
+$ cvs update
+
+from within the top scoop/ directory to get the freshest code, or run the
+get-scoop.sh script provided.  It will create a scoop/ directory in the current
+working directory and grab the CVS code.  Please note that it requires you have
+both the CVS utilities and SSH installed and available.
+
+------------
+The License:
+------------
+
+Scoop is licensed under the GNU GPL.  You will find a copy of this license in
+the file named "LICENSE."
+
+----------
+To Install
+----------
+
+Read the Installation section of the Scoop Administrators Guide (it's in the
+doc/scoop_admin_guide/ directory).
+
+Lots more info and support is available at http://scoop.kuro5hin.org/.  We also
+hang out in #scoop on irc.slashnet.org.
+
+Good luck!
+
+Quick install instructions:
+
+1) install expat
+2) install MySQL
+3) install Apache with mod_perl
+4) install the following perl modules from CPAN (or use install.pl which will 
+   attempt to install all these modules for you)
+      DBI
+      DBD::mysql
+      Digest::MD5
+      Apache::DBI
+      Apache::Test
+      Apache::Request
+      Class::Singleton
+      Crypt::UnixCrpyt
+      Mail::Sendmail
+      String::Random
+      Time::CTime
+      Time::Timezone
+      XML::Parser
+      LWP
+      Crypt::CBC
+      Crypt::Blowfish
+      XML::RSS
+      Cache::Memcached
+
+5) (optional) install the aspell libraries and Text::Aspell for Spellchecking 
+   support
+6) (optional) install Crypt::SSLeay for PayPal support
+7) (optional) run install.pl - this will perform steps 8, 9, and 10 for you
+8) create a MySQL database and user for Scoop
+9) load struct/scoop.sql into the database
+10) edit etc/httpd-location.conf or etc/httpd-vhost.conf to suit your 
+    configuration
+11) add an Include directive to the main httpd.conf referring to your Scoop 
+    configuration file
+12) stop then start Apache
+13) Scoop should be running. If it isn't, see the Scoop Admin Guide for 
+    troubleshooting.
+
+----------
+To Upgrade
+----------
+
+Check out the Upgrading section on the Scoop Administrators Guide (it's in the
+doc/scoop_admin_guide/ directory).
+
+-------
+Credits
+-------
+
+See the CREDITS file in this directory.
+

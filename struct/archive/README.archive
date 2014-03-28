@@ -1,0 +1,76 @@
+The create_archive_tables.sql will create the tables required for the scoop
+archive functions to work.
+
+As wells as setting up a new database for the archive to reside, you must
+also change some settings in you apache configuration, and some scoop vars
+as well.
+
+Apache.
+-------
+
+Add the following lines to your httpd.conf (or whatever file your main scoop
+settings are stored in).
+
+	# Archive config:
+	# Set these vars if you use an archive database
+
+	# The name of the archive database
+	PerlSetVar db_name_archive __DBNAMEARCHIVE__         
+
+	# The host where mySQL is running    
+	PerlSetVar db_host_archive __DBHOSTARCHIVE__    
+
+	# The user to connect as    
+	PerlSetVar db_user_archive __DBUSERARCHIVE__    
+
+	# The user's database password    
+	PerlSetVar db_pass_archive __DBPASSARCHIVE__
+
+Scoop.
+------
+
+The actual archiving is done by two of Scoop's cron jobs, archive_stories and
+poll_archive. By default, these are disabled, so to use archiving, go to
+Scoop's Cron admin tool and enable them by clicking the checkboxes next to
+those two crons, selecting Toggle Enabled, and clicking Save crons. Note that
+you need to have Scoop's Cron set up to actually run at certain intervals. See
+the Scoop Admin Guide for more on this.
+
+The following scoop vars need setting to control the archive.
+
+archive_moderations
+
+Set to 1 to save story moderations to the archive database. If set to 0 when
+a story is archived, the record of who moderated what will be deleted. Only
+the score will remain.
+
+archive_ratings
+
+Set to 1 to save comment ratings to the archive database. If set to 0 when a
+story is archived the record of who rated a comment and what they rated will
+be deleted. Only the score will remain.
+
+poll_archive_age
+
+Polls that are over this many days old (ie, at least this old and with no
+votes for that period) are archived. When a poll is archived it is not moved
+to the archive database. It is marked as being archived, and all votes for
+that poll are deleted. You cannot vote for archived polls.
+Setting this to 0 will disable poll archiving.
+
+story_archive_age
+
+Stories over this many days old will be archived. This behaviour can change
+if comment_archive_age is set to something other than 0.
+Setting this to 0 will disable story archiving.
+
+comment_archive_age
+
+Stories over story_archive_age days old will only be archived if there are
+no comments newer than this figure attatched to them.
+E.G. story_archive_age = 60 and comment_archive_age = 10.
+If a 60 day old story is found, but it has a comment attatched that is less
+than 10 days old, the story will not be archived.
+
+Set this to 0 to disable this check (stories over story_archive_age will
+always be archived)

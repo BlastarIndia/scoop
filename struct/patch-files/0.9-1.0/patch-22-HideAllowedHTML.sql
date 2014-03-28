@@ -1,0 +1,2 @@
+INSERT INTO vars VALUES ('hide_story_allowed_html','0','Set true to suppress the Allowed html line in the in story editing form. Useful for sites where users will likely just be confused by that line.','bool','Stories');
+INSERT INTO vars VALUES ('hide_comment_allowed_html','0','Set true to suppress the Allowed html line in the in comment posting form. Useful for sites where users will likely just be confused by that line.','bool','Comments');

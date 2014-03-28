@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>5 Extending Scoop's Abilities</TITLE>
+<META NAME="description" CONTENT="5 Extending Scoop's Abilities">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="A_Admin_Tools.html">
+<LINK REL="previous" HREF="4_Scoop_Features.html">
+<LINK REL="up" HREF="sag.html">
+<LINK REL="next" HREF="5_1_S_Object.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html" id="current"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<UL>
+<LI><A href="5_1_S_Object.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN> The $S Object</A></LI>
+<LI><A href="5_2_Program_Flow.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">2</SPAN> Program Flow and Scoop's code structure</A></LI>
+<LI><A href="5_3_Working_with.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">3</SPAN> Working with Boxes</A></LI>
+<LI><A href="5_4_Creating_new.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN> Creating new ops or features</A></LI>
+<LI><A href="5_5_Creating_Submitting.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">5</SPAN> Creating and Submitting Patches</A></LI>
+</UL>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00050000000000000000"></A>
+<A NAME="hacking"></A>
+<BR>
+<SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities
+</H1>
+
+<P>
+This section will explain the overall design of Scoop and some of the major functions that will help you program it. This does not by any means cover everything there is to know about Scoop; the only way to figure all that out is to read the code. This is intended to be a quick introduction to help you get started.
+
+<P>
+Most modules have perlpod in them, so you can `perldoc Module.pm' to get descriptions of most of a given module's functions.
+
+<P>
+This section assumes a working knowledge of perl and perl's OO syntax, and a little bit of SQL knowledge. A perl and SQL tutorial are way outside of the scope of this section, and besides, there are ones better than I could ever write already available all over the internet. It also assumes that you are familiar with running Scoop, as described in the rest of this admin guide.
+
+<P>
+Scoop uses perl's OO syntax but is not at heart very object oriented. All of Scoop's data and methods are available through one object, $S, mainly for convenience.
+
+<P>
+Adding features sometimes require changes to the underlying code of Scoop, sometimes only boxes, and sometimes a combination of underlying code and boxes.
+
+<P>
+When you change any of the .pm files in the scoop/lib directory or you change any of the apache configuration, you must completely stop apache, then start it. This forces everything to be recompiled; an `apachectl restart' will <EM>not</EM> do the job. When you change anything that is available to change via the web interface, you don't need to touch apache, it gets picked up automatically.
+
+<P>
+
+<HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html730"
+  HREF="5_1_S_Object.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN> The $S Object</A>
+<UL>
+<LI><A NAME="tex2html731"
+  HREF="5_1_S_Object.html#SECTION00051100000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">1</SPAN> Data</A>
+<LI><A NAME="tex2html732"
+  HREF="5_1_S_Object.html#SECTION00051200000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">2</SPAN> Database access</A>
+<LI><A NAME="tex2html733"
+  HREF="5_1_S_Object.html#SECTION00051300000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">3</SPAN> User-related Scoop Methods</A>
+<LI><A NAME="tex2html734"
+  HREF="5_1_S_Object.html#SECTION00051400000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">4</SPAN> Story-related Scoop Methods</A>
+<LI><A NAME="tex2html735"
+  HREF="5_1_S_Object.html#SECTION00051500000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">5</SPAN> Comment-related Scoop Methods</A>
+<LI><A NAME="tex2html736"
+  HREF="5_1_S_Object.html#SECTION00051600000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">6</SPAN> Other Useful Scoop Methods</A>
+<LI><A NAME="tex2html737"
+  HREF="5_1_S_Object.html#SECTION00051700000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">7</SPAN> Debugging</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html738"
+  HREF="5_2_Program_Flow.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">2</SPAN> Program Flow and Scoop's code structure</A>
+<LI><A NAME="tex2html739"
+  HREF="5_3_Working_with.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">3</SPAN> Working with Boxes</A>
+<UL>
+<LI><A NAME="tex2html740"
+  HREF="5_3_Working_with.html#SECTION00053100000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">1</SPAN> Box structure</A>
+<LI><A NAME="tex2html741"
+  HREF="5_3_Working_with.html#SECTION00053200000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN> Adding new features</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html742"
+  HREF="5_4_Creating_new.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN> Creating new ops or features</A>
+<LI><A NAME="tex2html743"
+  HREF="5_5_Creating_Submitting.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">5</SPAN> Creating and Submitting Patches</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

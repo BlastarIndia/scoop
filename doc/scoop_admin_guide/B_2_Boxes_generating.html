@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>B..2 Boxes generating the main page content</TITLE>
+<META NAME="description" CONTENT="B..2 Boxes generating the main page content">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="B_3_Boxes_with.html">
+<LINK REL="previous" HREF="B_1_Boxes_as.html">
+<LINK REL="up" HREF="B_Scoop_Box.html">
+<LINK REL="next" HREF="B_3_Boxes_with.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<UL>
+<LI><A href="B_1_Boxes_as.html">B..<SPAN CLASS="arabic">1</SPAN> Boxes as a small part of the page</A></LI>
+<LI><A href="B_2_Boxes_generating.html" id="current">B..<SPAN CLASS="arabic">2</SPAN> Boxes generating the main page content</A></LI>
+<LI><A href="B_3_Boxes_with.html">B..<SPAN CLASS="arabic">3</SPAN> Boxes with special needs</A></LI>
+</UL>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00072000000000000000"></A>
+<A NAME="sbe-box-op"></A>
+<BR>
+B..<SPAN CLASS="arabic">2</SPAN> Boxes generating the main page content
+</H2>
+
+<P>
+Some boxes can generate the main page content and fill in the CONTENT special key on a page template. These boxes are saved in the Boxes Admin Tool (<A HREF="A_11_Boxes.html#admin-tools-boxes">A.11</A>) by copying and pasting the code into the form and saving the new box. Once saved, they are activated in the Ops Admin Tool (<A HREF="A_16_Ops.html#admin-tools-ops">A.16</A>).
+
+<P>
+Create a new, appropriately named op, and fill in the form in a way that makes sense to the box. For example, while most pages use default_template as their page template, something like the faq_display box may be better suited to using index_template, which is used for the front and section index pages. Similarly, if the box is for general use, it probably doesn't need a permission associated with it.
+
+<P>
+Enter the name of the box in the `function' field and mark that this op is, in fact, a box.
+
+<P>
+If the box takes any parameters, these should be entered in the URL templates field. Using the faq_display box as our example again, the URL template would be:
+<PRE>
+/section/
+</PRE>
+
+<P>
+This URL template indicates that the box takes the CGI parameter named `section' as its first pseudo-subdirectory; visiting the URL /faq/help will display the section named `help' using the faq_display box. This will allow you to display any of the existing sections using the faq_display box, actually.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

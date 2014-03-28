@@ -1,0 +1,274 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.8 Comments and Comment Views</TITLE>
+<META NAME="description" CONTENT="4.8 Comments and Comment Views">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="4_9_Polls.html">
+<LINK REL="previous" HREF="4_7_Automatic_Related.html">
+<LINK REL="up" HREF="4_Scoop_Features.html">
+<LINK REL="next" HREF="4_9_Polls.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<UL>
+<LI><A href="4_1_Story_Selection.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN> Story Selection</A></LI>
+<LI><A href="4_2_User_Diaries.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> User Diaries</A></LI>
+<LI><A href="4_3_Story_Archiving.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN> Story Archiving</A></LI>
+<LI><A href="4_4_Story_Digest.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">4</SPAN> Story Digest Emails</A></LI>
+<LI><A href="4_5_Story_Syndication.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">5</SPAN> Story Syndication (RDF)</A></LI>
+<LI><A href="4_6_Story_hotlisting_bookma.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">6</SPAN> Story hotlisting/bookmarking</A></LI>
+<LI><A href="4_7_Automatic_Related.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">7</SPAN> Automatic `Related Links' listing</A></LI>
+<LI><A href="4_8_Comments_Comment.html" id="current"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">8</SPAN> Comments and Comment Views</A></LI>
+<LI><A href="4_9_Polls.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">9</SPAN> Polls</A></LI>
+<LI><A href="4_10_Spell_checking_Stories.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">10</SPAN> Spell-checking Stories and Comments</A></LI>
+<LI><A href="4_11_Macros_in.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">11</SPAN> Macros in Stories and Comments</A></LI>
+<LI><A href="4_12_Spam_Crapflood.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">12</SPAN> Spam and Crapflood Prevention</A></LI>
+<LI><A href="4_13_Trusted_Users.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">13</SPAN> Trusted Users and Mojo</A></LI>
+<LI><A href="4_14_Per_user_File.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">14</SPAN> Per-user File Uploads</A></LI>
+<LI><A href="4_15_User_Subscriptions.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">15</SPAN> User Subscriptions</A></LI>
+<LI><A href="4_16_User_submitted_Adverti.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">16</SPAN> User-submitted Advertisements</A></LI>
+<LI><A href="4_17_Calendar.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">17</SPAN> Calendar</A></LI>
+<LI><A href="4_18_Site_Layout.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">18</SPAN> Site Layout and Themes</A></LI>
+<LI><A href="4_19_Flexible_Sections.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">19</SPAN> Flexible Sections and Categorization</A></LI>
+<LI><A href="4_20_Searching_Relevance.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">20</SPAN> Searching by Relevance</A></LI>
+<LI><A href="4_21_Page_Caching.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">21</SPAN> Page Caching</A></LI>
+<LI><A href="4_22_Payment_Processing.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">22</SPAN> Payment Processing</A></LI>
+<LI><A href="4_23_Admin_Action.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">23</SPAN> Admin Action Logging</A></LI>
+<LI><A href="4_24_Access_Control.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">24</SPAN> Access Control While Upgrading</A></LI>
+<LI><A href="4_25_Boxtool.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">25</SPAN> Boxtool</A></LI>
+</UL>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html526"
+  HREF="4_8_Comments_Comment.html#SECTION00048100000000000000"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">1</SPAN> Comment Display</A>
+<LI><A NAME="tex2html527"
+  HREF="4_8_Comments_Comment.html#SECTION00048200000000000000"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">2</SPAN> Unread Comment Tracking</A>
+<LI><A NAME="tex2html528"
+  HREF="4_8_Comments_Comment.html#SECTION00048300000000000000"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">3</SPAN> Comment Posting</A>
+<LI><A NAME="tex2html529"
+  HREF="4_8_Comments_Comment.html#SECTION00048400000000000000"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">4</SPAN> Comment Rating</A>
+<LI><A NAME="tex2html530"
+  HREF="4_8_Comments_Comment.html#SECTION00048500000000000000"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">5</SPAN> Setting up Dynamic Comments</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H2><A NAME="SECTION00048000000000000000"></A>
+<A NAME="features-comment-views"></A>
+<BR>
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">8</SPAN> Comments and Comment Views
+</H2>
+
+<P>
+Comments are attached to either stories or polls, and are displayed below the story text or the poll graph when the full story or the poll results are viewed.  If a poll is attached to a story, the same comments will display whether it's the story or its attached poll which is displayed.
+
+<P>
+All of the variables referenced below should be in the Comments section of the Site Controls.
+
+<P>
+
+<H3><A NAME="SECTION00048100000000000000"></A>
+<A NAME="comments-display"></A>
+<BR>
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">1</SPAN> Comment Display
+</H3>
+
+<P>
+There are two kinds of comments: editorial and topical.  
+
+<P>
+<B>Editorial comments</B> are only displayed while the story they're attached to is in the queue, unless the user changes his comment view settings to explicitly include them, and top-level editorial comments can only be posted in the queue.  Editorial comments are for suggestions to the author to improve the story, or reasons for voting the way the comment poster did.  They shouldn't be used to discuss the topic of the story, because they will be hidden when (if) the story is posted.  
+
+<P>
+<B>Topical comments</B> are displayed both in and out of the queue, and can be posted both in and out of the queue.  Topical comments are for discussing the topic of the story, and not for providing suggestions for improvement, as they are displayed after posting when no changes are possible.  
+
+<P>
+Replies to any comment take on the comment type of their parent; top-level comments allow the poster to choose whether it's topical or editorial if the story is still in the queue. Once out of the queue, only topical comments can be posted.
+
+<P>
+If you feel <B>a comment is wrongly marked topical or editorial</B>, you can change it using the ``toggle'' link at the end of the comment, right beside the ``delete'' link.  Both require the perm <B>comment_delete</B> (<A HREF="A_12_Groups.html#perm-comment-delete">A.12.7</A>).  Deleting a comment with replies leaves the replies but makes them all top-level comments.
+
+<P>
+The two types of comments are formatted using the block <B>comment</B> for topical comments, and the block <B>moderation_comment</B> for editorial comments.  These blocks contain a number of special keys, such as for the subject, author, score, and date posted.  The special keys are detailed in the block description, on your site.  It's a good idea to <B>make the two types of comments visually distinct</B>; by default, topical comments have a blue border around the grey comment header information, while editorial comments have a red border.
+
+<P>
+Users can put a signature on every one of their comments if they like.  If the variable <B>allow_sig_behavior</B> is on, users can choose to have them either ``stuck'' to the comment (ie, always displaying as originally posted), changed retroactivally whenever they change their sig (ie, always displaying the current sig, regardless of the sig in use when the comment was posted), or not display at all.  This behavior can be set on a per-comment basis, with a default set in the user preferences.  The default for new users is set in the variable <B>default_sig_behavior</B>.
+
+<P>
+Comments can be ordered in one of several ways.  The user can change the view using the comment controls above and below the comment tree, and can set the preferred view in user preferences.  The default for new and anonymous users are set in the variables <B>default_comment_display</B>, <B>default_comment_order</B>, and <B>default_comment_sort</B>.
+
+<P>
+default_comment_display can be set to one of the following comment views:
+
+<P>
+<DL>
+<DT><STRONG>flat</STRONG></DT>
+<DD>``Flat'' view sorts the comments in their threaded order, but displays them all as top-level posts.
+</DD>
+<DT><STRONG>threaded</STRONG></DT>
+<DD>``Threaded'' view sorts the comments in their threads, indenting replies, and displays top-level comments in full and all replies as just titles, authors, dates, and scores with a link to the full comment.
+</DD>
+<DT><STRONG>nested</STRONG></DT>
+<DD>``Nested'' view sorts the comments in their threads, indenting replies, and displays all comments in full.
+</DD>
+<DT><STRONG>minimal</STRONG></DT>
+<DD>``Minimal'' view sorts the comments in their threads, indenting replies, but only displays titles, authors, dates, and scores for all comments.
+</DD>
+<DT><STRONG>dthreaded</STRONG></DT>
+<DD>``Dynamic Threaded'' view starts out like normal threaded view, but every comment has a small expand/collapse button next to it.  If you expand a comment, that comment is fetched and displayed without reloading the entire page.  You can also expand and collapse entire subthreads at a time.
+</DD>
+<DT><STRONG>dminimal</STRONG></DT>
+<DD>``Dynamic Minimal'' view starts out like normal minimal view, but can be expanded or collapsed as in dynamic threaded view.  The two dynamic modes are the only use of javascript in Scoop. 
+</DD>
+</DL>
+
+<P>
+Since searchbots will be registered as anonymous users and only the latest browsers support the javascript used in the dynamic comments, the two <B>dynamic modes are strongly not recommended as defaults</B>.
+
+<P>
+The other sorting rules (sorting by age or rating) act as you would expect, but only sort the top-level comments.  All replies are sorted by thread.
+
+<P>
+
+<H3><A NAME="SECTION00048200000000000000"></A>
+<A NAME="comments-unread"></A>
+<BR>
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">2</SPAN> Unread Comment Tracking
+</H3>
+
+<P>
+<B>Unread comments</B> can be marked as new for registered users, and the index pages can display the number of new comments in a story since a user last read it.  The read/unread status is based on the highest comment number the last time the user displayed the story and comments; the system assumes that all comments displayed have been read.  Displaying comments alone does not mark them as read.
+
+<P>
+The variable <B>show_new_comments</B> determines whether all, none, or only that user's hotlisted stories (<A HREF="4_6_Story_hotlisting_bookma.html#features-hotlist">4.6</A>) track which comments have been read, and the block <B>new_comment_marker</B> is displayed on the new comments.
+
+<P>
+The <B>Scoop Box Exchange</B> (see appendix&nbsp;<A HREF="B_Scoop_Box.html#sbe">B</A>) has a box that will notify users if there is an unread reply to one of their comments.  If you use this box, let your users know that comments are only marked read if they view the story; this has caused confusion in the past.
+
+<P>
+
+<H3><A NAME="SECTION00048300000000000000"></A>
+<A NAME="comments-post"></A>
+<BR>
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">3</SPAN> Comment Posting
+</H3>
+
+<P>
+Comments can be posted using HTML, plain text, or ``autoformat'', a mode that translates common markup, such as what most people use in email, into HTML formatting. For example, it changes words surrounded by asterisks into bold text; *this* becomes <B>this</B>.  A full description of the autoformat mode is included in your Scoop database; it can be found at <B>|rootdir|/special/autoformat_syntax</B>  Each user can select their preferred mode and can change the mode for a single comment when posting.  You can set the default for new and anonymous users to any of the three modes using the variable <B>default_post_type</B>.  The default post type applies to both stories and comments.
+
+<P>
+The <B>HTML tags permitted</B> in stories and comments can be changed as desired, in the variable <B>allowed_html</B>.  This has a specific format, described in the variable description, but basically you enter one HTML tag per line, follow it with any permitted attributes in a comma-separated list, and end it with ``-close'' if it must have a matching closing tag.
+
+<P>
+<B>Permission to post</B> topical comments is given with the perm <B>comment_post</B> (<A HREF="A_12_Groups.html#perm-comment-post">A.12.8</A>), and permission to post editorial comments is given with both <B>editorial_comments</B> (<A HREF="A_12_Groups.html#perm-editorial-comments">A.12.31</A>) and <B>comment_post</B>.  
+
+<P>
+You can also give permission to post comments in certain sections using the Sections Admin Tool (<A HREF="A_9_Sections.html#admin-tools-sections">A.9</A>).  To post a comment, a user must have both the comment_post general permission and the section-specific permission set.  Removing either of those removes the user's ability to post; the former overall, and the latter in the specific section.  
+
+<P>
+Comments in reply to polls are handled with the perm <B>poll_post_comments</B> (<A HREF="A_12_Groups.html#perm-poll-post-comments">A.12.36</A>) as well as comment_post; as with section permissions, both must be turned on for the user to be able to post comments to polls.
+
+<P>
+
+<H3><A NAME="SECTION00048400000000000000"></A>
+<A NAME="comments-rate"></A>
+<BR>
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">4</SPAN> Comment Rating
+</H3>
+
+<P>
+Comment rating uses an averaging, not an additive, system.  Rather than having three people rate a comment ``up'' at the same time and have the comment end up with a higher score than any of them think it deserves, those three people can rate it at the value they think it should be, and their ratings are averaged, giving it a score much closer to the one it deserves.  Fractional scores are very common, and are displayed to two decimal places.
+
+<P>
+Everybody with the perm <B>comment_rate</B> (<A HREF="A_12_Groups.html#perm-comment-rate">A.12.9</A>) can rate all comments except their own.  Individual ratings are an integer value between the values set in the variables <B>rating_min</B> and <B>rating_max</B>, inclusive.  The average rating of a user's comments determines his ``mojo'' (see section&nbsp;<A HREF="4_13_Trusted_Users.html#features-mojo">4.13</A> for a full description), which, if it gets high enough, can make the user ``trusted'' and able to rate comments one point below rating_min; all comments with an <B>average rating below rating_min are hidden</B> from everybody except trusted users.
+
+<P>
+To give unrated comments a fighting chance when users choose to display comments sorted by rating, you can have comments start with a default rating.  The first person to rate the comment completely overrides the default rating, and from there on ratings are averaged as usual.  To give comments an initial rating, turn the variable <B>use_initial_rating</B> on, and set the variables <B>anonymous_default_points</B> and <B>user_default_points</B> to the values you want anonymous (if permitted) and registered user comments to start with.
+
+<P>
+
+<H3><A NAME="SECTION00048500000000000000"></A>
+<A NAME="comments-dynamic"></A>
+<BR>
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">5</SPAN> Setting up Dynamic Comments
+</H3>
+
+<P>
+Scoop's dynamic comment modes are truly neat.  They do not load all comments then merely toggle the visibility of the appropriate sections of HTML; they actually request the individual comment from the server when you click to view it, and insert it into the page in the appropriate spot without reloading the entire page.
+
+<P>
+Dynamic comment mode is done using javascript, and only modern ``fifth-generation'' browsers can deal with it properly.  That is, Netscape &gt; 6; IE &gt; 5; Mozilla and other gecko-based browsers, and later versions of Opera. Some other browsers may work with it, but those listed here are those known to work.
+
+<P>
+On a brand-new install, dynamic mode comments should be as easy to turn on as switching on the variable <B>allow_dynamic_comment_mode</B>.  Older installs will take a bit more work, as information must be added to certain blocks, and that is hard to do automatically without clobbering your customizations.
+
+<P>
+The following items should be set as described below; if dynamic mode comments are turned on but not working properly, confirm that everything below is set correctly.
+
+<P>
+
+<UL>
+<LI>The file <B>dynamic-comments.js</B> must be present in the site's documentroot and fetchable from the internet with no errors.  Note its path.  Older location-based installs don't map the base scoop directory to a filesystem location, so the file can't be fetched.  To fix this, add the following to your httpd configuration, right by the Alias line that sets your images directory (the images directory line is also shown, for reference):
+<PRE>
+Alias /scoop/ "/www/scoop/html/"
+Alias /scoop/images/ "/www/scoop/html/images/"
+</PRE>
+Then stop and start Apache.  Paths should be adjusted as necessary for your setup.  This will allow files in the scoop/html directory, such as robots.txt, backend.rdf, and dynamic-comments.js to be fetched normally.
+</LI>
+<LI>A block called <B>dynamic_js_tag</B> must be present and must contain the following:
+<PRE>
+&lt;script type="text/javascript" src="|rootdir|/dynamic-comments.js"&gt;&lt;/script&gt;
+</PRE>
+Confirm that the path to dynamic-comments.js in this block is correct and leads to the file as noted in the first step.
+</LI>
+<LI>The blocks <B>story_template</B> and <B>default_template</B> must both contain |dynamicmode_javascript| at the end of the HEAD section of their HTML (<B>not</B> in the BODY section, nor between HEAD and BODY).
+</LI>
+<LI>The block <B>header</B> contains |dynamicmode_iframe| at the end of the block.  This key has no effect on the display as it is an invisible iframe, so it can actually be placed anywhere in the header block.
+</LI>
+</UL>
+
+<P>
+When you have made sure that all of the above items are set correctly, the variable <B>allow_dynamic_comment_mode</B> may be turned on to allow users to choose dynamic comment display modes.
+
+<P>
+Note that the dynamic modes should <B>never be set as default</B> in the variable <B>default_comment_display</B>, because it does not work for older browsers or search spiders.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

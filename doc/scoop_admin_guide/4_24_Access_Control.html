@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.24 Access Control While Upgrading</TITLE>
+<META NAME="description" CONTENT="4.24 Access Control While Upgrading">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="4_25_Boxtool.html">
+<LINK REL="previous" HREF="4_23_Admin_Action.html">
+<LINK REL="up" HREF="4_Scoop_Features.html">
+<LINK REL="next" HREF="4_25_Boxtool.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<UL>
+<LI><A href="4_1_Story_Selection.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN> Story Selection</A></LI>
+<LI><A href="4_2_User_Diaries.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> User Diaries</A></LI>
+<LI><A href="4_3_Story_Archiving.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN> Story Archiving</A></LI>
+<LI><A href="4_4_Story_Digest.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">4</SPAN> Story Digest Emails</A></LI>
+<LI><A href="4_5_Story_Syndication.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">5</SPAN> Story Syndication (RDF)</A></LI>
+<LI><A href="4_6_Story_hotlisting_bookma.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">6</SPAN> Story hotlisting/bookmarking</A></LI>
+<LI><A href="4_7_Automatic_Related.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">7</SPAN> Automatic `Related Links' listing</A></LI>
+<LI><A href="4_8_Comments_Comment.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">8</SPAN> Comments and Comment Views</A></LI>
+<LI><A href="4_9_Polls.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">9</SPAN> Polls</A></LI>
+<LI><A href="4_10_Spell_checking_Stories.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">10</SPAN> Spell-checking Stories and Comments</A></LI>
+<LI><A href="4_11_Macros_in.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">11</SPAN> Macros in Stories and Comments</A></LI>
+<LI><A href="4_12_Spam_Crapflood.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">12</SPAN> Spam and Crapflood Prevention</A></LI>
+<LI><A href="4_13_Trusted_Users.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">13</SPAN> Trusted Users and Mojo</A></LI>
+<LI><A href="4_14_Per_user_File.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">14</SPAN> Per-user File Uploads</A></LI>
+<LI><A href="4_15_User_Subscriptions.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">15</SPAN> User Subscriptions</A></LI>
+<LI><A href="4_16_User_submitted_Adverti.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">16</SPAN> User-submitted Advertisements</A></LI>
+<LI><A href="4_17_Calendar.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">17</SPAN> Calendar</A></LI>
+<LI><A href="4_18_Site_Layout.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">18</SPAN> Site Layout and Themes</A></LI>
+<LI><A href="4_19_Flexible_Sections.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">19</SPAN> Flexible Sections and Categorization</A></LI>
+<LI><A href="4_20_Searching_Relevance.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">20</SPAN> Searching by Relevance</A></LI>
+<LI><A href="4_21_Page_Caching.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">21</SPAN> Page Caching</A></LI>
+<LI><A href="4_22_Payment_Processing.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">22</SPAN> Payment Processing</A></LI>
+<LI><A href="4_23_Admin_Action.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">23</SPAN> Admin Action Logging</A></LI>
+<LI><A href="4_24_Access_Control.html" id="current"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">24</SPAN> Access Control While Upgrading</A></LI>
+<LI><A href="4_25_Boxtool.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">25</SPAN> Boxtool</A></LI>
+</UL>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000424000000000000000"></A>
+<A NAME="features-safemode"></A>
+<BR>
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">24</SPAN> Access Control While Upgrading
+</H2>
+
+<P>
+When configuring a new site or upgrading an existing one, you may want to allow yourself full access but keep other people out temporarily. Scoop's ``safe mode'' allows Superuser accounts and those with the perm <B>bypass_safe_mode</B> normal access, and returns a 503 service temporarily unavailable to everybody else, logged in or not. 
+
+<P>
+To turn ``safe mode'' on, the variable <B>safe_mode</B> should be set to 1. To return the site to normal operation when you're ready to open to the world, it should be set to 0.
+
+<P>
+Apache can be easily configured to return a custom error message along with the 503 error by including the following line in the apache configuration file:
+
+<P>
+<PRE>
+ErrorDocument 503 /oops.html
+</PRE>
+
+<P>
+That command will return the file /oops.html with the 503 error code. You can put any content in the file, such as explaining what's up with the server and when you expect to have the site back to normal.
+
+<P>
+If you prefer not to modify your apache configuration, you can put the full URL of an error page in the variable <B>safe_mode_redirect</B>. If this variable is used, Scoop will send a 302 Redirect to send the visitor to the error page. If you use this, make sure the URL of your error page is not a page controlled by Scoop, otherwise visitors will end up in a never-ending redirect loop as safe mode is triggered every time they try to access the error page.
+
+<P>
+Scoop will process logins before determining whether or not to let you in when safe mode is active, so if you put a login form on the error page you will be able to get into your site after your login expires.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,262 @@
+This just lists the order that you need to apply these patches, and the dates
+on which they were added to scoop. 
+
+The upgrade-db.pl in scripts/ will (hopefully) do all this for you. Try running
+it first.
+
+Apply them to your database in the order below with
+mysql -u root -p <scoopdb> < patch-NN-Name.sql
+
+Run the scripts with 
+./script-NN-(pre|post).pl
+
+If there are scripts and patches with the same number, run the -pre script
+first, then apply the patch, then run the -post script
+
+Don't apply patches dated earlier than when you installed scoop, or when you
+created the scoop database with scoop.sql  These patches are all in the
+scoop.sql file already
+
+
+
+Sep 18 0414 patch-01-StaticPageCache.sql
+	Apply this, and also create a directory which is read/write for your apache
+	user (e.g. "nobody") like /www/scoop/cache Restart and see Site Controls
+	category "Static Pages" to enable.
+
+Sep 19 0720 patch-02-UserBoxPrefs.sql
+	Allows users to turn off some boxes that the admin lets them turn off
+
+Oct 10 2110 patch-03-HTMLandSpelling.sql
+	Add vars for spellchecker, and add a block for HTML checking. See the
+	INSTALL file for more on the spellchecker
+
+Oct 24 16:49 patch-04-AdPatch1.sql
+	This is the first of probably many patches that will set up the scoop ad
+	server. Apply it even if you don't want ads, and make sure the var
+	'use_ads' is 0
+
+Nov 15 00:45 patch-05-WipeRatings.sql
+	Adds one var that will let you designate a group to change users to if
+	the "undo ratings" function is used on them,
+    IMPORTANT: For rating undo to work right, you need to edit the block
+	"op_templates". Look for the bit like:
+     	} else {
+			$p->{op}      = 'user';
+			$p->{tool}    = $path[1];
+ 			$p->{nick}    = $path[0];
+ 			$p->{action}  = $path[2];
+		}
+	You have to add the "$p->{action}  = $path[2];" line.
+
+Dec 14 19:58 patch-06-SomeVars.sql
+	Adds the paranoid_logging and sendmail_program vars.
+
+Dec 18 02:35 patch-07-ResetBoxPrefs.sql
+	I had to change the semantics of how box prefs are saved. This resets all
+	existing box display prefs. Sucks but it has to be done. You may want to
+	notify your users of the change, so they can reset them.
+
+Dec 21 11:12 patch-08-AdPatch2.sql
+	The second ad patch.  Big patch. Should apply clean, now you may safely
+	start testing the text ads.  Be sure to create a link to /submitad to let
+	people submit ads, and to /admin/ads (with perm ad_admin) in your
+	admin_tools box if you want to admin ads easily.
+
+Dec 31 16:44 patch-09-AdPatch3.sql
+	The latest ad patch.  Not to hard to apply, shouldn't cause any problems.
+	Fixes quite a few bugs.
+
+Jan 09 08:01 patch-10-24hTime.sql
+	Allows admin to select 24-hour time output instead of AM/PM
+Jan 12 09:57 patch-11-OpsPerms.sql
+	Adds missing op 'main' and moves perms list to a block
+
+Jan 12 17:16 patch-12-AdPatch4.sql
+	This ads the ability to see info about a particular ad. To make this work
+	fully, open up op_templates. Change this: 
+ 			$p->{type}   = 'author'
+ 		} else {
+	To:
+ 			$p->{type}    = 'author'
+ 		} elsif ($path[1] eq 'ads' ) {
+ 			$p->{op}      = 'adinfo';
+ 			$p->{ad_id}   = "uid:$uid";
+		} else {
+
+Jan 12 17:16 script-12-post.pl
+	Run this to upgrade to use fulltext indexes. It will only set them up for
+	you if your database supports it.
+
+Jan 16 05:16 patch-13-OpAliases.sql
+	Modifies op_aliases so that user-dir style URLs (/~username/) are
+	supported.
+
+Jan 16 05:16 script-13-post.pl
+	Modifies op_templates to support user-dir style URLs, and then modifies it
+	for patch-12-AdPatch4.sql
+
+Jan 16 08:23 patch-14-Formkeys.sql
+	Adds var to configure formkey timeout.
+
+Jan 20 14:04 patch-15-AdPatch5.sql
+	Adds logging for ads, and a few other niceties (ad list, etc).
+
+Feb ?? ??:?? patch-16-AdPatch6.sql
+	Adds in the missing hotlist opcode, and adds a column to record who judged
+	an ad.
+
+Feb ?? ??:?? patch-17-AdPatch7.sql
+	Adds payment processing and email ad reminders.
+
+Feb ?? ??:?? patch-18-NotifyAuthor.sql
+	Makes sending story notifications to authors configurable with a var.
+
+Feb 25 10:18 patch-19-AutoPostVars.sql
+	Two vars for better control of automatic story posting.
+
+Feb 25 12:46 patch-20-AutoPostTimeBasedVars.sql  
+	Two vars that control time-based (as opposed to vote-based) auto story
+	posting.
+
+Mar  6 11:21 patch-21-AdPosition.sql
+	Changed the ad tables a bit to allow for different ad positions.
+
+Mar 10 20:51 patch-22-RelatedLinks.sql
+	Puts the new related links box in, so that you don't get AUTOLOAD errors
+	on story pages.
+
+Mar 17 19:57 patch-23-AdDiscussions.sql
+	Sets you up for ad discussions.  Make sure you actually create the new
+	section and topic that are specified in these new vars.  Then if you're
+    upgrading an old site (like k5), check out scripts/make_ad_discussions.pl
+	and it will create ad discussions for all your old adverts. 
+
+Apr  4 17:45 patch-24-MoreSpelChek.sql
+	Add a group permission for spellchecker usage, and let every group except
+	Anonymous use it.
+
+Apr  4 19:19 patch-25-CommentIPlog.sql
+	Adds support for logging the IP address of users when they post a comment.
+
+Apr  2 14:12 patch-26-SubSections.sql
+	Adds support for subsections.  Enable by setting the var
+	enable_subsections to 1.
+
+Apr  7 18:07 patch-27-MojoIgnoreDiaries.sql
+	Adds a var to make Mojo calculation ignore all ratings of comments posted 
+	in diaries. Default off (i.e. defaults to including diary ratings).
+
+Apr 18 13:59 patch-28-EditQueue.sql
+	Adds db records to make editing-in-queue work. Best look at what's new
+	in the patch to know what you need to edit.
+
+Apr 19 17:43 patch-29-AdRenewal.sql
+	Adds the ability to renew ads, if the var allow_ad_renewal is set to 1. 
+	Don't use it yet as there are still a few more changes to submit_ad_pay_box
+	that are going to be merged from k5 before its usable.
+
+Apr 18 17:20 patch-30-Dynamic.sql
+	Sets up Dynamic comment mode. You will need to make sure
+	dynamic-comments.js is in your site's DocumentRoot, and manually add the
+	following HTML into the <HEAD> sectionof story_template and
+	default_template (or whatever templates you have setup for displaystory and
+	comments opcodes):
+
+	<SCRIPT TYPE="text/javascript"
+		SRC="%%rootdir%%/dynamic-comments.js"></SCRIPT>
+	
+	Once this is done, you can activate the Dynamic display mode by turning on
+	the 'allow_dynamic_comments_mode' var in the Comments category of Site
+	Controls.
+
+Apr 21 03:02 patch-31-AdPayment.sql
+    Adds lots of boxes and whatnot to enable ad payments and renwal
+
+Apr 21 22:26 patch-31-AdPayment.sql
+	Adds things necessary for accepting payments for ads.
+
+Apr 22 20:02 patch-32-Dynamic2.sql
+	Change the dynamic comment pref name and add a block with a link to display
+	while a comment is being loaded.
+
+Apr 26 12:47 patch-33-Dynamic3.sql
+	Adds another block with a link for dynamic comments.
+
+Apr 27 03:50 patch-34-AutoFormat.sql
+	Adds a special page documenting the new Auto Format comment posting mode.
+
+Apr 30 21:00 patch-35-OpsAdminTools.sql
+	Sets up the database for the new ops and admin tools, including creating
+	tables, adding a permission, and setting up all the admin tools.
+
+Apr 30 21:00 script-35-post.pl
+	Converts old system of ops over to new one. Note that any custom ops added
+	through hacking ApacheHandler.pm and adding will not be included. Also, any
+	ops that were created with a box and a custom template will still work,
+	though they should be ported to the new system.
+
+May 25 17:20 patch-36-BlockCat.sql
+	This adds the Block Categories and the new block editor interface. Bask
+	in its ease of use!
+
+May 29 15:47 patch-37-MoreEditQueue.sql
+	A few more patches to the edit queue.  This also adds the user pref for
+	resizing the text areas for posting comments and stories
+
+May 30 22:22 patch-38-Interpolate.sql
+	This moves the Admin tools Box editor into a template in the blocks table.
+
+Jun  6 17:34 patch-39-BarsBlock.sql
+	Adds a small block for the separators used everywhere in the titlebar
+	( this used to be hardcoded || )
+
+Jun 11 22:55 patch-40-LogoutBox.sql
+	Adds the logout_box to control the url /logout now.  Now by changing the
+	var logout_url you can change where your users are redirected to on logout.
+
+Jun 13 20:36 patch-41-Subscriptions.sql
+	Tables and data for new subscriptions code.
+
+Jun 24 01:20 patch-42-NewCache.sql
+	Removes a var related to the old cache code, and adds in two new ones.
+
+Jun 24 17:00 patch-43-Dynamic4.sql
+	Adds a block for the "Loading..." message shown while loading dynamic
+	threads, and two blocks for the collapse thread/expand thread links.
+	Updates dynamic_template to match the cleaned-up javascript
+	function interfaces. Appends |dynamicmode_iframe| to the end of the
+	header block, which will be replaced with an <IFRAME> tag that will
+	manage dynamic data.
+
+Jul 03 00:20 patch-44-EditQueue3.sql
+	Updates the edit queue cron to use a method for moving the story into
+	voting. Also adds a missing var for the edit queue spam vote feature.
+
+Jul 03 01:10 script-44-post.pl
+	Changes the comment_controls box to enable the commentstatus flag.
+
+Jul 27 01:35 patch-45-Hooks.sql
+	Adds support for hooks, where code can be attached to certain actions, such
+	as comment and story posting, and will be run when that action is
+	performed.
+
+Jul 27 03:20 patch-46-DefaultUser.sql
+	Adds a site control to set the default user, whose prefs will automatically
+	be copied over to any new accounts. Also updates logout_box to not require
+	logout_url to be set.
+
+Sep 27 20:40 patch-47-PollBox.sql
+    Adds a var to control commentstatus, and updates poll box to correctly
+    handle section permissions.
+
+Oct 11 22:30 script-47-post.pl
+	Once again updates blocks admin tool in op_templates to use a new URL
+	format.
+
+Any problems, email scoop-help@lists.sourceforge.net (don't forget to join!)
+join here: http://sourceforge.net/mail/?group_id=4901
+
+or if you irc look in #scoop on irc.slashnet.org  or #kuro5hin if nobody is
+in #scoop.
+

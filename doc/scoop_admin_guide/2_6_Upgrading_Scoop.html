@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>2.6 Upgrading Scoop</TITLE>
+<META NAME="description" CONTENT="2.6 Upgrading Scoop">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="2_7_System_specific_notes.html">
+<LINK REL="previous" HREF="2_5_Installing_Hand.html">
+<LINK REL="up" HREF="2_Installation.html">
+<LINK REL="next" HREF="2_7_System_specific_notes.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<UL>
+<LI><A href="2_1_Dependencies.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> Dependencies</A></LI>
+<LI><A href="2_2_Installing_MySQL.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> Installing MySQL and Apache/mod_perl</A></LI>
+<LI><A href="2_3_Getting_Scoop.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN> Getting Scoop</A></LI>
+<LI><A href="2_4_Using_Installer.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN> Using the Installer</A></LI>
+<LI><A href="2_5_Installing_Hand.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN> Installing By Hand</A></LI>
+<LI><A href="2_6_Upgrading_Scoop.html" id="current"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN> Upgrading Scoop</A></LI>
+<LI><A href="2_7_System_specific_notes.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN> System-specific notes</A></LI>
+<LI><A href="2_8_Troubleshooting.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">8</SPAN> Troubleshooting</A></LI>
+</UL>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html252"
+  HREF="2_6_Upgrading_Scoop.html#SECTION00026100000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">1</SPAN> Backing up</A>
+<LI><A NAME="tex2html253"
+  HREF="2_6_Upgrading_Scoop.html#SECTION00026200000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">2</SPAN> Upgrading the code</A>
+<LI><A NAME="tex2html254"
+  HREF="2_6_Upgrading_Scoop.html#SECTION00026300000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">3</SPAN> Upgrading the database</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H2><A NAME="SECTION00026000000000000000"></A>
+<A NAME="upgrading"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN> Upgrading Scoop
+</H2>
+
+<P>
+Eventually a new point release will come out, or a new bug fix or feature is in CVS, and you want it.  To upgrade Scoop, you have to first upgrade the code, then the database.  Backing both up before the upgrade is always a good idea.
+
+<P>
+For a busy production site, you will probably want to run the new code on a testbed before upgrading the live site, and also to take the site down to prevent any discrepancies in the database between the testbed database and the live database. When upgrading the live site, Scoop's `safe mode' (<A HREF="4_24_Access_Control.html#features-safemode">4.24</A>) will allow you to perform a final test of the changes while keeping the regular users out temporarily.
+
+<P>
+
+<H3><A NAME="SECTION00026100000000000000"></A>
+<A NAME="backup"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">1</SPAN> Backing up
+</H3>
+
+<P>
+The Scoop code can be very easily backed up by making a copy of all the .pm files, or by making a copy of the entire directory tree.  This can be done while Scoop is running.
+
+<P>
+The database is backed up by using mysqldump as described below (substitute an appropriate mysql username and the name of your database).  That will get you a text copy of the current database that can be read into a blank database the same way the original database was created.
+
+<P>
+<PRE>
+$ mysqldump -u &lt;dbuser&gt; -p &lt;scoopdb&gt; &gt; dump.sql
+</PRE>
+
+<P>
+The only caveat is that if your somebody makes a change to the database while mysqldump is running (ie, posts a comment or anything) things could go wrong.  A better plan is to take your Scoop site down while backing up and upgrading your database.  Very large databases can take a long time to dump, so a replacement page indicating that you're upgrading would be a good idea.
+
+<P>
+
+<H3><A NAME="SECTION00026200000000000000"></A>
+<A NAME="upgrading-code"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">2</SPAN> Upgrading the code
+</H3>
+
+<P>
+When moving between numbered releases, the easiest thing to do is to download the release tarball and unpack it on top of the old version.  This can be done while Scoop is running, because the code changes don't take effect until you force a recompile by stopping and then starting Apache.  (Note: a restart will not work properly; Apache must fully terminate and start fresh to properly recompile Scoop.)
+
+<P>
+If you're tracking CVS, you can issue the following commands.  If you've updated via CVS before, you can skip the login command.
+
+<P>
+<PRE>
+$ cvs -d:pserver:anonymous@scoop.versionhost.com:/cvs/scoop login
+password: anonymous
+$ cvs update -P -d
+</PRE>
+
+<P>
+This will check each file, fetch any changed ones, then merge them together, as well as fetching completely new files. Unless you make changes to the code, this should go without any problems. Even if you do, most likely it'll merge just fine. However, watch for any lines that start with ``C'', since that means there were conflicts during the merge. You'll want to open that file and search for ``&lt;&lt;&lt;&lt;&lt;'', which will show you where the problem was. The old lines will be first, then following the ``========'' line will be the new lines, up until ``&gt;&gt;&gt;&gt;&gt;&gt;''. You'll need to either work them together, or remove one of them. Otherwise, Apache won't start when you try to get it running the new code.
+
+<P>
+If you had been running a numbered release and want to upgrade to the CVS version, the following commands will bring your code up to date.
+
+<P>
+<PRE>
+$ cvs -d:pserver:anonymous@scoop.versionhost.com:/cvs/scoop login
+password: anonymous
+$ cvs update -A
+</PRE>
+
+<P>
+This will update your code as with `tracking CVS', above, but will move you from the numbered release to the latest CVS code.
+
+<P>
+Before you take the site down to upgrade the database, running ``apachectl configtest'' will tell you if Apache will start properly when you try to bring the site back up again.  This can be done while Apache is running (and probably should, so you still have a working site while you're trying to sort out any problems).
+
+<P>
+
+<H3><A NAME="SECTION00026300000000000000"></A>
+<A NAME="upgrading-db"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">3</SPAN> Upgrading the database
+</H3>
+
+<P>
+Don't forget to back up your database first! That way if things go horribly wrong, you have something to revert to while you figure out what happened.
+
+<P>
+Some new features or bug fixes require changes to the database, as well.  This almost never interferes with your customization, and more often takes the form of simply adding things.  Generally, if a patch will change a block or box that may have been customized, it will check for changes and simply warn you to fix it yourself if you've changed it.
+
+<P>
+Unless you have done something truly bizarre to your database, you will want to <B>use the upgrade-db.pl script</B>.  The script will prompt you for a username and password to the database, and whatever other information it needs.  Occasionally, a table will be created or altered, so giving the script a username that has those permissions (such as root) is recommended.
+
+<P>
+It will also ask you where the patches are kept.  If you're just tracking CVS, the default (scoop/struct/patch-files/current) is probably what you want.  If you are upgrading from one numbered release to another, you will have to name those directories.  If you are making a large upgrade, such as from 0.6 to 0.9, you will have to run the upgrade-db.pl script more than once: in this example, once for the directory 0.6-0.8 and once for the directory 0.8-0.9.
+
+<P>
+If there has been a point release since the last time you updated, and you're tracking CVS, you'll have to first tell the script to use the appropriate numbered directory and then current, to make sure it gets all the patches. Missed patches cause very strange problems!
+
+<P>
+upgrade-db.pl keeps track of which patches it's applied already in the database, which is why we strongly recommend that you use it.
+
+<P>
+The patches must be applied in order, because they assume that all previous patches have been applied, and some alter information that was inserted by a previous patch.
+
+<P>
+If you want to upgrade the database by hand, you have to apply the patches one at a time in numeric order, using the command:
+
+<P>
+<PRE>
+mysql -u dbuser -p scoopdb &lt;patch-xx-patchname.sql
+</PRE>
+
+<P>
+Where xx is the patch number.  If there are any scripts with the same number as a patch, they should be run either before (script-xx-pre.pl) or after (script-xx-post.pl) as available.  Each script will prompt you for the username and password as upgrade-db.pl does.  If there is no script present, the patch alone is sufficient.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>2 Installation</TITLE>
+<META NAME="description" CONTENT="2 Installation">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="3_Setup_Administration.html">
+<LINK REL="previous" HREF="1_Introduction.html">
+<LINK REL="up" HREF="sag.html">
+<LINK REL="next" HREF="2_1_Dependencies.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html" id="current"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<UL>
+<LI><A href="2_1_Dependencies.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> Dependencies</A></LI>
+<LI><A href="2_2_Installing_MySQL.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> Installing MySQL and Apache/mod_perl</A></LI>
+<LI><A href="2_3_Getting_Scoop.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN> Getting Scoop</A></LI>
+<LI><A href="2_4_Using_Installer.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN> Using the Installer</A></LI>
+<LI><A href="2_5_Installing_Hand.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN> Installing By Hand</A></LI>
+<LI><A href="2_6_Upgrading_Scoop.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN> Upgrading Scoop</A></LI>
+<LI><A href="2_7_System_specific_notes.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN> System-specific notes</A></LI>
+<LI><A href="2_8_Troubleshooting.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">8</SPAN> Troubleshooting</A></LI>
+</UL>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00020000000000000000"></A>
+<A NAME="install"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN> Installation
+</H1>
+
+<P>
+Please read this section carefully. Installing Scoop can be pretty painless if you follow the instructions properly, but one missed step can cause much unhappiness later on.
+
+<P>
+Before you even start, make sure that you can 
+
+<UL>
+<LI>Alter your web server's core configuration file
+</LI>
+<LI>Stop and start the web server
+</LI>
+<LI>Install programs
+</LI>
+</UL>
+and check for your OS in section&nbsp;<A HREF="2_7_System_specific_notes.html#install-system-notes">2.7</A>, System-specific notes for any special instructions.
+
+<P>
+Many hosting companies don't allow this kind of control, but without it it's impossible to install Scoop.  (Scoop is not a cgi script that you can just drop into your cgi-bin directory!)  If you can't install Scoop, there are a few hosting companies that offer pre-installed Scoop sites for you, in which case you can skip this entire section and go straight to section&nbsp;<A HREF="3_Setup_Administration.html#admin">3</A>.
+
+<P>
+Also, check section&nbsp;<A HREF="2_7_System_specific_notes.html#install-system-notes">2.7</A> for notes specific to your OS.  Some have quirks that will cause no end of headaches if you don't read this section early.  Any operating systems not listed in that section either work with the basic instructions given below, or have never been tried.  In theory, Scoop should work on any OS that has a version of Apache/mod_perl available.
+
+<P>
+
+<HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html157"
+  HREF="2_1_Dependencies.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> Dependencies</A>
+<UL>
+<LI><A NAME="tex2html158"
+  HREF="2_1_Dependencies.html#SECTION00021100000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">1</SPAN> Required Programs</A>
+<LI><A NAME="tex2html159"
+  HREF="2_1_Dependencies.html#SECTION00021200000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">2</SPAN> Required Perl Modules</A>
+<LI><A NAME="tex2html160"
+  HREF="2_1_Dependencies.html#SECTION00021300000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">3</SPAN> Recommended Programs</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html161"
+  HREF="2_2_Installing_MySQL.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> Installing MySQL and Apache/mod_perl</A>
+<LI><A NAME="tex2html162"
+  HREF="2_3_Getting_Scoop.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN> Getting Scoop</A>
+<UL>
+<LI><A NAME="tex2html163"
+  HREF="2_3_Getting_Scoop.html#SECTION00023100000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">1</SPAN> Getting a Tarball</A>
+<LI><A NAME="tex2html164"
+  HREF="2_3_Getting_Scoop.html#SECTION00023200000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN> Getting From CVS</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html165"
+  HREF="2_4_Using_Installer.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN> Using the Installer</A>
+<UL>
+<LI><A NAME="tex2html166"
+  HREF="2_4_Using_Installer.html#SECTION00024100000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN> Installing Perl Modules</A>
+<LI><A NAME="tex2html167"
+  HREF="2_4_Using_Installer.html#SECTION00024200000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> Configure the Database</A>
+<LI><A NAME="tex2html168"
+  HREF="2_4_Using_Installer.html#SECTION00024300000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN> Configure Apache</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html169"
+  HREF="2_5_Installing_Hand.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN> Installing By Hand</A>
+<UL>
+<LI><A NAME="tex2html170"
+  HREF="2_5_Installing_Hand.html#SECTION00025100000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN> Configure the Database</A>
+<LI><A NAME="tex2html171"
+  HREF="2_5_Installing_Hand.html#SECTION00025200000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">2</SPAN> Configure Apache</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html172"
+  HREF="2_6_Upgrading_Scoop.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN> Upgrading Scoop</A>
+<UL>
+<LI><A NAME="tex2html173"
+  HREF="2_6_Upgrading_Scoop.html#SECTION00026100000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">1</SPAN> Backing up</A>
+<LI><A NAME="tex2html174"
+  HREF="2_6_Upgrading_Scoop.html#SECTION00026200000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">2</SPAN> Upgrading the code</A>
+<LI><A NAME="tex2html175"
+  HREF="2_6_Upgrading_Scoop.html#SECTION00026300000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">3</SPAN> Upgrading the database</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html176"
+  HREF="2_7_System_specific_notes.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN> System-specific notes</A>
+<UL>
+<LI><A NAME="tex2html177"
+  HREF="2_7_System_specific_notes.html#SECTION00027100000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN> Debian Linux</A>
+<LI><A NAME="tex2html178"
+  HREF="2_7_System_specific_notes.html#SECTION00027200000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">2</SPAN> Mac OS X (Panther)</A>
+<LI><A NAME="tex2html179"
+  HREF="2_7_System_specific_notes.html#SECTION00027300000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">3</SPAN> Solaris</A>
+<LI><A NAME="tex2html180"
+  HREF="2_7_System_specific_notes.html#SECTION00027400000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">4</SPAN> Windows 2000/XP</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html181"
+  HREF="2_8_Troubleshooting.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">8</SPAN> Troubleshooting</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

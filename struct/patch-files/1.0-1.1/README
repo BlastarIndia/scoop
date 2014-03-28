@@ -1,0 +1,156 @@
+This just lists the order that you need to apply these patches, and the dates
+on which they were added to scoop. 
+
+The upgrade-db.pl in scripts/ will (hopefully) do all this for you. Try running
+it first.
+
+Apply them to your database in the order below with
+mysql -u root -p <scoopdb> < patch-NN-Name.sql
+
+Run the scripts with 
+./script-NN-(pre|post).pl
+
+If there are scripts and patches with the same number, run the -pre script
+first, then apply the patch, then run the -post script
+
+Don't apply patches dated earlier than when you installed scoop, or when you
+created the scoop database with scoop.sql  These patches are all in the
+scoop.sql file already
+
+
+Jul  2 13:32 patch-01-MultiPolls.sql
+	Allows "approval voting" in polls as an option.
+
+Jul  6 01:44 patch-02-Sessions.sql
+	Drops and re-creates the sessions table to be compatible with the new
+	Scoop::Sessions module.
+
+Jul 18 12:15 patch-03-CommentPost.sql
+	Moves the comment post form to a block
+
+Aug 4 14:17 patch-04-UserPrefs.sql
+	New flexible user preferences. Both -pre and -post scripts are required
+
+Aug 17 11:30 patch-05-UserPrefs2.sql
+	Bugfixes and small feature additions for the above userprefs patch.
+
+Aug 27 13:30 patch-06-UserPrefs3.sql
+	More bugfixes: fixed a caching issue and added the ability to use a box
+	for validation instead of a regex, if desired. If you want both, put
+	the regex in the box.
+
+Jan 15 9:50 patch-07-SpecialPage.sql
+	Moves the special page formatting to a block
+
+Jan 21 09:30 patch-08-Calendar.sql
+        Adds a very featureful collaborative event calendar module. Docs remain to
+        be written, unfortunately, but here's all the funtionality, anyway.
+
+Jan 22 19:20 patch-09-Diary.sql
+	Removes the use_diaries var and uses the section perms instead.
+
+Jan 25 10:10 patch-10-CalendarUpdates.sql
+        Updates and bugfixes to the Calendar module. Adds a separate calendar_css
+        block, and a css_includes block, which should be called in place of the
+        existing css LINK REL in your templates. Makes keeping CSS up to date much
+        easier.
+
+Jan 25 12:11 patch-11-SignupWithPass.sql
+        Mainly adds a new signup method where the user chooses their own password.
+        Works a lot more smoothly than the old way. If you install fresh, it's the default.
+        If not, you need to edit a bunch of Accounts blocks and turn on 
+        "signup_with_password" var. This patch also adds CT's iplookup tools, and
+        flexible date formatting.
+
+Jan 27 11:30 patch-12-RemoveComments.sql
+	Adds the ability to "remove" (in addition to the old "delete") comments. 
+	"Remove" replaces the comment with a note saying the comment had been deleted, 
+	but doesn't change the comment threading.
+
+Jan 27 2:42 patch-13-RemoveForumZilla.sql
+	Drops the boxes, blocks, and ops that support ForumZilla.
+
+Jan 28 3:57 patch-14-PostThrottle.sql
+        Bugfix for problems in the post throttling code, moves content out of code.
+
+Feb 03 10:36 patch-15-StoryForm.sql
+        Moves story posting forms entirely into blocks. This will make it a lot
+        easier to add extra fields or customizations to stories. Also, there's 
+        a new admin_tools box that handles a change in admin tools to allow for 
+        more than one perm per tool. Updated here as admin_tools_new to not clobber 
+        custom boxes.
+
+Feb 11 2:00 patch-16-MacroPerms.sql
+	Adds the ability to restrict macros by location and user group, using the same 
+	syntax as the allowed_html block. The script fixes a small bug in one of the 
+	userpref boxes.
+
+May 26 10:30 patch-17-NavBar.sql
+	Moves the story nav bar from hard coded HTML into blocks.
+
+May 26 11:25 patch-18-EditoralComment.sql
+	Fixes comment type toggling in edit queue stories.
+
+May 26 12:05 patch-19-StoryVoteMessage.sql
+	Move the story vote messages from code into blocks.
+
+May 27 6:45 patch-20-StoryPosting.sql
+	Updates the story post messages and the story post form action
+
+Sep 9 4:30 patch-21-Tags.sql
+	Adds tag categorization.
+
+Oct 6 1:25 patch-22-SharedDB.sql
+	Adds shared database support.
+
+Oct 14 13:08 patch-23-MinMax.sql
+			 patch-24-CommentFixes.sql
+			 patch-25-UserFile.sql
+			 patch-26-UserMenu.sql
+	A bunch of patches being checked in at the same time here. 
+	Patch 23 has some fixes for min/max characters in a story's intro and fixes
+	for blank titles.
+	Patch 24 has miscellaneous comment fixes.
+	Patch 25 adds some permissions to eliminate file permission quirks.
+	Patch 26 adds a copy of the userpref menu that fixes the file permission
+	quirks and fixes the issue where the user pref menu would display pref
+	pages on the menu that exist even if the user can't view or modify any of
+	those prefs.  Because modifying an exisiting userpref_menu is bad, this
+	adds a box called 'userpref_menu_file_pref' with these fixes. From this
+	box, site administrators can add the fixes to their existing userpref_menu
+	boxes without destroying the existing box.
+
+Dec 17 21:00 patch-27-SpecialAdmin.sql
+	Moves the special pages admin form to a block and adds the ability to see
+	special pages as if the pageid were an op.
+
+Jan 13 2006 13:38 patch-28-RequireTags.sql
+	Adds a var to enable requiring tags for story posting.
+
+Jan 13 15:50 patch-29-TUPerms.sql
+	Adds a var to add perms that can be specifically checked by
+	$S->have_perm() for trusted users, so we can use just that var and
+	$S->have_perm, rather than mucking about with TRUSTLEV and super_mojo.
+
+Jan 15 11:20 patch-30-TagEnhancements.sql
+	Adds ops, boxes, and perms for adding and editing existing story tags,
+	as well as an op for easily changing the order tags are displayed. If
+	you upgrade to this, it is recommended that you make a "tag_template"
+	block for the tag op from the index_template and add the 
+	"tag_sort_change" box above |CONTENT|. Additionally, you should add the
+	"tag_listing" box to your story_template - above the first
+	"comment_controls" box is a good place.
+
+Jan 15 14:53 patch-31-TagPermUpdate.sql
+	Adds a perm, 'edit_story_tags', that was left out of patch 30. If you
+	wish to allow trusted users, but not others, edit story tags, add
+	'edit_story_tags' to the var 'tu_perms'.
+
+Feb 7 20:36 patch-32-DiaryGuidelines.sql
+	Adds a block 'diary_guidelines' where different guidelines can be
+	given for a diary on a site.
+
+Any problems, email scoop-help@lists.kuro5hin.org (don't forget to join!)
+join here: http://lists.kuro5hin.org/mailman/listinfo/scoop-help
+or if you irc look in #scoop on irc.slashnet.org.
+

@@ -1,0 +1,11 @@
+INSERT INTO box (boxid, title, content, description, template) VALUES ('user_files_list', 'User Files', 'return unless $S->have_perm(\'upload_user\');\r\n\r\nmy $uid = $S->{UID};\r\n\r\nmy $content = qq[\r\n	<form name="insert_file">\r\n	<select name="file_link" size="1">\r\n	<option value="">Select File:</option>\r\n];\r\n\r\nmy $file_link = $S->var(\'upload_link_user\') . $uid;\r\nmy ($file_counter, $file_total_count) = (2, 0);\r\n\r\nmy @files = $S->get_file_list($uid, \'user\');\r\n$file_total_count = (scalar @files) - 2;\r\n\r\nwhile ($file_counter < ($file_total_count + 2) ) {\r\n	my $file_name = $files[$file_counter];\r\n	$content .= qq{<option value="&lt;img src=&quot;$file_link/$file_name&quot;&gt;">$file_name</option>};\r\n	$file_counter++;\r\n}\r\n\r\n$content .= qq[\r\n	</select><br />\r\n	<input type="button" value="<< Intro Text" onclick="document.editstory.introtext.value+=document.insert_file.file_link.value"><br />\r\n	<input type="button" value="<< Body Text" onclick="document.editstory.bodytext.value+=document.insert_file.file_link.value">\r\n	</form>\r\n	%%norm_font%%<a href="/user/uid:$uid/files">View Your Files</a>%%norm_font_end%%\r\n];\r\n\r\nreturn $content;\r\n', 'Allows a user to insert a IMG tag pointing at an uploaded file into the introtext or bodytext of a story.', 'box');
+INSERT INTO vars VALUES ('allow_uploads','0','Allow uploads to site, ignore any other settings','bool','Uploads');
+INSERT INTO vars VALUES ('upload_delete','0','Allow a user to delete files they have uploaded','bool','Uploads');
+INSERT INTO vars VALUES ('upload_rename','0','Allow a user to rename files they
+have uploaded','bool','Uploads');
+INSERT INTO vars VALUES ('upload_user_quota','0','KB of disk space an individual user is allowed to take up','num','Uploads');
+INSERT INTO vars VALUES ('upload_link_admin','','Link to access uploaded file via http, ending in /','text','Uploads');
+INSERT INTO vars VALUES ('upload_link_user','','Link to access uploaded file via http, ending in /','text','Uploads');
+INSERT INTO vars VALUES ('upload_path_admin','','Path to save uploaded file, ending in /','text','Uploads');
+INSERT INTO vars VALUES ('upload_path_user','','Path to save uploaded file, ending in /','text','Uploads');
+UPDATE blocks SET block = CONCAT(block, ",\nupload_content,\nupload_admin,\nupload_user") WHERE bid = 'perms';

@@ -1,0 +1,32 @@
+This just lists the order that you need to apply these patches, and the dates
+on which they were added to scoop. 
+
+The upgrade-db.pl in scripts/ will (hopefully) do all this for you. Try running
+it first.
+
+Apply them to your database in the order below with
+mysql -u root -p <scoopdb> < patch-NN-Name.sql
+
+Run the scripts with 
+./script-NN-(pre|post).pl
+
+If there are scripts and patches with the same number, run the -pre script
+first, then apply the patch, then run the -post script
+
+Don't apply patches dated earlier than when you installed scoop, or when you
+created the scoop database with scoop.sql  These patches are all in the
+scoop.sql file already
+
+Any problems, email scoop-help@lists.kuro5hin.org (don't forget to join!)
+join here: http://lists.kuro5hin.org/mailman/listinfo/scoop-help
+or if you irc look in #scoop on irc.slashnet.org.
+
+Mar 12  11:45 patch-01-DynamicFix.sql
+		Fixes a display bug in dynamic comments where HTML wasn't properly
+		migrated out of the code. Also fixes login form so you go back to the
+		same page you were on.
+
+Apr 4 22:30  patch-02-RadioRatings.sql
+		Adds the option to use either a drop-down list or a radio button to 
+		rate comments with.
+

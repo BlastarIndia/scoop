@@ -1,0 +1,2 @@
+INSERT INTO vars VALUES ('auto_post_use_time','0','Set if you want to define a maximum time for a story in the queue, instead of a max number of votes (which is the default). See also auto_post_max_minutes to set the actual value','bool','Stories');
+INSERT INTO vars VALUES ('auto_post_max_minutes','2160','Number of minutes to leave a story in voting before making a decision, if thresholds aren\'t reached. See also auto_post_use_time to turn this on or off.','num','Stories');

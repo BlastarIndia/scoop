@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>C..1 General and installation</TITLE>
+<META NAME="description" CONTENT="C..1 General and installation">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="C_2_Stories_comments.html">
+<LINK REL="previous" HREF="C_Frequently_Asked.html">
+<LINK REL="up" HREF="C_Frequently_Asked.html">
+<LINK REL="next" HREF="C_2_Stories_comments.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<UL>
+<LI><A href="C_1_General_installation.html" id="current">C..<SPAN CLASS="arabic">1</SPAN> General and installation</A></LI>
+<LI><A href="C_2_Stories_comments.html">C..<SPAN CLASS="arabic">2</SPAN> Stories, comments, and the queue</A></LI>
+<LI><A href="C_3_Users_logging.html">C..<SPAN CLASS="arabic">3</SPAN> Users, logging in, and logging out</A></LI>
+<LI><A href="C_4_Site_layout.html">C..<SPAN CLASS="arabic">4</SPAN> Site layout and customization</A></LI>
+<LI><A href="C_5_Crashes_general.html">C..<SPAN CLASS="arabic">5</SPAN> Crashes and general misbehaviour</A></LI>
+<LI><A href="C_6_Email.html">C..<SPAN CLASS="arabic">6</SPAN> Email</A></LI>
+<LI><A href="C_7_Other.html">C..<SPAN CLASS="arabic">7</SPAN> Other</A></LI>
+</UL>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html1315"
+  HREF="C_1_General_installation.html#SECTION00081100000000000000">C..<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">1</SPAN> What exactly is Scoop?</A>
+<LI><A NAME="tex2html1316"
+  HREF="C_1_General_installation.html#SECTION00081200000000000000">C..<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">2</SPAN> Why don't you re-write Scoop in (insert your favourite language here)?</A>
+<LI><A NAME="tex2html1317"
+  HREF="C_1_General_installation.html#SECTION00081300000000000000">C..<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">3</SPAN> Does Scoop run on Apache 2?</A>
+<LI><A NAME="tex2html1318"
+  HREF="C_1_General_installation.html#SECTION00081400000000000000">C..<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">4</SPAN> Why can't Apache find all the perl modules I installed?</A>
+<LI><A NAME="tex2html1319"
+  HREF="C_1_General_installation.html#SECTION00081500000000000000">C..<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">5</SPAN> What is CPAN? and how do I get these crazy modules?</A>
+<LI><A NAME="tex2html1320"
+  HREF="C_1_General_installation.html#SECTION00081600000000000000">C..<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">6</SPAN> I keep getting "Document Contains no Data", what does that mean?</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H2><A NAME="SECTION00081000000000000000">
+C..<SPAN CLASS="arabic">1</SPAN> General and installation</A>
+</H2>
+
+<P>
+
+<H3><A NAME="SECTION00081100000000000000">
+C..<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">1</SPAN> What exactly is Scoop?</A>
+</H3>
+
+<P>
+Scoop is a ``Collaborative Media Application''. Basically, it's somewhere between a weblog, a bulletin board, and a content management system. Superficially, it looks like a weblog, with stories displayed in reverse chronological order, and comments attached. The difference is that Scoop allows your users to drive the site by not only submitting stories, but acting as site editors and choosing which stories to publish. That's where the ``collaborative'' part of the name comes in.
+
+<P>
+Scoop is designed to enable your website to become a community. It empowers your visitors to be the producers of the site, contributing news and discussion, and making sure that the signal remains high.
+
+<P>
+A scoop site can be run almost entirely by the readers. The whole life-cycle of content is reader-driven. They submit stories, they choose what to post, and they can discuss what they post. Readers can rate other readers comments, as well, providing a collaborative filtering tool to let the best contributions float to the top. Based on this rating, you can also reward consistently good contributors with greater power to review potentially untrusted content. The real power of Scoop is that it is almost totally collaborative.
+
+<P>
+Of course, as an admin, you also may pick and choose which tools you want the community to have, and which will be available to admins only. Administrators have a very wide range of customization and security management tools available. All of the administration of Scoop is done through the normal web interface. Scoop will seamlessly provide more options to site administrators, right in the normal site, so the tools you need are always right where you need them.
+
+<P>
+
+<H3><A NAME="SECTION00081200000000000000">
+C..<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">2</SPAN> Why don't you re-write Scoop in (insert your favourite language here)?</A>
+</H3>
+
+<P>
+Go right ahead, but the Scoop developers like perl. There's not much point in writing a Scoop feature clone in another language though, you should figure out which features you really want and implement them however you see fit in your own project.
+
+<P>
+
+<H3><A NAME="SECTION00081300000000000000">
+C..<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">3</SPAN> Does Scoop run on Apache 2?</A>
+</H3>
+
+<P>
+Yes, but...  Some things may be broken (file uploads are definately broken at the moment, some other items as well). Also, you have to run CVS development versions of libapreq. 
+
+<P>
+Basically, Scoop has been made to run on Apache 2, but you should only do so if you intend to help port it to mod_perl 2. On no account should you run a production Scoop site using mod_perl 2.
+
+<P>
+
+<H3><A NAME="SECTION00081400000000000000">
+C..<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">4</SPAN> Why can't Apache find all the perl modules I installed?</A>
+</H3>
+
+<P>
+There are a couple of possibilities. One is that some of the perl modules didn't get installed properly--if that's the case, check CPAN's output for error messages.
+
+<P>
+Another possibility is that CPAN upgraded perl without asking you. If this is the case, you'll see messages like ``Can't find Something.pm in @INC (@INC includes path1,path2,...)''. See section&nbsp;<A HREF="2_8_Troubleshooting.html#install-troubleshooting">2.8</A> for details on what causes this and how to fix it.
+
+<P>
+
+<H3><A NAME="SECTION00081500000000000000">
+C..<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">5</SPAN> What is CPAN? and how do I get these crazy modules?</A>
+</H3>
+
+<P>
+CPAN is the Comprehensive Perl Archive Network, a vast repository of more perl modules than you'll ever need. Scoop depends heavily on quite a few of those modules, so the Scoop developers don't have to rewrite such basic functions as sending email, generating random strings, and connecting to the database.
+
+<P>
+The full details on how to get the modules from CPAN are in section&nbsp;<A HREF="2_1_Dependencies.html#install-modules">2.1.2</A>
+
+<P>
+
+<H3><A NAME="SECTION00081600000000000000">
+C..<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">6</SPAN> I keep getting "Document Contains no Data", what does that mean?</A>
+</H3>
+
+<P>
+This means that somehow either Apache or Scoop is failing without warning and just stopping. 
+
+<P>
+If Scoop hasn't yet successfully shown its front page, it may be having trouble connecting to the database. One fix that has been known to work is to go back into cpan, and 'force install' DBD::mSQL
+<PRE>
+cpan&gt; force install DBD::mSQL
+</PRE>
+and tell it to install the msyql modules only.
+
+<P>
+If Scoop was working before and is now giving you ``Document Contains no Data'', it may be because Apache has run out of space to write its log files. Scoop has been known to trigger this via its page caching (<A HREF="4_21_Page_Caching.html#features-static-page-caching">4.21</A>), if Apache's log files and Scoop's cache files are on the same partition on the hard drive.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

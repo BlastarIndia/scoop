@@ -1,0 +1,491 @@
+\section{Installation}
+\label{install}
+
+Please read this section carefully. Installing Scoop can be pretty painless if you follow the instructions properly, but one missed step can cause much unhappiness later on.
+
+Before you even start, make sure that you can 
+\begin{itemize}
+\item Alter your web server's core configuration file
+\item Stop and start the web server
+\item Install programs
+\end{itemize}
+and check for your OS in section~\ref{install-system-notes}, System-specific notes for any special instructions.
+
+Many hosting companies don't allow this kind of control, but without it it's impossible to install Scoop.  (Scoop is not a cgi script that you can just drop into your cgi-bin directory!)  If you can't install Scoop, there are a few hosting companies that offer pre-installed Scoop sites for you, in which case you can skip this entire section and go straight to section~\ref{admin}.
+
+Also, check section~\ref{install-system-notes} for notes specific to your OS.  Some have quirks that will cause no end of headaches if you don't read this section early.  Any operating systems not listed in that section either work with the basic instructions given below, or have never been tried.  In theory, Scoop should work on any OS that has a version of Apache/mod\_perl available.
+
+\subsection{Dependencies}
+\label{install-depend}
+
+Before installing Scoop itself, you should make sure that all the dependencies are properly installed first.  The programs below should be installed in roughly the order presented, but there are only a few {\bf critical notes on installation order}.  
+\begin{itemize}
+\item Expat must be installed before Apache
+\item MySQL and Apache must be installed before the Perl Modules
+\item All of the required programs must be installed before Scoop itself
+\end{itemize}
+
+\subsubsection{Required Programs}
+\label{install-require}
+
+{\bf Perl}, or Practical Extraction and Report Language, is the underlying language Scoop is written in. Scoop requires {\bf at least perl 5.005\_03} in order to run (note that the versioning system used for Perl changed between 5.005 and 5.6) but will work fine with later versions.  Perl is available from \hturl{http://www.cpan.org/src/} and is available in both source and binary distributions.  A standard Perl install is your best bet, so follow the instructions included with the distribution.  If you're installing Scoop on any OS other than Windows or Solaris, you probably already have a suitable Perl installed. See the system-specific notes for details.
+
+{\bf Expat} is an XML parser.  Strictly speaking, Scoop doesn't need it to run, but if you want to add RDF functionality later and you didn't put this in from the beginning, you'll basically have to recompile everything.  So install it.  Expat can be downloaded from \hturl{http://sourceforge.net/projects/expat/} and a default install is all that is needed.  Follow the instructions that come with the distribution.  When compiling Apache, you may need to explicitly tell it where expat is located, as sometimes it can't find it on its own.
+
+{\bf Apache} is a popular HTTP server, is available from the Apache website at \hturl{http://www.apache.org/dist/httpd/} and is the only one Scoop supports. Scoop with Apache 2.0 is not supported and not considered stable. Just about any version of Apache 1.3 should work, though the most recent is recommended as it will always include bug and security fixes.  You should compile Apache by hand and not use a precompiled version, as many precompiled packages don't work properly with Scoop.  When you compile Apache, you can include mod\_perl (below) directly in the program or compile it separately as a DSO (module).  See section~\ref{install-apache-modperl} for detailed instructions.
+
+{\bf Mod\_perl}, an Apache module, is also required. The stable tree is 1.x, and you can get it from the mod\_perl website at \hturl{http://perl.apache.org/}. Note that if you get, or already have, an older version of Apache, then you may need to get an older version of mod\_perl to work with it.  As with Apache, the most recent 1.x version is recommended as it has bug and security fixes, but the mod\_perl version must correspond to the Apache version, as detailed on their website.  Mod\_perl 2.0 is not yet supported.
+
+{\bf MySQL} is a database management system (DBMS), and is currently the only one Scoop supports, though support for Postgres is in the works. The stable tree for MySQL is 4.0, and versions 4.x, 3.23.x and 3.22.x are known to work with Scoop.  You must set the variable mysql\_version in the Apache configuration file to a number corresponding to the first two parts of the version number (i.e., 3.22, 3.23, or 4.0).  Version 3.22 uses a different date format, and version 4 has some extra features that Scoop can take advantage of, so you must set this variable correctly.  All versions are available for download from \hturl{http://www.mysql.com/downloads/}.  The most recent 3.23.x or 4.x version is recommended, and a default install is your best bet.  Follow the installation instructions on the MySQL website, then make sure that you can access the MySQL database from the webserver.  If you are using a binary mysql package, such as the .rpm or .deb, you will also need the mysql development package, whatever it is named in your packaging system.  If you are compiling from source, you will have everything necessary already.
+
+\subsubsection{Required Perl Modules}
+\label{install-modules}
+
+Scoop uses quite a few Perl modules, all of which are available from CPAN. Table~\ref{perlmod} has a list of modules that are currently required by Scoop, as well as common problems encountered when installing them.
+
+This is pretty consistently {\bf the hardest, most frustrating} part of installing Scoop.  Unfortunately, there is nothing we can do about it, since all the suckage is in CPAN and the quirky, fragile test scripts that come with some of the modules.  There are some modules that simply will not pass their tests, even when compiled correctly.  A ``force install'' is required to bypass the tests in those cases.
+
+There are several ways to install them. You could go to CPAN, get each tarball, and install by hand, but that takes time and effort. You could also use the CPAN shell (more on this below) to install each one, but that still requires typing out each module.
+
+For convenience, Scoop includes a Bundle::Scoop, which you can use with the CPAN shell to install all of them.  The install script uses this to install modules, which is the easiest way. But if you'd like to manually use it, here's how (note that you'll probably want to be root for this):
+
+\begin{verbatim}
+% perl -MCPAN -e shell;
+cpan> ! use lib qw( /path/to/scoop/lib/ );
+cpan> install Bundle::Scoop
+cpan> exit
+\end{verbatim}
+
+There will be a lot of output between the install and exit commands; try to watch for errors.
+
+Make sure that Follow Prerequisites is set to 'Ask', or CPAN may upgrade your perl install and several other modules whether you want it or not.
+
+
+\begin{table}[htp]
+\caption{Summary of required Perl modules}
+\label{perlmod}
+\begin{center}
+\latex{\begin{tabular}{|l|c|p{3.1in}|}}
+\html{\begin{tabular}{|l|c|l|}}
+\hline
+Module & Min Version & Notes \\
+\hline
+DBI & 1.14 &  \\
+%\hline
+DBD::mysql & 2.0414 & or try DBD::mSQL using CPAN, with MySQL only chosen.  Either way, MySQL will need to be running with a non-root user created.  You should give this user and password to either of the modules when it asks for it, or the module will not be able to log into the database and will fail all of its tests.  You may need to install using CPAN instead of the bundle to get it to ask.  This module can be forced if there are no compile errors and only test errors. \\
+%\hline
+Digest::MD5 & 2.11& may need to install using CPAN; sometimes fails in the bundle \\
+%\hline
+Apache::DBI & 0.87 & \\
+%\hline
+Apache::Request & 0.31 & If you get {\bf Invalid command 'TransferLog'} when building this module, go to the CPAN shell and force install it. It's just another broken test suite. \\
+%\hline
+Apache::Test & ? & The newest versions of Apache::Request require Apache::Test, and if your /root directory has permissions 700 or 710, the tests will fail.  Apache::Test starts up its own apache process, and tries to access a test html file inside /root/.cpan/, which it naturally doesn't have permission to...  {\bf fix:} either force install Apache::Test, or change your permissions on /root to 711 (rwx--x--x) for the duration of the install, then back to whatever it was before after finishing installing this module. \\
+%\hline
+Class::Singleton & 1.03 & \\
+%\hline
+Crypt::UnixCrypt & 1.0 & \\
+%\hline
+Mail::Sendmail & 0.77 & \\
+%\hline
+String::Random & 0.198 & \\
+%\hline
+Time::CTime & 99.062201 & \\
+%\hline
+Time::Timezone & 99.062401 & \\
+%\hline
+Time::ParseDate & 99.062401 & \\
+%\hline
+Date::Calc & 5.4 & \\
+%\hline
+XML::Parser & 2.30 & must have expat installed \\
+%\hline
+LWP & 5.53 & \\
+%\hline
+Crypt::CBC & 1.25 & \\
+%\hline
+Crypt::Blowfish & 2.06 & \\
+%\hline
+XML::RSS & 0.8 & must have expat installed \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+If there are any errors, and with some modules there are bound to be, you can try to install them individually through the CPAN shell.  Modules notorious for causing trouble are marked in the table above.  At least one of the modules (DBD::mysql) asks for some information before it starts testing, so it's to your advantage to have the CPAN shell in interactive mode, even though that means you have to pay attention to it while it's installing things.  You will need to provide the test script with a valid username and password for the database, and the database must be running when this module does its tests.  I'd recommend against giving it the database root password, just because that's bad policy.  If you want to skip the database tests for DBD::mysql, you can force install it through CPAN without any ill effects.
+
+Instead of DBD::mysql, you may want to try installing the DBD::msql module, and selecting the MySQL drivers from it.  These drivers are a bit older but more stable than the drivers in DBD::mysql, and you may have more success with them.
+
+XML::Parser may need to be installed by hand, because often you need to tell it explicitly where expat is installed.  If it can't find expat on its own, this module and all the ones that depend on it will fail; installing XML::Parser by hand (command line, not CPAN) then re-running the above bundle install will work.
+
+If various modules are failing and saying that they depend on some other module, check your CPAN shell configuration, and make sure that it is set to ask before following dependencies.  If it is set to never follow dependencies, there may be problems if you have an old Perl install and some of your modules are too old.
+
+\subsubsection{Recommended Programs}
+\label{install-recommended-programs}
+
+{\bf CVS} is extremely useful if you want to keep your Scoop install up to date.  Even the numbered releases are packaged as a CVS checkout, so updating to a newer numbered release or to the latest CVS version is quite easy if you have CVS installed.
+
+{\bf Sendmail} eliminates the hassle of trying to troubleshoot mail sending through somebody else's (ie, your ISP) mail server.  You have to make sure you secure your mail server to not be an open relay, and it is another program to keep up on security updates with.  It's your call.
+
+{\bf Text::Aspell} is a perl module used to provide spell-checking functionality in comments and stories.  You will need {\bf Aspell 0.50.3} and the {\bf Aspell English dictionary 0.51.0}, both available from \hturl{http://aspell.sourceforge.net/}.  Follow the installation instructions to install the two components in order.  Aspell 0.50.3 {\bf must be properly installed before the dictionary will configure} properly.  The Text::Aspell perl module can then be installed using CPAN.  To activate and configure Spellchecking, see section~\ref{features-spellcheck}.
+
+\subsection{Installing MySQL and Apache/mod\_perl}
+\label{install-apache-modperl}
+
+{\bf MySQL} can be installed as a package or compiled from source.  You can check your system's install disks for a MySQL package, you can download one of the MySQL binary packages from their website, or you can compile your own from source using the standard procedure: that is, ./configure; make; make install - the last done as root or other account that can install programs in /usr/local.  If you are using a binary mysql package, such as the .rpm or .deb, you will also need the mysql development package, whatever it is named in your packaging system.  If you are compiling from source, you will have everything necessary already.
+
+For information on possible options and on preparing and securing your MySQL install, see the MySQL documentation.
+
+{\bf Apache and mod\_perl} need to be configured correctly for Scoop to work properly.  Some precompiled packages that ship with various distributions are reported to work, but if in doubt, compile this yourself.
+
+The quick reference to compiling Apache and mod\_perl is below; to add any other modules, or to customize the install, see the module's documentation.  The commands below will leave you with a simple Apache that will work with Scoop.
+
+These instructions assume
+\begin{itemize}
+\item The apache source is in a directory named apache\_1.3.x (where x is the specific revision number you downloaded)
+\item The mod\_perl source is in a directory named mod\_perl-1.x (where x is the specific revision number you downloaded)
+\item Both of those directories are in the directory you start the first command from
+\end{itemize}
+
+The \$ indicates a normal user prompt; the \% a root prompt.  This can all be done as root, but is not recommended.  The backslash at the end of a line immediately precedes a newline; do not put any spaces after the backslash and before the newline. And, obviously, substitute the correct value for the `x' in the version numbers.
+
+\begin{verbatim}
+$ cd apache_1.3.x
+$ ./configure
+$ cd ../mod_perl-1.x
+$ perl Makefile.PL \
+    APACHE_PREFIX=/usr/local/apache \
+    APACHE_SRC=../apache_1.3.x \
+    DO_HTTPD=1 \
+    USE_APACI=1 \
+    EVERYTHING=1 \
+    APACI_ARGS='--enable-module=rewrite --enable-module=expires\
+          --enable-module=mime_magic --enable-module=speling'
+$ make
+% make install
+\end{verbatim}
+
+This places Apache into /usr/local/apache/*. you can change that to another value by altering APACHE\_PREFIX if you like.
+
+If you are using different options for apache and mod\_perl, are adding other modules, or are compiling mod\_perl as a DSO instead of directly into apache (as the above instructions assume), you must not forget the `EVERYTHING=1' option to mod\_perl. If this is not set then Scoop will not work.
+
+\subsection{Getting Scoop}
+
+Before you can start installing and using Scoop, you're going to need to get it. Of course, if you already have it, then you can probably skip this section. Note that, while you'd usually want to get a stable version of any program, the nature of development with Scoop (at least, currently) results in a lot of new features being in the CVS development version, which is almost always stable. You'll probably want to get the development version.
+
+\subsubsection{Getting a Tarball}
+
+Probably the easiest way to get Scoop is to download a tarball from the development site at \hturl{http://scoop.kuro5hin.org/}. You'll be able to get the current stable, numbered Scoop release from there, or one built nightly from CVS. You'll also find instructions for using CVS.
+
+Once you've downloaded Scoop, you'll want to decompress it. Copy the tarball to someplace where Apache can read it (such as ``/usr/local/apache/''), though not in the document root (such as under ``htdocs/'') because you don't want people downloading the code through your website. Decompress it (``tar zxf \latexhtml{$<$}{<}filename\latexhtml{$>$}{>}''), which will create a new directory called ``scoop''. You can then remove the tarball, or move it somewhere else.
+
+You do not need to have the code unpacked in the same location as you are using as the documentroot for your Scoop site; however, the directory you are using as a documentroot must exist, even if nothing is in it.  
+
+\subsubsection{Getting From CVS}
+
+To checkout manually, first make sure you have the ``cvs'' program, which you can get from \hturl{http://www.cvshome.org/downloads.html}. After that, switch to a directory where Apache can read (such as ``/usr/local/apache/''), though not in the document root (such as under ``htdocs/''). Then issue the following commands:
+
+\begin{verbatim}
+$ cvs -d:pserver:anonymous@scoop.versionhost.com:/cvs/scoop login
+password: anonymous
+$ cvs -z3 -d:pserver:anonymous@scoop.versionhost.com:/cvs/scoop co scoop
+\end{verbatim}
+
+This will appear to do nothing for awhile, then several lines will scroll by. When it finishes, you'll have a new directory called ``scoop'', which is the same as the one you get from downloading a tarball.
+
+When you're using the CVS version, you should keep up with the latest features and bug fixes.  See section~\ref{upgrading-code} for details.
+
+\subsection{Using the Installer}
+
+The script `{\bf install.pl}' is by far the easiest way to install Scoop.  Once you've installed all the dependancies (\ref{install-depend}) and downloaded Scoop, all you have to do is change into the scripts directory and run install.pl.  The install script isn't really set up to easily handle multiple Scoop sites, though it can work.  Even if you use the install script, you may want to read section~\ref{by-hand} anyway, just to tweak things a bit.
+
+If you're running Windows, the installer won't work; you'll have to do it by hand, and follow a few special instructions as well.  See sections~\ref{by-hand} and~\ref{install-system-notes}.
+
+\subsubsection{Installing Perl Modules}
+
+First, the install script will do some checks, then ask if you want to install Perl modules. 
+
+Even if you've already installed all the modules listed, it doesn't hurt. If everything is already up to date, then it will skip over all of them and tell you everything is installed.  The script basically follows the instructions in section~\ref{install-modules} for installing Bundle::Scoop.
+
+\subsubsection{Configure the Database}
+
+If you're upgrading to a new computer, re-configuring your database will drop all the data in it, so unless that's your intention, don't let the script do it.  If you're just upgrading the code, you shouldn't be using the install script; go read section~\ref{upgrading}.
+
+For a new install, however, you want to let it continue.  You'll need to provide the installer with a username, password, hostname, and port so that it can connect to the database and do the work, though most of the defaults will work fine. Note that you will need to give the script two usernames and passwords; one to create the database (usually the database root user) and one that Scoop will use to actually connect to the database (which should have access {\em only} to the Scoop database, as its password is stored in the apache configuration file). At the next step, you'll probably want to choose option 1 (Create a new database), since if you rebuild, it'll just drop a current one.
+
+Unless you have a specific reason to change it, such as if you're planning on running multiple Scoop sites on the same computer, the default database name will work just fine.
+
+After this, you'll need to make some choices. The installer will walk you through the options, explaining each one. Make sure to read the prompts carefully.
+
+
+\subsubsection{Configure Apache}
+
+Once the script has created your new database, it will ask a few questions about what kind of setup you want.  Namely, virtual hosted or path based, and what path to use if it's the latter, as well as a few other configuration items.
+
+The script then fills in the configuration file according to what you told it, then saves the configuration file with a name based on the site ID it asked for earlier (httpd-\latexhtml{$<$}{<}siteid\latexhtml{$>$}{>}.conf).  Read this file over to make sure everything is set up properly.  Put the file generated by the script in the same directory as your httpd.conf file.
+
+Edit httpd.conf to put an Include directive (\hturl{http://httpd.apache.org/docs/mod/core.html\#include}) in the appropriate place, referencing Scoop's configuration file.  The exact location of this directive will vary depending on how you have Apache set up, and if you've already done some customizations.  Since the generated file contains full \latexhtml{$<$}{<}VirtualHost\latexhtml{$>$}{>} or \latexhtml{$<$}{<}Location\latexhtml{$>$}{>} directives, {\bf simply adding at the end of your httpd.conf file} should work.
+
+The .conf file that Scoop generates for you {\bf is not a complete Apache configuration file}.  It must be included in your main httpd.conf file either via pasting it in its entirety into httpd.conf or by using an Include directive.
+
+Run ``apachectl configtest'' to make sure everything is set up properly.  It may not catch some misconfigurations, but it'll catch any syntax errors or missing requirements when it tries to compile Scoop.
+
+If the configtest returns no errors, you can start Apache.  If it's already running, stop it first, wait for it to completely halt, then start it.  {\bf Never use the restart command} as that will not properly recompile Scoop.
+
+Now, you can try to load your website, using the URL you told the install script you were using, and start setting it up the rest of the way, as described in section~\ref{admin}.
+
+\subsection{Installing By Hand}
+\label{by-hand}
+
+If you choose not to use the install.pl script to install Scoop, it can be done by hand.  These instructions assume you have installed perl, mysql, apache/mod\_perl, and the required perl modules as described in previous sections.
+
+First, make sure you have the Scoop distribution unpacked in its directory.
+
+\subsubsection{Configure the Database}
+\label{manual-db}
+
+You'll have to log in to the database as root (database root, not system root) or as another database user with the ability to grant privileges to other users, as well as the ability to create and modify databases.  If you have just set up MySQL, please {\bf make sure that the database root account has a password} on it - MySQL allows you to get away without one, but it's very bad practice.
+
+You may substitute values to suit your setup for the words in \latexhtml{$<$}{<}brackets\latexhtml{$>$}{>}, as needed; for example, if you are running more than one Scoop site, you won't want to call either of them `scoop'.  And definitely change \latexhtml{$<$}{<}password\latexhtml{$>$}{>} to something more secure.
+
+\begin{verbatim}
+shell$ mysql -u root -p
+Enter password: 
+mysql> create database <scoop>;
+mysql> grant insert, update, delete, select on <scoop>.* 
+    -> to <nobody>@<localhost> identified by '<password>';
+mysql> exit
+\end{verbatim}
+
+Note: the grant statement might have to be modified if you run MySQL 3.22.x, but if you have a choice, you shouldn't run that version.
+
+Once the database is created, you need to dump the scoop.sql file into your new database.  In the struct/ directory, issue the following command (it will prompt you for the password):
+
+\begin{verbatim}
+shell$ mysql -u root -p <scoop> < scoop.sql
+\end{verbatim}
+
+If you are doing a path-based install (http://www.mysite.org/scoop/ instead of http://scoop.mysite.org/) you'll have to set the path in the database.
+
+\begin{verbatim}
+mysql> update vars set value='/<path>' where name='rootdir';
+\end{verbatim}
+
+\latexhtml{$<$}{<}path\latexhtml{$>$}{>} should reflect your URL path; using the above example, '/\latexhtml{$<$}{<}path\latexhtml{$>$}{>}' should be '/scoop' (do not add a trailing slash!)  If you are doing a virtual-host install, do not do this step.
+
+Other important settings are described in section~\ref{initial-setup}; rootdir is the only one that cannot be set through Scoop's normal administrative interface, and it must be set before starting Apache.
+
+\subsubsection{Configure Apache}
+\label{apache-config}
+
+Once MySQL has the Scoop database set up with the proper permissions, Apache needs to know about it, as well as several other things.
+
+If you will run Scoop as a virtual host or as the sole website on the server, open etc/httpd-vhost.conf; if you will run Scoop in a subdirectory, open etc/httpd-location.conf.  The files are pretty well self-documented; read the one you chose carefully to set all the variables and options properly.
+
+Some extra notes on the options:
+\begin{itemize}
+\item \_\_URL\_PATH\_\_ is the external path after your domain name and not the internal filesystem path.
+\item The database username and password should be the ones you used in your `grant' statement while creating the Scoop database, and {\bf should not be a highly-priviledged user}.
+\item If you set the server name in MySQL to `localhost' then the database server name in Apache should also be `localhost'; if you set the first to the actual DNS name of the webserver, then the second should use the DNS name of the SQL server, even if they are the same computer.
+\item The cookie\_host variable must {\bf match the domain you will use} to access the Scoop site, and it must have two dots in it.  Using mysite.org won't work; .mysite.org or scoop.mysite.org will, but the first will allow any third-level domain.  Using .scoop.mysite.org can cause problems with some browsers but seems to work in most.  If you don't have a domain and are accessing your Scoop site using its IP address, put the IP address in the cookie\_host variable. If you are doing a local install for testing, localhost won't work as the domain name, because there are no dots. Make an entry similar to machinename.home.local (or other three-part, invalid domain) in your hosts file and use that as the domain for your Scoop site.
+\item If you will be using a mail server running on the same computer as Scoop to send email, set the SMTP variable to that computer's DNS name if it runs as a daemon, or to ``-'' if it doesn't (and is sendmail).  If this variable is set to ``-'', Scoop will look for the variable sendmail\_program so it can make sendmail send an email.
+\item To use an SMTP server that is not on the same computer, you must make sure that the server allows Scoop to relay mail through it, or stuff like account creation will not work.
+\item If you (or other people) can't create accounts but everything seems to be set up properly, make sure your SMTP server isn't blacklisted by the intended recipient of the email before mucking with the configuration.  Try a different email address, possibly one on the same server as your SMTP server, first.
+\item If your Scoop server is behind a proxy or a NATing firewall, you must use the internal IP address in your VirtualHost setup.  In all cases, you must use the IP address that your Scoop server thinks it lives at.  Check this with /sbin/ifconfig or a similar tool if necessary.
+\end{itemize}
+
+Once you've set all the variables to fit your requirements, copy the entire file into your httpd.conf file, or include it in your httpd.conf with
+
+\begin{verbatim}
+Include /path/to/httpd-<blah>.conf
+\end{verbatim}
+
+Once Apache is configured, make sure MySQL is running (it should be, you've just been messing around in it) and start Apache.  Using your web browser, go to the URL you set up in your httpd.conf file as Scoop's main page.
+
+If the page comes up and you see the headline ``Welcome to Scoop!'' then you successfully installed Scoop, and you should go on to section~\ref{admin} to finish setting up and start customizing.
+
+If it doesn't, review the install procedure to make sure you didn't forget anything, check to see if your problem is described in section~\ref{install-troubleshooting}, then if you still can't figure it out, ask for help at one of the places listed in section~\ref{get-help}.
+
+\subsection{Upgrading Scoop}
+\label{upgrading}
+
+Eventually a new point release will come out, or a new bug fix or feature is in CVS, and you want it.  To upgrade Scoop, you have to first upgrade the code, then the database.  Backing both up before the upgrade is always a good idea.
+
+For a busy production site, you will probably want to run the new code on a testbed before upgrading the live site, and also to take the site down to prevent any discrepancies in the database between the testbed database and the live database. When upgrading the live site, Scoop's `safe mode' (\ref{features-safemode}) will allow you to perform a final test of the changes while keeping the regular users out temporarily.
+
+\subsubsection{Backing up}
+\label{backup}
+
+The Scoop code can be very easily backed up by making a copy of all the .pm files, or by making a copy of the entire directory tree.  This can be done while Scoop is running.
+
+The database is backed up by using mysqldump as described below (substitute an appropriate mysql username and the name of your database).  That will get you a text copy of the current database that can be read into a blank database the same way the original database was created.
+
+\begin{verbatim}
+$ mysqldump -u <dbuser> -p <scoopdb> > dump.sql
+\end{verbatim}
+
+The only caveat is that if your somebody makes a change to the database while mysqldump is running (ie, posts a comment or anything) things could go wrong.  A better plan is to take your Scoop site down while backing up and upgrading your database.  Very large databases can take a long time to dump, so a replacement page indicating that you're upgrading would be a good idea.
+
+\subsubsection{Upgrading the code}
+\label{upgrading-code}
+
+When moving between numbered releases, the easiest thing to do is to download the release tarball and unpack it on top of the old version.  This can be done while Scoop is running, because the code changes don't take effect until you force a recompile by stopping and then starting Apache.  (Note: a restart will not work properly; Apache must fully terminate and start fresh to properly recompile Scoop.)
+
+If you're tracking CVS, you can issue the following commands.  If you've updated via CVS before, you can skip the login command.
+
+\begin{verbatim}
+$ cvs -d:pserver:anonymous@scoop.versionhost.com:/cvs/scoop login
+password: anonymous
+$ cvs update -P -d
+\end{verbatim}
+
+This will check each file, fetch any changed ones, then merge them together, as well as fetching completely new files. Unless you make changes to the code, this should go without any problems. Even if you do, most likely it'll merge just fine. However, watch for any lines that start with ``C'', since that means there were conflicts during the merge. You'll want to open that file and search for ``\latexhtml{$<$}{<}{}\latexhtml{$<$}{<}{}\latexhtml{$<$}{<}{}\latexhtml{$<$}{<}{}\latexhtml{$<$}{<}'', which will show you where the problem was. The old lines will be first, then following the ``========'' line will be the new lines, up until ``\latexhtml{$>$}{>}{}\latexhtml{$>$}{>}{}\latexhtml{$>$}{>}{}\latexhtml{$>$}{>}{}\latexhtml{$>$}{>}{}\latexhtml{$>$}{>}''. You'll need to either work them together, or remove one of them. Otherwise, Apache won't start when you try to get it running the new code.
+
+If you had been running a numbered release and want to upgrade to the CVS version, the following commands will bring your code up to date.
+
+\begin{verbatim}
+$ cvs -d:pserver:anonymous@scoop.versionhost.com:/cvs/scoop login
+password: anonymous
+$ cvs update -A
+\end{verbatim}
+
+This will update your code as with `tracking CVS', above, but will move you from the numbered release to the latest CVS code.
+
+Before you take the site down to upgrade the database, running ``apachectl configtest'' will tell you if Apache will start properly when you try to bring the site back up again.  This can be done while Apache is running (and probably should, so you still have a working site while you're trying to sort out any problems).
+
+\subsubsection{Upgrading the database}
+\label{upgrading-db}
+
+Don't forget to back up your database first! That way if things go horribly wrong, you have something to revert to while you figure out what happened.
+
+Some new features or bug fixes require changes to the database, as well.  This almost never interferes with your customization, and more often takes the form of simply adding things.  Generally, if a patch will change a block or box that may have been customized, it will check for changes and simply warn you to fix it yourself if you've changed it.
+
+Unless you have done something truly bizarre to your database, you will want to {\bf use the upgrade-db.pl script}.  The script will prompt you for a username and password to the database, and whatever other information it needs.  Occasionally, a table will be created or altered, so giving the script a username that has those permissions (such as root) is recommended.
+
+It will also ask you where the patches are kept.  If you're just tracking CVS, the default (scoop/struct/patch-files/current) is probably what you want.  If you are upgrading from one numbered release to another, you will have to name those directories.  If you are making a large upgrade, such as from 0.6 to 0.9, you will have to run the upgrade-db.pl script more than once: in this example, once for the directory 0.6-0.8 and once for the directory 0.8-0.9.
+
+If there has been a point release since the last time you updated, and you're tracking CVS, you'll have to first tell the script to use the appropriate numbered directory and then current, to make sure it gets all the patches. Missed patches cause very strange problems!
+
+upgrade-db.pl keeps track of which patches it's applied already in the database, which is why we strongly recommend that you use it.
+
+The patches must be applied in order, because they assume that all previous patches have been applied, and some alter information that was inserted by a previous patch.
+
+If you want to upgrade the database by hand, you have to apply the patches one at a time in numeric order, using the command:
+
+\begin{verbatim}
+mysql -u dbuser -p scoopdb <patch-xx-patchname.sql
+\end{verbatim}
+
+Where xx is the patch number.  If there are any scripts with the same number as a patch, they should be run either before (script-xx-pre.pl) or after (script-xx-post.pl) as available.  Each script will prompt you for the username and password as upgrade-db.pl does.  If there is no script present, the patch alone is sufficient.
+
+\subsection{System-specific notes}
+\label{install-system-notes}
+
+Some operating systems have issues or quirks that need to be worked around.  If your OS is listed here, make sure you read its section before installing.
+
+Many thanks to the users and developers who have contributed the notes below.
+
+\subsubsection{Debian Linux}
+
+\begin{itemize}
+\item libz.so needs to be softlinked to libz.so.1 if it doesn't exist
+\end{itemize}
+
+\subsubsection{Mac OS X (Panther)}
+
+\begin{itemize}
+\item Before you can install Scoop you will need the developer tools (XCode) or you won't be able to compile any of the perl modules.
+\item The default Apache included with OS X works fine just by having it load mod\_perl
+\item CPAN does not seem to like making all the perl modules; make fails with no useful error message. If you find this to be the case installing them by hand (outside of CPAN) works fine. It's tedious, but not particularly complicated, as most perl modules have the same install instructions, differing only in their prerequisites (which are listed in their README files). See the items below for a few prerequisite quirks.
+\item Once the modules are installed, CPAN recognizes them and the install script works fine.
+\item MySQL is not in your path, so you'll have to edit the perl module's Makefile.PL (line 174) and put in the full path to mysql\_config.
+\item fink has an expat package, but installs it in a non-standard location so you'll have to make sure the XML modules find it when compiling them
+\end{itemize}
+
+\subsubsection{Solaris}
+
+\begin{itemize}
+\item The perl that comes with Solaris won't work properly. You should build your own perl using the same compiler you use to build mod\_perl. (perl has a notion of how it was built, and it tries to keep using that notion for future building.)
+\item Make sure your perl install is in your path {\em before} the perl installed by Solaris, so that it's used when compiling apache/mod\_perl.
+\item gcc-3.2 (Solaris package from sunfreeware) is the recommended compiler.
+\end{itemize}
+
+\subsubsection{Windows 2000/XP}
+
+\begin{itemize}
+\item Mail sending is notoriously troublesome under Windows.  Some people have reported that Scoop can send only one email before email stops working. No fix has been reported yet.
+\item You'll need to get and install ActiveState's Perl, which is available from \hturl{http://www.activestate.com/Products/ActivePerl/}.
+\item There is no CPAN for Windows, and therefore Bundle::Scoop won't work. Use ppm instead:
+\begin{verbatim}
+ppm install (module name)
+\end{verbatim}
+for each module.
+\end{itemize}
+
+\subsection{Troubleshooting}
+\label{install-troubleshooting}
+
+Before starting the troubleshooting process, you should collect certain pieces of information.
+
+\begin{itemize}
+\item The exact error message (if any) or behaviour you see in your browser
+\item The exact error message (if any) from Apache's error logs---check your Apache configuration for its location; it's usually called error\_log
+\item Any other error messages produced
+\item What you were doing when the error happened (eg, just loading the front page, or logging in, or trying to change something in the Admin Tools)
+\end{itemize}
+
+\html{\begin{table}[htp]}
+%\begin{center}
+\html{\begin{tabular}{|l|l|}}
+\latex{\begin{longtable}{|p{2in}|p{3in}|}}
+\latex{\caption{Troubleshooting}\\}
+\html{\caption{Troubleshooting}}
+%\label{troubletable}
+\hline
+{\bf Symptom} & {\bf Solution} \\
+\hline
+\latex{\endfirsthead}
+\latex{\caption*{Troubleshooting (continued)}\\}
+\latex{\hline}
+\latex{{\bf Symptom} & {\bf Solution} \\}
+\latex{\hline}
+\latex{\endhead}
+\latex{\hline}
+\latex{\endfoot}
+Apache refuses to start, complaining that it can't find some of the perl modules, but I installed all of them.  
+
+A typical error message is: Can't find packagename in @INC (@INC includes path1,path2,...) & This usually means one of two things.  Either the package named wasn't actually installed, or the @INC used by mod\_perl is different than the @INC used by CPAN when you installed the modules (common if you upgraded Perl after compiling mod\_perl, or if you installed the modules, upgraded perl, then compiled mod\_perl).  
+
+Search for the file named in the error message.  If it doesn't exist, you will need to install it (see section~\ref{install-modules}) then try again.  If the file does exist, check its location against the paths listed in the error message; chances are the version information in the paths is different.  
+
+If this is the case, you can either recompile mod\_perl (\ref{install-apache-modperl}) to use the new perl version, or you can add the relevant paths to @INC.  To add the paths to @INC, put the following two lines in your startup.pl file, immediately after the line that says ``use strict;''.  
+
+\begin{flushleft}
+BEGIN \{ push(@INC, '/usr/lib/perl5/site\_perl/5.x.y/i586-linux'); \} \\
+BEGIN \{ push(@INC, '/usr/lib/perl5/site\_perl/5.x.y'); \} 
+\end{flushleft}
+
+Change the version from 5.x.y to whichever version your modules were installed with (obviously, the version that is not in the @INC in the error message).  Those two lines should be sufficient.  \\
+\hline
+Apache refuses to start, complaining that the \latexhtml{$<$}{<}perl\latexhtml{$>$}{>} directives are not recognized & mod\_perl is not installed or active; see section~\ref{install-apache-modperl}. \\
+\hline
+Apache starts, but I see a directory index (may or may not be Scoop's) instead of the front page, or I get a ``Directory index forbidden by rule'' error in my browser & This usually means your virtualhost setup or your location setup isn't correct, especially if the directory index isn't of Scoop's html/ directory.  It may also mean that a higher-level directory has too-restrictive of permissions (such as the Directory / having a ``Deny from All'' command, which would be characterized by {\bf client denied by server configuration} in the error logs). \\
+\hline
+Apache starts, but I see Scoop's html/ directory index instead of the front page, or I get a ``Directory index forbidden by rule'' error in my browser & This usually means that Apache is indeed looking in the right place, but the mod\_perl instructions are not running.  See section~\ref{apache-config}. \\
+\hline
+I can log in, but I'm logged out again on the very next page & This is a cookie problem.  Generally, your server is not configured to send cookies properly; look in the Apache configuration file Scoop generated for you, and make sure the variable {\bf cookie\_host} is set to the URL you use to access the site as described in section~\ref{apache-config}.  
+
+If your cookie host is set properly, make sure your browser is not rejecting cookies from your domain.  You may want to delete the cookie if it already exists, and tell your browser to notify you of attempts to set a cookie, to see if you're being sent one at all. \\
+\hline
+I can log in, but when I try to click on any of the Admin Tools, I get a "Permission Denied" error & See above; you're most likely being logged out, and if you're not logged in you don't have permission to do administrative tasks. \\
+\hline
+My site starts up fine, but when I (or anybody else) tries to create an account, no email is sent & make sure your smtp and email variables in the apache config file (\ref{apache-config}) and the Site Controls (\ref{initial-setup}) are set properly.  Make sure the SMTP server you are using allows your Scoop server to send email through it. Make sure your SMTP server is allowed to send email to the receiving server, too, before messing with its configuration---if it's in a spam blocklist the receiving server is using, no email will get through, through no configuration on your part. \\
+\hline
+I get the error ``\latexhtml{$<$}{<}Perl\latexhtml{$>$}{>}: PerlSetVar takes two arguments, Perl config var and value'' but my PerlSetVar commands all have the two arguments they need & Check your VERSION file - chances are there's been a cvs conflict (usually at the bottom of the file). The conflict delimiters mess up how apache parses that file for version info. \\
+\hline
+\latex{\end{longtable}}
+\html{\end{tabular}}
+%\end{center}
+\html{\end{table}}
+
+%EOF

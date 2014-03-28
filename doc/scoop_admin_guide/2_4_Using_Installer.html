@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>2.4 Using the Installer</TITLE>
+<META NAME="description" CONTENT="2.4 Using the Installer">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="2_5_Installing_Hand.html">
+<LINK REL="previous" HREF="2_3_Getting_Scoop.html">
+<LINK REL="up" HREF="2_Installation.html">
+<LINK REL="next" HREF="2_5_Installing_Hand.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<UL>
+<LI><A href="2_1_Dependencies.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> Dependencies</A></LI>
+<LI><A href="2_2_Installing_MySQL.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> Installing MySQL and Apache/mod_perl</A></LI>
+<LI><A href="2_3_Getting_Scoop.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN> Getting Scoop</A></LI>
+<LI><A href="2_4_Using_Installer.html" id="current"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN> Using the Installer</A></LI>
+<LI><A href="2_5_Installing_Hand.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN> Installing By Hand</A></LI>
+<LI><A href="2_6_Upgrading_Scoop.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN> Upgrading Scoop</A></LI>
+<LI><A href="2_7_System_specific_notes.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN> System-specific notes</A></LI>
+<LI><A href="2_8_Troubleshooting.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">8</SPAN> Troubleshooting</A></LI>
+</UL>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html227"
+  HREF="2_4_Using_Installer.html#SECTION00024100000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN> Installing Perl Modules</A>
+<LI><A NAME="tex2html228"
+  HREF="2_4_Using_Installer.html#SECTION00024200000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> Configure the Database</A>
+<LI><A NAME="tex2html229"
+  HREF="2_4_Using_Installer.html#SECTION00024300000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN> Configure Apache</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H2><A NAME="SECTION00024000000000000000">
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN> Using the Installer</A>
+</H2>
+
+<P>
+The script `<B>install.pl</B>' is by far the easiest way to install Scoop.  Once you've installed all the dependancies (<A HREF="2_1_Dependencies.html#install-depend">2.1</A>) and downloaded Scoop, all you have to do is change into the scripts directory and run install.pl.  The install script isn't really set up to easily handle multiple Scoop sites, though it can work.  Even if you use the install script, you may want to read section&nbsp;<A HREF="2_5_Installing_Hand.html#by-hand">2.5</A> anyway, just to tweak things a bit.
+
+<P>
+If you're running Windows, the installer won't work; you'll have to do it by hand, and follow a few special instructions as well.  See sections&nbsp;<A HREF="2_5_Installing_Hand.html#by-hand">2.5</A> and&nbsp;<A HREF="2_7_System_specific_notes.html#install-system-notes">2.7</A>.
+
+<P>
+
+<H3><A NAME="SECTION00024100000000000000">
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN> Installing Perl Modules</A>
+</H3>
+
+<P>
+First, the install script will do some checks, then ask if you want to install Perl modules. 
+
+<P>
+Even if you've already installed all the modules listed, it doesn't hurt. If everything is already up to date, then it will skip over all of them and tell you everything is installed.  The script basically follows the instructions in section&nbsp;<A HREF="2_1_Dependencies.html#install-modules">2.1.2</A> for installing Bundle::Scoop.
+
+<P>
+
+<H3><A NAME="SECTION00024200000000000000">
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> Configure the Database</A>
+</H3>
+
+<P>
+If you're upgrading to a new computer, re-configuring your database will drop all the data in it, so unless that's your intention, don't let the script do it.  If you're just upgrading the code, you shouldn't be using the install script; go read section&nbsp;<A HREF="2_6_Upgrading_Scoop.html#upgrading">2.6</A>.
+
+<P>
+For a new install, however, you want to let it continue.  You'll need to provide the installer with a username, password, hostname, and port so that it can connect to the database and do the work, though most of the defaults will work fine. Note that you will need to give the script two usernames and passwords; one to create the database (usually the database root user) and one that Scoop will use to actually connect to the database (which should have access <EM>only</EM> to the Scoop database, as its password is stored in the apache configuration file). At the next step, you'll probably want to choose option 1 (Create a new database), since if you rebuild, it'll just drop a current one.
+
+<P>
+Unless you have a specific reason to change it, such as if you're planning on running multiple Scoop sites on the same computer, the default database name will work just fine.
+
+<P>
+After this, you'll need to make some choices. The installer will walk you through the options, explaining each one. Make sure to read the prompts carefully.
+
+<P>
+
+<H3><A NAME="SECTION00024300000000000000">
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN> Configure Apache</A>
+</H3>
+
+<P>
+Once the script has created your new database, it will ask a few questions about what kind of setup you want.  Namely, virtual hosted or path based, and what path to use if it's the latter, as well as a few other configuration items.
+
+<P>
+The script then fills in the configuration file according to what you told it, then saves the configuration file with a name based on the site ID it asked for earlier (httpd-&lt;siteid&gt;.conf).  Read this file over to make sure everything is set up properly.  Put the file generated by the script in the same directory as your httpd.conf file.
+
+<P>
+Edit httpd.conf to put an Include directive (<A HREF="http://httpd.apache.org/docs/mod/core.html#include">http://httpd.apache.org/docs/mod/core.html#include</A>) in the appropriate place, referencing Scoop's configuration file.  The exact location of this directive will vary depending on how you have Apache set up, and if you've already done some customizations.  Since the generated file contains full &lt;VirtualHost&gt; or &lt;Location&gt; directives, <B>simply adding at the end of your httpd.conf file</B> should work.
+
+<P>
+The .conf file that Scoop generates for you <B>is not a complete Apache configuration file</B>.  It must be included in your main httpd.conf file either via pasting it in its entirety into httpd.conf or by using an Include directive.
+
+<P>
+Run ``apachectl configtest'' to make sure everything is set up properly.  It may not catch some misconfigurations, but it'll catch any syntax errors or missing requirements when it tries to compile Scoop.
+
+<P>
+If the configtest returns no errors, you can start Apache.  If it's already running, stop it first, wait for it to completely halt, then start it.  <B>Never use the restart command</B> as that will not properly recompile Scoop.
+
+<P>
+Now, you can try to load your website, using the URL you told the install script you were using, and start setting it up the rest of the way, as described in section&nbsp;<A HREF="3_Setup_Administration.html#admin">3</A>.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

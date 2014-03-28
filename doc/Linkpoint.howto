@@ -1,0 +1,14 @@
+Linkpoint HOWTO
+Updated 04/20/02 by Rusty
+
+This document describes how to enable credit card processing in Scoop, using the Linkpoint LPERL wrapper and Linkpoint payment gateway.
+
+
+1) Create a directory under scoop/ called 'cctmp'. Make the directory owned by your web user (usually nobody.nobody), and set permissions 744.
+
+2) Create a directory under lib/ called 'LPERL'. Install the Linkpoint LPERL package under this. You need to include, at least, lbin, lperl.pm, and your store's xxxxxx.pem certificate file. 
+
+3) Uncomment the lines in startup.pl relating to Linkpoint billing.
+
+4) In your Scoop httpd.conf, uncomment the Linkpoint config lines, and make sure the settings are correct. At the very least, replace 'xxxxxx' with your store ID number in linkpt_store and linkpt_keyfile. Check that the other settings match your configuration.
+

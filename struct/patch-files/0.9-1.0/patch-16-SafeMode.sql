@@ -1,0 +1,1 @@
+INSERT INTO vars VALUES ('safe_mode','0','Set true to make Scoop only return pages for Superusers. Use this to configure a public site without the masses being able to overload it before you\'re done. Returns a 502 error if set and user isn\'t allowed in. feel free to point 502 to whatever error document you like.','bool','Security');

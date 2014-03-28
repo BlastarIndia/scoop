@@ -1,0 +1,30 @@
+# This is a file that simply keeps track of 
+# what's been done to Scoop cvs lately. It 
+# will be used for a handy version box that 
+# you can use to check what you're running.
+
+# Don't change the format of this file, its parsed
+# by Scoop.pm
+
+my %scoop_env;
+
+$scoop_env{Version}     = 'scoop-1_1-dev';
+$scoop_env{Date}        = '$Date: 2006/08/06 04:23:55 $';
+$scoop_env{Revision}    = '$Revision: 1.737 $';
+$scoop_env{Author}      = '$Author: jeremy $';
+$scoop_env{State}       = '$State: Exp $';
+
+return \%scoop_env;
+
+
+
+
+
+
+
+
+
+
+# Ignore this -- it's just to force CVS to 
+# update this on all commits.
+#Gibberish: 662562201338918

@@ -1,0 +1,153 @@
+--------------------------
+Scoop 1.1 development
+How to contribute
+--------------------------
+
+As with any open source project, there are several ways to contribute to Scoop.
+This document outlines some of things that you can do to make Scoop better, and
+how to contribute that work.
+
+While reading this, keep in mind that Scoop is not a massive project with
+strict rules on contributing. Nearly any contribution is appreciated, and most
+are accepted. Discussion is an important part of improving Scoop, so please do
+discuss your ideas with other on the scoop-dev mailing list,
+scoop.kuro5hin.org, or in #scoop.
+
+
+------------------------------
+Bug Reports & Feature Requests
+------------------------------
+
+While using Scoop, more than likely, you'll come across something that doesn't
+work quite the way it should, or decide that Scoop needs to do something that
+it doesn't. In this case, you should send your bug report or feature request
+to the Scoop Bug Muncher (http://bugz.mostly-harmless.ca/)
+
+You can also send your comments to the scoop-help mailing list, or discuss it
+in #scoop with the developers.
+
+In any case, please try and give as much as information as possible. For a bug,
+tell what you consider the bug to be, where you found it, and the steps
+necessary to re-produce it. For feature requests, make sure to include a clear,
+through description of what you think should be added. In either case, make
+sure there is a way for the developers to contact you, in case more information 
+is necessary.
+
+Bug reports and feature requests are always appreciated, but if you've got the
+knowledge, patches that fix bugs or implement features are always preferred.
+
+----
+Code
+----
+
+It's almost always easier for a developer to apply a patch than it is to write
+the code. Because of this, code patches that fix bugs or add features help
+developers to get a little more sleep at night. But before you send in your
+code, there are some guidelines to follow.
+
+If you are fixing a bug, check the Scoop Bug Muncher
+(http://bugz.mostly-harmless.ca/) for other reports about this bug - somebody
+may have noticed the same bug via a slightly different behaviour that you
+should take into account, or if you aren't running the very latest code, it may
+already have been fixed. If it hasn't been reported already, feel free to
+report it yourself at this point.
+
+Before you start on a major feature, or even a minor one, it would be a good
+idea to check the Scoop Bug Muncher and email scoop-dev and make sure that no
+one is already working on the same feature - and to make sure that the
+developers think the feature is worth working on (you wouldn't want to write a
+major feature only to have it rejected completely). Also, by doing this, you
+can discuss your idea with others and improve on both the feature and its
+integration into Scoop.
+
+When you've started on your feature, don't forget to file an "enhancement
+request" bug in the Bug Muncher; this is where patches and some commentary will
+be placed, after the initial discussion hashing out how to go about adding your
+feature.
+
+Most importantly, make sure that your patch is against the most recent CVS
+version of Scoop, not a released version - and especially not an old release.
+Just before sending your patch in for review, use CVS to update your local copy
+of Scoop and run some basic tests one more time, just to be sure. Some minor
+problems are okay, they can be corrected. However, patches against an older
+version, such as 0.8.1, will be rejected.
+
+Also, do your best to follow the coding style used within Scoop. It's not (yet)
+documented anywhere, so look over some of the existing code to get a feel for
+it. Because of the coding style's undocumented status, patches usually aren't
+rejected based on style unless they're completely unreadable.
+
+If your patch requires any changes to the database, then be sure to include a
+database patch. There are plenty of examples of these in the
+struct/patch-files/current/ directory, so look there for an idea of how to make
+one. Don't forget to update the README file in that directory with a
+description of your patch.
+
+In the base Scoop directory, update the appropriate part of the CHANGES file to
+reflect your addition or change. Also, if it's your first time contributing to
+Scoop, add yourself to the end of the developer list in the CREDITS file.
+
+Once you're ready to make your patch, be sure to follow the instructions in the
+'Sending a Patch' section of this document. If your patch isn't in the proper
+format, or doesn't include all the necessary parts, then it won't be accepted
+and you'll be asked to try again.
+
+
+---------------
+Sending a Patch
+---------------
+
+Before sending a patch in, you have to actually make it. Use the 'cvs diff'
+command for this:
+
+$ cvs diff -u [files] > patch.diff
+
+The 'cvs diff' part runs the cvs program and tells it to compare the files on
+your computer with the ones on the server, then generate a file with the
+differences between the two.
+
+The '-u' option makes a unified diff. Be sure to use this, otherwise it is much
+more difficult for developers to review your patch.
+
+A list of files is optional. If not given, CVS will go through each directory
+under, and including, the current one and compare the files within them. If a
+list of files is given, then only those are compared.
+
+Finally, CVS sends its output to stdout, so you must redirect it to a file to
+save it. Replace 'patch.diff' with whatever you want to name the patch, but
+keep the .diff extension.
+
+When you think your patch is ready to be reviewed, attach it to your bug entry
+in the Scoop Bug Muncher and set the review? flag on the attachment. The
+developers regularly search the SBM for patches requesting review.
+
+Once you've submitted a patch, be patient. Developers have a lot to do, both
+within and outside of Scoop, so you're patch might not be reviewed right away.
+Whoever is reviewing your patch will probably contact you about it, if only to
+say that's it been applied. If you don't receive anything regarding your patch
+after a week or so, you could try sending another email to see what its status
+is. There are several factors that could contribute to your patch not being
+reviewed right away, but a patch is never deliberately ignored.
+
+It's possible that your patch will be rejected, but don't be discouraged by
+this. Whoever rejects your patch will do their best to explain why they did so,
+and to offer advice on what would make the patch better. Follow the advice and
+there's a good chance your patch will be accepted.
+
+
+-------------
+Documentation
+-------------
+
+Docs are pretty complete, but can always use more eyes to point out unclear
+explanations.  The Scoop Admin Guide, which is located in the doc/ directory,
+holds most of Scoop's docs. It's maintained in LaTeX format and the HTML is
+generated from that.
+
+The easiest way to contribute to docs is to read through them and point out
+problems on the scoop-help mailing list or the Scoop Bug Muncher. Knowing about
+deficiencies in the docs is the first step in getting them improved. If you see
+a missing or out-dated section, a confusing paragraph, or even a mis-spelled
+word, let someone know, and it will be corrected.
+
+

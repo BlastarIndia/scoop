@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>A..16 Ops</TITLE>
+<META NAME="description" CONTENT="A..16 Ops">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="A_17_Subscriptions.html">
+<LINK REL="previous" HREF="A_15_Advertising.html">
+<LINK REL="up" HREF="A_Admin_Tools.html">
+<LINK REL="next" HREF="A_17_Subscriptions.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<UL>
+<LI><A href="A_1_New_Story.html">A..<SPAN CLASS="arabic">1</SPAN> New Story</A></LI>
+<LI><A href="A_2_Story_List.html">A..<SPAN CLASS="arabic">2</SPAN> Story List</A></LI>
+<LI><A href="A_3_Archived_Story.html">A..<SPAN CLASS="arabic">3</SPAN> Archived Story List</A></LI>
+<LI><A href="A_4_New_Poll.html">A..<SPAN CLASS="arabic">4</SPAN> New Poll</A></LI>
+<LI><A href="A_5_Poll_List.html">A..<SPAN CLASS="arabic">5</SPAN> Poll List</A></LI>
+<LI><A href="A_6_Site_Controls.html">A..<SPAN CLASS="arabic">6</SPAN> Site Controls</A></LI>
+<LI><A href="A_7_Blocks.html">A..<SPAN CLASS="arabic">7</SPAN> Blocks</A></LI>
+<LI><A href="A_8_Topics.html">A..<SPAN CLASS="arabic">8</SPAN> Topics</A></LI>
+<LI><A href="A_9_Sections.html">A..<SPAN CLASS="arabic">9</SPAN> Sections</A></LI>
+<LI><A href="A_10_Special_Pages.html">A..<SPAN CLASS="arabic">10</SPAN> Special Pages</A></LI>
+<LI><A href="A_11_Boxes.html">A..<SPAN CLASS="arabic">11</SPAN> Boxes</A></LI>
+<LI><A href="A_12_Groups.html">A..<SPAN CLASS="arabic">12</SPAN> Groups</A></LI>
+<LI><A href="A_13_RDF_Feeds.html">A..<SPAN CLASS="arabic">13</SPAN> RDF Feeds</A></LI>
+<LI><A href="A_14_Cron.html">A..<SPAN CLASS="arabic">14</SPAN> Cron</A></LI>
+<LI><A href="A_15_Advertising.html">A..<SPAN CLASS="arabic">15</SPAN> Advertising</A></LI>
+<LI><A href="A_16_Ops.html" id="current">A..<SPAN CLASS="arabic">16</SPAN> Ops</A></LI>
+<LI><A href="A_17_Subscriptions.html">A..<SPAN CLASS="arabic">17</SPAN> Subscriptions</A></LI>
+<LI><A href="A_18_Hooks.html">A..<SPAN CLASS="arabic">18</SPAN> Hooks</A></LI>
+<LI><A href="A_19_Log.html">A..<SPAN CLASS="arabic">19</SPAN> Log</A></LI>
+<LI><A href="A_20_Macros.html">A..<SPAN CLASS="arabic">20</SPAN> Macros</A></LI>
+<LI><A href="A_21_User_Preferences.html">A..<SPAN CLASS="arabic">21</SPAN> User Preferences</A></LI>
+<LI><A href="A_22_Calendars.html">A..<SPAN CLASS="arabic">22</SPAN> Calendars</A></LI>
+<LI><A href="A_23_Search.html">A..<SPAN CLASS="arabic">23</SPAN> Search</A></LI>
+</UL>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000616000000000000000"></A>
+<A NAME="admin-tools-ops"></A>
+<BR>
+A..<SPAN CLASS="arabic">16</SPAN> Ops
+</H2>
+
+<P>
+The Ops Admin Tool is where you control how Scoop behaves for a given ``op'', the first pseudo-directory in Scoop's virtual path.  Subsequent pseudo-directories are handled by the function assigned here, and vary depending on the op.  If you are using Scoop version 0.8, this functionality is (poorly) controlled by the Templates Admin Tool, which has been removed between 0.8 and 0.9 and is not documented here.
+
+<P>
+Ops that do not exist or are not enabled are handed back to Apache to process as a normal directory.
+
+<P>
+To edit an op, select the name of the op from the top drop-down list and click the ``Get'' button.  To create a new one, leave the drop-down list at its dashes and just fill in the fields below.
+
+<P>
+The fields are:
+
+<P>
+<DL>
+<DT><STRONG>Op</STRONG></DT>
+<DD>The name of the op, as it will appear in the URL.  Use lowercase letters and underscores, mostly.
+</DD>
+<DT><STRONG>Template</STRONG></DT>
+<DD>The page template that will be used to display the page.  Page templates are edited in the Blocks Admin Tool, and are all filed in the ``templates'' category.  (See appendix&nbsp;<A HREF="A_7_Blocks.html#admin-tools-blocks">A.7</A> and section&nbsp;<A HREF="4_18_Site_Layout.html#features-custom">4.18</A>.)
+</DD>
+<DT><STRONG>Function</STRONG></DT>
+<DD>The function that will run to produce content for the page.  For some ops, the function is built into scoop, such as the story and comment display functions.  For others, it is provided by a box.  If the former, the name of the function is put in this text box; for the latter, the name of the box is put in this text box and the checkbox below is selected.
+</DD>
+<DT><STRONG>Function is a box</STRONG></DT>
+<DD>If the function named above is actually a box, this checkbox should be selected.
+</DD>
+<DT><STRONG>Permission</STRONG></DT>
+<DD>If a permission is needed to use this op, it should be selected here.  (See appendix&nbsp;<A HREF="A_12_Groups.html#admin-tools-groups">A.12</A> and section&nbsp;<A HREF="3_3_Users_Stories.html#admin-users">3.3</A>.)  If no permission is needed, this should be left at its dashes.
+</DD>
+<DT><STRONG>Enabled</STRONG></DT>
+<DD>Whether or not this op is enabled at all.  If disabled, Scoop acts as if the op does not exist, and hands it back to Apache.  Anyone requesting this op usually gets a 404 Page Not Found error, unless by chance you have a directory of the same name as the op available.
+</DD>
+<DT><STRONG>Op Aliases</STRONG></DT>
+<DD>Alternate names that this op recognizes as equivalent. For example, the <B>displaystory</B> op has the alias <B>story</B>, so by default the URL http://www.site.com/displaystory/nnnn/nn/nn/nnnn/nnnn gives the same page as http://www.site.com/story/nnnn/nn/nn/nnnn/nnnn.
+</DD>
+<DT><STRONG>URL Templates</STRONG></DT>
+<DD>Information on how Scoop should interpret the paths it gets, and how to turn them into CGI parameters. There can be multiple templates of varying path length. Each template should be on one line, and multiple templates should be separated by a comma. The details are below.
+</DD>
+<DT><STRONG>Description</STRONG></DT>
+<DD>A description of what the op and its function do, so you don't have to go read the code...
+</DD>
+<DT><STRONG>Delete this op</STRONG></DT>
+<DD>Check this only if you intend to delete the currently selected op when you save it.
+</DD>
+</DL>
+
+<P>
+To save any changes you have made, click the ``Write Op'' button; to clear them, click the ``Reset'' button.
+
+<P>
+For more information on adding functionality to Scoop, see section&nbsp;<A HREF="5_Extending_Scoop_s.html#hacking">5</A>.
+
+<P>
+<B>To understand URL Templates</B>, the first thing you have to know is that they are generally laid out much like the paths that they are used to interpret, except the first pseudo-directory (the op) is not present in the templates. The elements between slashes are CGI parameter names (in the path that the user sees they are the parameter values), and there are various commands that allow you to customize Scoop's interpretation of the path. An overview of how to create a basic URL Template string is below the following examples.
+
+<P>
+The simplest form can be found, for example, in the section op. The URL template there is <B>/section/page/</B> which means that when the URL http://www.example.com/section/news/3 is requested, Scoop will first look at the section op to find out what to do with the rest of the path (first pseudo-directory) then set the CGI parameter `section' to news (second pseudo-directory), and the CGI parameter `page' to 3 (third pseudo-directory). The more familiar CGI URL, for those of you who have done web programming before, would be http://www.example.com/?op=section;section=news;page=3 and would get exactly the same page. If there are fewer pseudo-directories in the page request than in the URL template, the last few parameters are undefined.
+
+<P>
+Looking at the URL template for the comments op, you can see three different `complications' in how the paths are parsed. The first template, with <B>element.1</B> at the beginning, indicates that this template only applies if the first pseudo-directory after the op is `poll'. (Element 0 is the op itself.) The rest of the URL template is then used as above to assign values to CGI parameter names.
+
+<P>
+The second and third templates have <B>length=</B> at the beginning. This indicates that they are to apply if the path is of that particular length (again, not counting the op in that length). You can see that the entry with length=2 has two CGI parameters defined, and that the one with length=3 has three parameters defined.
+
+<P>
+The fourth template shows an entirely different `complication'; sid{5} means that what would otherwise be five seperate items are treated as one parameter called `sid' (including the internal slashes). Story ID, or sid, values consist of five parts, separated by slashes.
+
+<P>
+The most complicated form can be found in the user op. The URL template there is a block of perl code enclosed in an EVAL{&nbsp;} statement. This perl code, like boxes, has full access to Scoop's internal functions. The value returned by the code must be a hash with CGI parameter names as the keys and CGI parameter values as the values of the hash. In the case of the user op, it must do such things as translate /my/info to use the user op and the nickname of the user making the request. It can also change the real op entirely: this is how /user/nickname/stories can return search results--the op is changed to be search, and the nickname is used as the search term for an author search.
+
+<P>
+<B>To create URL Templates</B>, you must first sort out what CGI parameters must be passed to your op for it to do everything it needs to do in a GET request. (CGI parameters that should be posted can be ignored here, since they never appear in the URL.) Then, in general, you should order them from most generic to most specific. For example, the sections op first lists which section (generic) then which page (specific) you are requesting. Optional parameters (like which page) should be last, so they can be left off without messing up the other parameters.
+
+<P>
+Then, if none of your parameter values have slashes in them, you simply put your parameter names in the URL Templates textarea in order, separated by slashes. (Don't forget - leave off the op.)
+
+<P>
+If one or more of your parameter values have slashes, such as the sid (story ID), then specify how many `parts' the parameter value has. The sid, for example, has five parts - four slashes in the value, so instead of just /sid/ you would put /sid{5}/ to tell Scoop to slurp up five 'directories' for that CGI parameter instead of the default one.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

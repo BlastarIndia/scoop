@@ -1,0 +1,143 @@
+\section{Frequently Asked Questions}
+\label{faq}
+
+These questions are primarily taken from the questions that get asked in \#scoop, on the Scoop mailing lists, or on the Scoop website (\ref{get-help}).  If you have any questions that aren't answered here or in the rest of the Scoop Admin Guide, go right ahead and ask any of those places.  It may well end up in this FAQ!
+
+\subsection{General and installation}
+
+\subsubsection{What exactly is Scoop?}
+
+Scoop is a ``Collaborative Media Application''. Basically, it's somewhere between a weblog, a bulletin board, and a content management system. Superficially, it looks like a weblog, with stories displayed in reverse chronological order, and comments attached. The difference is that Scoop allows your users to drive the site by not only submitting stories, but acting as site editors and choosing which stories to publish. That's where the ``collaborative'' part of the name comes in.
+
+Scoop is designed to enable your website to become a community. It empowers your visitors to be the producers of the site, contributing news and discussion, and making sure that the signal remains high.
+
+A scoop site can be run almost entirely by the readers. The whole life-cycle of content is reader-driven. They submit stories, they choose what to post, and they can discuss what they post. Readers can rate other readers comments, as well, providing a collaborative filtering tool to let the best contributions float to the top. Based on this rating, you can also reward consistently good contributors with greater power to review potentially untrusted content. The real power of Scoop is that it is almost totally collaborative.
+
+Of course, as an admin, you also may pick and choose which tools you want the community to have, and which will be available to admins only. Administrators have a very wide range of customization and security management tools available. All of the administration of Scoop is done through the normal web interface. Scoop will seamlessly provide more options to site administrators, right in the normal site, so the tools you need are always right where you need them.
+
+\subsubsection{Why don't you re-write Scoop in (insert your favourite language here)?}
+
+Go right ahead, but the Scoop developers like perl. There's not much point in writing a Scoop feature clone in another language though, you should figure out which features you really want and implement them however you see fit in your own project.
+
+\subsubsection{Does Scoop run on Apache 2?}
+
+Yes, but...  Some things may be broken (file uploads are definately broken at the moment, some other items as well). Also, you have to run CVS development versions of libapreq. 
+
+Basically, Scoop has been made to run on Apache 2, but you should only do so if you intend to help port it to mod\_perl 2. On no account should you run a production Scoop site using mod\_perl 2.
+
+\subsubsection{Why can't Apache find all the perl modules I installed?}
+
+There are a couple of possibilities. One is that some of the perl modules didn't get installed properly---if that's the case, check CPAN's output for error messages.
+
+Another possibility is that CPAN upgraded perl without asking you. If this is the case, you'll see messages like ``Can't find Something.pm in @INC (@INC includes path1,path2,...)''. See section~\ref{install-troubleshooting} for details on what causes this and how to fix it.
+
+\subsubsection{What is CPAN? and how do I get these crazy modules?}
+
+CPAN is the Comprehensive Perl Archive Network, a vast repository of more perl modules than you'll ever need. Scoop depends heavily on quite a few of those modules, so the Scoop developers don't have to rewrite such basic functions as sending email, generating random strings, and connecting to the database.
+
+The full details on how to get the modules from CPAN are in section~\ref{install-modules}
+
+\subsubsection{I keep getting "Document Contains no Data", what does that mean?}
+
+This means that somehow either Apache or Scoop is failing without warning and just stopping. 
+
+If Scoop hasn't yet successfully shown its front page, it may be having trouble connecting to the database. One fix that has been known to work is to go back into cpan, and 'force install' DBD::mSQL
+\begin{verbatim}
+cpan> force install DBD::mSQL
+\end{verbatim}
+and tell it to install the msyql modules only.
+
+If Scoop was working before and is now giving you ``Document Contains no Data'', it may be because Apache has run out of space to write its log files. Scoop has been known to trigger this via its page caching (\ref{features-static-page-caching}), if Apache's log files and Scoop's cache files are on the same partition on the hard drive.
+
+\subsection{Stories, comments, and the queue}
+
+\subsubsection{How do stories get posted?}
+
+Stories are placed into a moderation queue when submitted, then are voted on by registered users. When a story's score (the sum of all positive, negative, and neutral votes) reaches a configurable threshold, the story is either posted or dropped. The exact mechanism and a description of what the thresholds are and how they interact is described in section~\ref{features-modsub}.
+
+\subsubsection{How do stories get posted if there aren't any users to vote on them?}
+
+To short-circuit the problem all Scoop sites have when first started, that of having no users to vote stories up and therefore no stories posted to attract users, the administrator can manually post articles. When enough active users are present, the moderation queue can be opened to members with the thresholds set suitably low and raised as the membership grows. Details can be found in section~\ref{moderation-override}.
+
+\subsubsection{What is an "open queue"?}
+
+An open moderation queue is one in which all registered users have permission to view and vote on submitted stories. Stories are posted or not depending on what the users choose. For full details on configuring the open queue, see section~\ref{features-modsub}.
+
+\subsubsection{What is a "closed queue"?}
+
+A closed moderation queue is one in which only editors, but not any registered users, have permission to view and vote on submitted stories. In a closed queue, the editors will also generally have permission to edit the stories, so the queue then becomes a place for the site's editorial staff to prepare stories for publication.
+
+\subsubsection{How do I edit a comment?}
+
+There's no way to edit a comment's text. As an admin, all you can do is delete it, which is irreversible, or change it between editorial or topical, which is easily reversible by simply changing it again. For more details on what is possible with comments, see section~\ref{comments-display}.
+
+\subsection{Users, logging in, and logging out}
+
+\subsubsection{Why do I get logged out on every new page load, even though I can log in just fine?}
+
+This is a cookie problem. Scoop uses cookies to identify you with every page you request, so it knows what you are allowed to do. Generally this is caused by the cookie\_host variable in your Apache configuration being wrong; it must match the domain you are using the access the site. See section~\ref{apache-config} for more details.
+
+\subsubsection{Why does the admin stuff tell me "Permission Denied" when I've logged in as the administrator?}
+
+Chances are you're being logged out. If you are, see the question above. 
+
+If you're still logged in but are being denied permission to do admin events, you should check the Groups Admin Tool (\ref{admin-tools-groups}) to make sure you actually do have permission to do what you're trying to do. If you've created another account, you may be logged in as that account and not the superuser account created when Scoop is first installed.
+
+\subsubsection{Why does logging out take so long? Every other page load is way faster!}
+
+KeepAlive is on. Logging out waits for the KeepAlive to time out, a length of time set by the Apache directive {\bf KeepAliveTimeout}. You can reduce the timeout or turn KeepAlive off entirely to speed up the logout process.
+
+KeepAlive has some advantages, so you should read Apache's documentation on that directive and consider the advantages against the logout time issue to decide what you want to set the timeout to.
+
+\subsubsection{I have a user who forgot their password, how do I change it?}
+
+Users can request a new password from Scoop by putting their username into the login box and clicking the ``Mail Password'' button.
+
+If the user does not have access anymore to the email address listed as their ``real email'' in their user preferences, you will have to change their password for them - but {\bf make sure to your satisfaction that they are who they claim they are!} While logged into a Superuser level account, use the Edit User box in the Admin Tool box to type in their username, and click 'prefs'. Scroll down do where you can enter a new password for them. Type in a new password for them, into both boxes. Click ``Save'', let them know about their new password, and you're done.
+
+\subsection{Site layout and customization}
+
+\subsubsection{What's the difference between blocks and boxes?}
+
+{\bf Blocks} are used to build the display. At first they can be confusing, because it's not always clear which block is used where, but they allow you to quickly and easily change the entire layout of the site. This is where all layout changes are made; there are no HTML template files to modify. (The html/ directory in the Scoop package contains the site's static files, such as its images and robots.txt.)
+
+{\bf Boxes}, on the other hand, are bits of perl code that run every time they appear on a page. They range from very simple (the main\_menu box which checks a few permissions and displays appropriate menu items) to very complex (the payment processing boxes used to handle ad and subscription payment and activation). Boxes have full access to all of Scoop's data and functions, as well as the normal Perl ability to call external programs and capture their output for parsing (the fortune\_box is an example of this; it calls the unix program 'fortune' and displays the quote returned). There are a number of useful boxes included with Scoop, and quite a number of other boxes available on the Scoop Box Exchange (\ref{sbe}).
+
+\subsubsection{How do I add some of those sidebar boxes that kuro5hin has?}
+
+Some of kuro5hin's custom boxes are available on the Scoop Box Exchange (\ref{sbe}). Others aren't. The SBE is the first place to look for boxes that aren't included with Scoop.
+
+\subsection{Crashes and general misbehaviour}
+
+\subsubsection{RDFs don't work! I can't fetch any from the RDF admin tool!}
+
+This is because apache, by default, compiles in a modified version of expat (called expat-lite) that differs from the normal expat, which perl's XML parser module uses. Having two different expat's in memory is enough to segfault the apache child. You will see this behavior when running cron with 'op=cron' or re-fetching the RDF feeds from the RDF admin tool. Sadly, the only way to fix this is to recompile apache.
+
+See section~\ref{install-depend} for an explanation.
+
+\subsubsection{Cron is segfaulting Apache!}
+
+See the question above; this is most likely happening when Scoop's cron tries to fetch RDF files.
+
+\subsubsection{I keep getting "Document Contains no Data", what does that mean?}
+
+This means that somehow either Apache or Scoop is failing without warning and just stopping. 
+
+If Scoop was working before and is now giving you ``Document Contains no Data'', it may be because Apache has run out of space to write its log files. Scoop has been known to trigger this via its page caching (\ref{features-static-page-caching}), if Apache's log files and Scoop's cache files are on the same partition on the hard drive.
+
+\subsection{Email}
+
+\subsubsection{Why won't my site send email when creating new accounts?}
+
+First, make sure Scoop is configured to use the right mail server by checking your configuration against the instructions in section~\ref{apache-config}.
+
+If Scoop is configured properly, try creating an account using an email address you know for certain the mail server Scoop uses can successfully send email to. It is entirely possible that the address that didn't receive the email has an overzealous spam filter, and there's actually nothing at all wrong with your configuration. In that case, there's really nothing you can do.
+
+If Scoop can't send an email to an address that you know for sure works and you can send email to via the same mailserver as Scoop is configured to use, then you'll have to check the mailserver logs to see what is actually happening to the email, because the problem is probably in the mail server configuration itself, possibly an issue with your Scoop server not having permission to relay email through the mail server.
+
+If you've installed Scoop on Windows, we know email doesn't work but we don't know why yet.
+
+\subsection{Other}
+
+If your question isn't answered in any of the previous sections of the Scoop FAQ, feel free to drop by \#scoop on irc.slashnet.org to ask for help. A lot of Scoop problems have been solved in that channel. Your question may also end up here in the FAQ!
+

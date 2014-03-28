@@ -1,0 +1,274 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>2.1 Dependencies</TITLE>
+<META NAME="description" CONTENT="2.1 Dependencies">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="2_2_Installing_MySQL.html">
+<LINK REL="previous" HREF="2_Installation.html">
+<LINK REL="up" HREF="2_Installation.html">
+<LINK REL="next" HREF="2_2_Installing_MySQL.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<UL>
+<LI><A href="2_1_Dependencies.html" id="current"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> Dependencies</A></LI>
+<LI><A href="2_2_Installing_MySQL.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> Installing MySQL and Apache/mod_perl</A></LI>
+<LI><A href="2_3_Getting_Scoop.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN> Getting Scoop</A></LI>
+<LI><A href="2_4_Using_Installer.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN> Using the Installer</A></LI>
+<LI><A href="2_5_Installing_Hand.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN> Installing By Hand</A></LI>
+<LI><A href="2_6_Upgrading_Scoop.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN> Upgrading Scoop</A></LI>
+<LI><A href="2_7_System_specific_notes.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN> System-specific notes</A></LI>
+<LI><A href="2_8_Troubleshooting.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">8</SPAN> Troubleshooting</A></LI>
+</UL>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html192"
+  HREF="2_1_Dependencies.html#SECTION00021100000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">1</SPAN> Required Programs</A>
+<LI><A NAME="tex2html193"
+  HREF="2_1_Dependencies.html#SECTION00021200000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">2</SPAN> Required Perl Modules</A>
+<LI><A NAME="tex2html194"
+  HREF="2_1_Dependencies.html#SECTION00021300000000000000"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">3</SPAN> Recommended Programs</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H2><A NAME="SECTION00021000000000000000"></A>
+<A NAME="install-depend"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> Dependencies
+</H2>
+
+<P>
+Before installing Scoop itself, you should make sure that all the dependencies are properly installed first.  The programs below should be installed in roughly the order presented, but there are only a few <B>critical notes on installation order</B>.  
+
+<UL>
+<LI>Expat must be installed before Apache
+</LI>
+<LI>MySQL and Apache must be installed before the Perl Modules
+</LI>
+<LI>All of the required programs must be installed before Scoop itself
+</LI>
+</UL>
+
+<P>
+
+<H3><A NAME="SECTION00021100000000000000"></A>
+<A NAME="install-require"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">1</SPAN> Required Programs
+</H3>
+
+<P>
+<B>Perl</B>, or Practical Extraction and Report Language, is the underlying language Scoop is written in. Scoop requires <B>at least perl 5.005_03</B> in order to run (note that the versioning system used for Perl changed between 5.005 and 5.6) but will work fine with later versions.  Perl is available from <A HREF="http://www.cpan.org/src/">http://www.cpan.org/src/</A> and is available in both source and binary distributions.  A standard Perl install is your best bet, so follow the instructions included with the distribution.  If you're installing Scoop on any OS other than Windows or Solaris, you probably already have a suitable Perl installed. See the system-specific notes for details.
+
+<P>
+<B>Expat</B> is an XML parser.  Strictly speaking, Scoop doesn't need it to run, but if you want to add RDF functionality later and you didn't put this in from the beginning, you'll basically have to recompile everything.  So install it.  Expat can be downloaded from <A HREF="http://sourceforge.net/projects/expat/">http://sourceforge.net/projects/expat/</A> and a default install is all that is needed.  Follow the instructions that come with the distribution.  When compiling Apache, you may need to explicitly tell it where expat is located, as sometimes it can't find it on its own.
+
+<P>
+<B>Apache</B> is a popular HTTP server, is available from the Apache website at <A HREF="http://www.apache.org/dist/httpd/">http://www.apache.org/dist/httpd/</A> and is the only one Scoop supports. Scoop with Apache 2.0 is not supported and not considered stable. Just about any version of Apache 1.3 should work, though the most recent is recommended as it will always include bug and security fixes.  You should compile Apache by hand and not use a precompiled version, as many precompiled packages don't work properly with Scoop.  When you compile Apache, you can include mod_perl (below) directly in the program or compile it separately as a DSO (module).  See section&nbsp;<A HREF="2_2_Installing_MySQL.html#install-apache-modperl">2.2</A> for detailed instructions.
+
+<P>
+<B>Mod_perl</B>, an Apache module, is also required. The stable tree is 1.x, and you can get it from the mod_perl website at <A HREF="http://perl.apache.org/">http://perl.apache.org/</A>. Note that if you get, or already have, an older version of Apache, then you may need to get an older version of mod_perl to work with it.  As with Apache, the most recent 1.x version is recommended as it has bug and security fixes, but the mod_perl version must correspond to the Apache version, as detailed on their website.  Mod_perl 2.0 is not yet supported.
+
+<P>
+<B>MySQL</B> is a database management system (DBMS), and is currently the only one Scoop supports, though support for Postgres is in the works. The stable tree for MySQL is 4.0, and versions 4.x, 3.23.x and 3.22.x are known to work with Scoop.  You must set the variable mysql_version in the Apache configuration file to a number corresponding to the first two parts of the version number (i.e., 3.22, 3.23, or 4.0).  Version 3.22 uses a different date format, and version 4 has some extra features that Scoop can take advantage of, so you must set this variable correctly.  All versions are available for download from <A HREF="http://www.mysql.com/downloads/">http://www.mysql.com/downloads/</A>.  The most recent 3.23.x or 4.x version is recommended, and a default install is your best bet.  Follow the installation instructions on the MySQL website, then make sure that you can access the MySQL database from the webserver.  If you are using a binary mysql package, such as the .rpm or .deb, you will also need the mysql development package, whatever it is named in your packaging system.  If you are compiling from source, you will have everything necessary already.
+
+<P>
+
+<H3><A NAME="SECTION00021200000000000000"></A>
+<A NAME="install-modules"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">2</SPAN> Required Perl Modules
+</H3>
+
+<P>
+Scoop uses quite a few Perl modules, all of which are available from CPAN. Table&nbsp;<A HREF="#perlmod">1</A> has a list of modules that are currently required by Scoop, as well as common problems encountered when installing them.
+
+<P>
+This is pretty consistently <B>the hardest, most frustrating</B> part of installing Scoop.  Unfortunately, there is nothing we can do about it, since all the suckage is in CPAN and the quirky, fragile test scripts that come with some of the modules.  There are some modules that simply will not pass their tests, even when compiled correctly.  A ``force install'' is required to bypass the tests in those cases.
+
+<P>
+There are several ways to install them. You could go to CPAN, get each tarball, and install by hand, but that takes time and effort. You could also use the CPAN shell (more on this below) to install each one, but that still requires typing out each module.
+
+<P>
+For convenience, Scoop includes a Bundle::Scoop, which you can use with the CPAN shell to install all of them.  The install script uses this to install modules, which is the easiest way. But if you'd like to manually use it, here's how (note that you'll probably want to be root for this):
+
+<P>
+<PRE>
+% perl -MCPAN -e shell;
+cpan&gt; ! use lib qw( /path/to/scoop/lib/ );
+cpan&gt; install Bundle::Scoop
+cpan&gt; exit
+</PRE>
+
+<P>
+There will be a lot of output between the install and exit commands; try to watch for errors.
+
+<P>
+Make sure that Follow Prerequisites is set to 'Ask', or CPAN may upgrade your perl install and several other modules whether you want it or not.
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER">
+
+<A NAME="perlmod"></A>
+<DIV ALIGN="CENTER">
+</DIV>
+<P>
+<DIV ALIGN="CENTER"><A NAME="164"></A>
+<TABLE CELLPADDING=3 BORDER="1">
+<CAPTION><STRONG>Table 1:</STRONG>
+Summary of required Perl modules</CAPTION>
+<TR><TD ALIGN="LEFT">Module</TD>
+<TD ALIGN="CENTER">Min Version</TD>
+<TD ALIGN="LEFT">Notes</TD>
+</TR>
+<TR><TD ALIGN="LEFT">DBI</TD>
+<TD ALIGN="CENTER">1.14</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">DBD::mysql</TD>
+<TD ALIGN="CENTER">2.0414</TD>
+<TD ALIGN="LEFT">or try DBD::mSQL using CPAN, with MySQL only chosen.  Either way, MySQL will need to be running with a non-root user created.  You should give this user and password to either of the modules when it asks for it, or the module will not be able to log into the database and will fail all of its tests.  You may need to install using CPAN instead of the bundle to get it to ask.  This module can be forced if there are no compile errors and only test errors.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Digest::MD5</TD>
+<TD ALIGN="CENTER">2.11</TD>
+<TD ALIGN="LEFT">may need to install using CPAN; sometimes fails in the bundle</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Apache::DBI</TD>
+<TD ALIGN="CENTER">0.87</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Apache::Request</TD>
+<TD ALIGN="CENTER">0.31</TD>
+<TD ALIGN="LEFT">If you get <B>Invalid command 'TransferLog'</B> when building this module, go to the CPAN shell and force install it. It's just another broken test suite.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Apache::Test</TD>
+<TD ALIGN="CENTER">?</TD>
+<TD ALIGN="LEFT">The newest versions of Apache::Request require Apache::Test, and if your /root directory has permissions 700 or 710, the tests will fail.  Apache::Test starts up its own apache process, and tries to access a test html file inside /root/.cpan/, which it naturally doesn't have permission to...  <B>fix:</B> either force install Apache::Test, or change your permissions on /root to 711 (rwx-x-x) for the duration of the install, then back to whatever it was before after finishing installing this module.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Class::Singleton</TD>
+<TD ALIGN="CENTER">1.03</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Crypt::UnixCrypt</TD>
+<TD ALIGN="CENTER">1.0</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Mail::Sendmail</TD>
+<TD ALIGN="CENTER">0.77</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">String::Random</TD>
+<TD ALIGN="CENTER">0.198</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Time::CTime</TD>
+<TD ALIGN="CENTER">99.062201</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Time::Timezone</TD>
+<TD ALIGN="CENTER">99.062401</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Time::ParseDate</TD>
+<TD ALIGN="CENTER">99.062401</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Date::Calc</TD>
+<TD ALIGN="CENTER">5.4</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">XML::Parser</TD>
+<TD ALIGN="CENTER">2.30</TD>
+<TD ALIGN="LEFT">must have expat installed</TD>
+</TR>
+<TR><TD ALIGN="LEFT">LWP</TD>
+<TD ALIGN="CENTER">5.53</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Crypt::CBC</TD>
+<TD ALIGN="CENTER">1.25</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Crypt::Blowfish</TD>
+<TD ALIGN="CENTER">2.06</TD>
+<TD ALIGN="LEFT">&nbsp;</TD>
+</TR>
+<TR><TD ALIGN="LEFT">XML::RSS</TD>
+<TD ALIGN="CENTER">0.8</TD>
+<TD ALIGN="LEFT">must have expat installed</TD>
+</TR>
+</TABLE>
+</DIV>
+</DIV>
+<BR>
+
+<P>
+If there are any errors, and with some modules there are bound to be, you can try to install them individually through the CPAN shell.  Modules notorious for causing trouble are marked in the table above.  At least one of the modules (DBD::mysql) asks for some information before it starts testing, so it's to your advantage to have the CPAN shell in interactive mode, even though that means you have to pay attention to it while it's installing things.  You will need to provide the test script with a valid username and password for the database, and the database must be running when this module does its tests.  I'd recommend against giving it the database root password, just because that's bad policy.  If you want to skip the database tests for DBD::mysql, you can force install it through CPAN without any ill effects.
+
+<P>
+Instead of DBD::mysql, you may want to try installing the DBD::msql module, and selecting the MySQL drivers from it.  These drivers are a bit older but more stable than the drivers in DBD::mysql, and you may have more success with them.
+
+<P>
+XML::Parser may need to be installed by hand, because often you need to tell it explicitly where expat is installed.  If it can't find expat on its own, this module and all the ones that depend on it will fail; installing XML::Parser by hand (command line, not CPAN) then re-running the above bundle install will work.
+
+<P>
+If various modules are failing and saying that they depend on some other module, check your CPAN shell configuration, and make sure that it is set to ask before following dependencies.  If it is set to never follow dependencies, there may be problems if you have an old Perl install and some of your modules are too old.
+
+<P>
+
+<H3><A NAME="SECTION00021300000000000000"></A>
+<A NAME="install-recommended-programs"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">3</SPAN> Recommended Programs
+</H3>
+
+<P>
+<B>CVS</B> is extremely useful if you want to keep your Scoop install up to date.  Even the numbered releases are packaged as a CVS checkout, so updating to a newer numbered release or to the latest CVS version is quite easy if you have CVS installed.
+
+<P>
+<B>Sendmail</B> eliminates the hassle of trying to troubleshoot mail sending through somebody else's (ie, your ISP) mail server.  You have to make sure you secure your mail server to not be an open relay, and it is another program to keep up on security updates with.  It's your call.
+
+<P>
+<B>Text::Aspell</B> is a perl module used to provide spell-checking functionality in comments and stories.  You will need <B>Aspell 0.50.3</B> and the <B>Aspell English dictionary 0.51.0</B>, both available from <A HREF="http://aspell.sourceforge.net/">http://aspell.sourceforge.net/</A>.  Follow the installation instructions to install the two components in order.  Aspell 0.50.3 <B>must be properly installed before the dictionary will configure</B> properly.  The Text::Aspell perl module can then be installed using CPAN.  To activate and configure Spellchecking, see section&nbsp;<A HREF="4_10_Spell_checking_Stories.html#features-spellcheck">4.10</A>.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

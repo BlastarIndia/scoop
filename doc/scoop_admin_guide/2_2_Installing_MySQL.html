@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>2.2 Installing MySQL and Apache/mod_perl</TITLE>
+<META NAME="description" CONTENT="2.2 Installing MySQL and Apache/mod_perl">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="2_3_Getting_Scoop.html">
+<LINK REL="previous" HREF="2_1_Dependencies.html">
+<LINK REL="up" HREF="2_Installation.html">
+<LINK REL="next" HREF="2_3_Getting_Scoop.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<UL>
+<LI><A href="2_1_Dependencies.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> Dependencies</A></LI>
+<LI><A href="2_2_Installing_MySQL.html" id="current"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> Installing MySQL and Apache/mod_perl</A></LI>
+<LI><A href="2_3_Getting_Scoop.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN> Getting Scoop</A></LI>
+<LI><A href="2_4_Using_Installer.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN> Using the Installer</A></LI>
+<LI><A href="2_5_Installing_Hand.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN> Installing By Hand</A></LI>
+<LI><A href="2_6_Upgrading_Scoop.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN> Upgrading Scoop</A></LI>
+<LI><A href="2_7_System_specific_notes.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN> System-specific notes</A></LI>
+<LI><A href="2_8_Troubleshooting.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">8</SPAN> Troubleshooting</A></LI>
+</UL>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00022000000000000000"></A>
+<A NAME="install-apache-modperl"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> Installing MySQL and Apache/mod_perl
+</H2>
+
+<P>
+<B>MySQL</B> can be installed as a package or compiled from source.  You can check your system's install disks for a MySQL package, you can download one of the MySQL binary packages from their website, or you can compile your own from source using the standard procedure: that is, ./configure; make; make install - the last done as root or other account that can install programs in /usr/local.  If you are using a binary mysql package, such as the .rpm or .deb, you will also need the mysql development package, whatever it is named in your packaging system.  If you are compiling from source, you will have everything necessary already.
+
+<P>
+For information on possible options and on preparing and securing your MySQL install, see the MySQL documentation.
+
+<P>
+<B>Apache and mod_perl</B> need to be configured correctly for Scoop to work properly.  Some precompiled packages that ship with various distributions are reported to work, but if in doubt, compile this yourself.
+
+<P>
+The quick reference to compiling Apache and mod_perl is below; to add any other modules, or to customize the install, see the module's documentation.  The commands below will leave you with a simple Apache that will work with Scoop.
+
+<P>
+These instructions assume
+
+<UL>
+<LI>The apache source is in a directory named apache_1.3.x (where x is the specific revision number you downloaded)
+</LI>
+<LI>The mod_perl source is in a directory named mod_perl-1.x (where x is the specific revision number you downloaded)
+</LI>
+<LI>Both of those directories are in the directory you start the first command from
+</LI>
+</UL>
+
+<P>
+The $ indicates a normal user prompt; the % a root prompt.  This can all be done as root, but is not recommended.  The backslash at the end of a line immediately precedes a newline; do not put any spaces after the backslash and before the newline. And, obviously, substitute the correct value for the `x' in the version numbers.
+
+<P>
+<PRE>
+$ cd apache_1.3.x
+$ ./configure
+$ cd ../mod_perl-1.x
+$ perl Makefile.PL \
+    APACHE_PREFIX=/usr/local/apache \
+    APACHE_SRC=../apache_1.3.x \
+    DO_HTTPD=1 \
+    USE_APACI=1 \
+    EVERYTHING=1 \
+    APACI_ARGS='--enable-module=rewrite --enable-module=expires\
+          --enable-module=mime_magic --enable-module=speling'
+$ make
+% make install
+</PRE>
+
+<P>
+This places Apache into /usr/local/apache/*. you can change that to another value by altering APACHE_PREFIX if you like.
+
+<P>
+If you are using different options for apache and mod_perl, are adding other modules, or are compiling mod_perl as a DSO instead of directly into apache (as the above instructions assume), you must not forget the `EVERYTHING=1' option to mod_perl. If this is not set then Scoop will not work.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

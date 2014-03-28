@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.1 Initial Setup</TITLE>
+<META NAME="description" CONTENT="3.1 Initial Setup">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="3_2_Basic_Customization.html">
+<LINK REL="previous" HREF="3_Setup_Administration.html">
+<LINK REL="up" HREF="3_Setup_Administration.html">
+<LINK REL="next" HREF="3_2_Basic_Customization.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<UL>
+<LI><A href="3_1_Initial_Setup.html" id="current"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">1</SPAN> Initial Setup</A></LI>
+<LI><A href="3_2_Basic_Customization.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN> Basic Customization</A></LI>
+<LI><A href="3_3_Users_Stories.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN> Users and Stories</A></LI>
+<LI><A href="3_4_Routine_Maintenance.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN> Routine Maintenance</A></LI>
+<LI><A href="3_5_Performance_Monitoring.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">5</SPAN> Performance Monitoring</A></LI>
+<LI><A href="3_6_General_Administrative.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">6</SPAN> General Administrative Tips</A></LI>
+</UL>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00031000000000000000"></A>
+<A NAME="initial-setup"></A>
+<BR>
+<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">1</SPAN> Initial Setup
+</H2>
+
+<P>
+Ok, you go to the URL of your website and there's the ``Welcome to Scoop!'' message.  Before you make the site public, there are a few things that you'll really want to change.
+
+<P>
+<B>Note:</B> if you just get a directory listing, check to make sure that you followed the directions in the section&nbsp;<A HREF="2_Installation.html#install">2</A> completely, and that the Apache that's running is the one you compiled, has mod_perl working, and has been freshly started with the Scoop code present.
+
+<P>
+First, log in with the username password you entered in the install phase.  If you installed by hand and didn't use the install.pl script, the initial username and password are both `scoop'.  Once you're logged in, the login fields should disappear and in their place is a box titled with your username.  Not far below that, another new box has appeared, titled `Admin Tools'.
+
+<P>
+The first thing to do is to make sure all of the required settings are right.  All site-wide settings can be found in Site Controls (the link is in the Admin Tools box).
+
+<P>
+<B>Note:</B> if you get `Permission Denied' when you click on the Site Controls link, there's probably something wrong with your cookies.  See section&nbsp;<A HREF="2_5_Installing_Hand.html#apache-config">2.5.2</A> for details on how it should be set up.
+
+<P>
+Most of the default settings should work, but there are some that you should definitely change, all in the `General' category:
+
+<UL>
+<LI><B>imagedir</B>: check this and make sure it's correct.  If your images are showing up on the page, it probably is fine.
+</LI>
+<LI><B>local_email</B>: put the email you want Scoop to send stuff like new account notices <EM>from</EM>.  This email address must be a valid one, both for the program and because people sometimes reply to it.  You can put a name in it as well as the email address, by putting ``My Site Name &lt;scoop@mysite.org&gt;'' (without the quotes) in the field.  If this email is invalid, Scoop will often tell people that <EM>their</EM> email is invalid when they try to create an account.
+</LI>
+<LI><B>sitename</B>: The official name of your site, not the URL.  This is used for display and in emails, mostly.
+</LI>
+<LI><B>site_url</B>: The full URL of your site's front page, without a trailing slash.  If there is a trailing slash, links sent in email to new accounts won't work properly because the double slash screws up Scoop's path parser (which separates parameters with slashes).
+</LI>
+<LI><B>time_zone</B>: Put your time zone here.  Rather, put the time zone your server runs on here, otherwise people will get very confused about posts coming from the future or the past, and the like.
+</LI>
+<LI><B>admin_alert</B>: The email(s) Scoop should email when it has a problem.  This is generally rarely used, but extremely important.
+</LI>
+</UL>
+
+<P>
+The Site Controls interface allows two ways of changing settings:
+
+<UL>
+<LI>You can choose a variable by name directly from the drop-down list in the form, click ``Get'', make your changes, and click ``Save''.  
+</LI>
+<LI>You can choose a category of variables from the list above the form, scroll down and change as many variables as you like, then click ``Save'' to change them all at once.  
+</LI>
+</UL>
+
+<P>
+When using the category list, you can only change the value; when using the single variable form, you can change any part of the variable.  You'll generally only need to change the value, and once your site is set up you probably won't visit this tool very often.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

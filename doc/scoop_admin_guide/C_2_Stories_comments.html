@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>C..2 Stories, comments, and the queue</TITLE>
+<META NAME="description" CONTENT="C..2 Stories, comments, and the queue">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="C_3_Users_logging.html">
+<LINK REL="previous" HREF="C_1_General_installation.html">
+<LINK REL="up" HREF="C_Frequently_Asked.html">
+<LINK REL="next" HREF="C_3_Users_logging.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<UL>
+<LI><A href="C_1_General_installation.html">C..<SPAN CLASS="arabic">1</SPAN> General and installation</A></LI>
+<LI><A href="C_2_Stories_comments.html" id="current">C..<SPAN CLASS="arabic">2</SPAN> Stories, comments, and the queue</A></LI>
+<LI><A href="C_3_Users_logging.html">C..<SPAN CLASS="arabic">3</SPAN> Users, logging in, and logging out</A></LI>
+<LI><A href="C_4_Site_layout.html">C..<SPAN CLASS="arabic">4</SPAN> Site layout and customization</A></LI>
+<LI><A href="C_5_Crashes_general.html">C..<SPAN CLASS="arabic">5</SPAN> Crashes and general misbehaviour</A></LI>
+<LI><A href="C_6_Email.html">C..<SPAN CLASS="arabic">6</SPAN> Email</A></LI>
+<LI><A href="C_7_Other.html">C..<SPAN CLASS="arabic">7</SPAN> Other</A></LI>
+</UL>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html1331"
+  HREF="C_2_Stories_comments.html#SECTION00082100000000000000">C..<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> How do stories get posted?</A>
+<LI><A NAME="tex2html1332"
+  HREF="C_2_Stories_comments.html#SECTION00082200000000000000">C..<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> How do stories get posted if there aren't any users to vote on them?</A>
+<LI><A NAME="tex2html1333"
+  HREF="C_2_Stories_comments.html#SECTION00082300000000000000">C..<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN> What is an "open queue"?</A>
+<LI><A NAME="tex2html1334"
+  HREF="C_2_Stories_comments.html#SECTION00082400000000000000">C..<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN> What is a "closed queue"?</A>
+<LI><A NAME="tex2html1335"
+  HREF="C_2_Stories_comments.html#SECTION00082500000000000000">C..<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN> How do I edit a comment?</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H2><A NAME="SECTION00082000000000000000">
+C..<SPAN CLASS="arabic">2</SPAN> Stories, comments, and the queue</A>
+</H2>
+
+<P>
+
+<H3><A NAME="SECTION00082100000000000000">
+C..<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> How do stories get posted?</A>
+</H3>
+
+<P>
+Stories are placed into a moderation queue when submitted, then are voted on by registered users. When a story's score (the sum of all positive, negative, and neutral votes) reaches a configurable threshold, the story is either posted or dropped. The exact mechanism and a description of what the thresholds are and how they interact is described in section&nbsp;<A HREF="4_1_Story_Selection.html#features-modsub">4.1</A>.
+
+<P>
+
+<H3><A NAME="SECTION00082200000000000000">
+C..<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> How do stories get posted if there aren't any users to vote on them?</A>
+</H3>
+
+<P>
+To short-circuit the problem all Scoop sites have when first started, that of having no users to vote stories up and therefore no stories posted to attract users, the administrator can manually post articles. When enough active users are present, the moderation queue can be opened to members with the thresholds set suitably low and raised as the membership grows. Details can be found in section&nbsp;<A HREF="4_1_Story_Selection.html#moderation-override">4.1.3</A>.
+
+<P>
+
+<H3><A NAME="SECTION00082300000000000000">
+C..<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN> What is an "open queue"?</A>
+</H3>
+
+<P>
+An open moderation queue is one in which all registered users have permission to view and vote on submitted stories. Stories are posted or not depending on what the users choose. For full details on configuring the open queue, see section&nbsp;<A HREF="4_1_Story_Selection.html#features-modsub">4.1</A>.
+
+<P>
+
+<H3><A NAME="SECTION00082400000000000000">
+C..<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN> What is a "closed queue"?</A>
+</H3>
+
+<P>
+A closed moderation queue is one in which only editors, but not any registered users, have permission to view and vote on submitted stories. In a closed queue, the editors will also generally have permission to edit the stories, so the queue then becomes a place for the site's editorial staff to prepare stories for publication.
+
+<P>
+
+<H3><A NAME="SECTION00082500000000000000">
+C..<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN> How do I edit a comment?</A>
+</H3>
+
+<P>
+There's no way to edit a comment's text. As an admin, all you can do is delete it, which is irreversible, or change it between editorial or topical, which is easily reversible by simply changing it again. For more details on what is possible with comments, see section&nbsp;<A HREF="4_8_Comments_Comment.html#comments-display">4.8.1</A>.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

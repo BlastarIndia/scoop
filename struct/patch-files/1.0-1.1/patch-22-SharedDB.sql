@@ -1,0 +1,3 @@
+INSERT INTO `vars` (`name`, `value`, `description`, `type`, `category`) VALUES ('shared_db_tables', 'users userprefs pref_items', 'Space Seperated list of tables to be retrieved from <b>master_db</b> if <b>use_shared_database</b> is true', 'text', 'Shared Database');
+INSERT INTO `vars` (`name`, `value`, `description`, `type`, `category`) VALUES ('use_shared_db', '0', 'Enable use of shared user accounts across two mysql databases on the same server.', 'bool', 'Shared Database');
+INSERT INTO `vars` (`name`, `value`, `description`, `type`, `category`) VALUES ('shared_db_name', 'scoop', 'Name Of the database from which to read the tables listed in <b>shared_tables</b>', 'text', 'Shared Database');

@@ -1,0 +1,189 @@
+This just lists the order that you need to apply these patches, and the dates
+on which they were added to scoop. 
+
+The upgrade-db.pl in scripts/ will (hopefully) do all this for you. Try running
+it first.
+
+Apply them to your database in the order below with
+mysql -u root -p <scoopdb> < patch-NN-Name.sql
+
+Run the scripts with 
+./script-NN-(pre|post).pl
+
+If there are scripts and patches with the same number, run the -pre script
+first, then apply the patch, then run the -post script
+
+Don't apply patches dated earlier than when you installed scoop, or when you
+created the scoop database with scoop.sql  These patches are all in the
+scoop.sql file already
+
+
+Sep  8 07:06 patch-01-EditCategory.sql
+	Adds features which are useful for sites with a closed queue, such as
+	automatically voting zero when a story is viewed, and categories for
+	stories in the queue.
+
+Sep  8 07:06 script-01-post.pl
+	Updates comment_controls to only allow users to view Editorial comments if
+	they have permission to.
+
+Oct 13 00:15 patch-02-HtmlRemoval.sql
+	Removes a few pieces of text and HTML from the code and puts it into
+	blocks.
+
+Oct 13 00:15 patch-03-Uploads.sql
+	Adds early support for uploading and managing files from within Scoop.
+
+Nov 17 20:53 patch-04-StoryPreview.sql
+	Added new var so that you can not require people to preview a story
+	before posting it.  Default is require them to preview.
+
+Dec 01 04:00 patch-05-AccountCreation.sql
+	Changes account creation to no longer require confirmation URLs, along with
+	the change password system.
+
+Dec 01 04:00 script-05-post.pl
+	Removes two lines from op_templates that were related to the old account
+	creation process.
+
+Dec 07 12:45 patch-06-Logging.sql
+	Adds tables, vars, and other things for admin logging.
+
+Dec 07 12:45 script-06-post.pl
+	Updates op_templates for logging feature.
+
+Dec 22 21:15 patch-07-Themes.sql
+	Adds vars and blocks needed for themes. Also moved block_programs over to
+	vars, and puts in a sample theme.
+
+Dec 22 21:15 script-07-post.pl
+	Modified box template so that the background color is set by a block.
+
+Jan 22 22:15 patch-08-Archive.sql
+	Adds vars, cron jobs, and an admin tool for archiving stories. See
+	struct/archive/README.archive for more on enabling it.
+
+Jan 22 22:15 script-08-post.pl
+	Updates a few boxes to have archive support.
+
+Jan 24 01:00 patch-09-Themes2.sql
+	Adds the template for a theme overview tool.
+
+May 26 20:50 patch-10-VarCleanup.sql
+	Adds various vars which were missing from a default install, and may be
+	missing from existing databases.
+
+May 27 11:45 patch-11-ExcludeSection.sql
+	Adds a var which allows you to exclude some sections from the "__all__"
+	meta-section.
+
+Jun 25 11:25 patch-12-TopicImagesDefault.sql
+    Fix for a bug which caused topic images not to show for anonymous users. 
+	Adds var "topic_images_default", set true to show topic images, false 
+	to not show.
+
+Jul 18 03:13 patch-13-FastArchive.sql
+	Adds columns to stories and comments for the new archiving script. 
+	Incidentally, the archive script only works for mysql version 4+.
+	Not recommended for production use at this time, particularly, as it 
+	needs a little more polishing.
+
+Oct 05 04:45 patch-14-ManyChanges.sql
+	Many, many bug fixes, missing vars, fixed descriptions, etc.
+
+Oct 05 04:45 script-14-post.pl
+	Just like the db patch. Contains numerous fixes and tweaks to blocks, vars,
+	and boxes in the database.
+
+Oct 06 10:00 patch-15-RatingIP.sql
+	Table changes and new vars for new rating system.
+
+Oct 06 13:15 patch-16-SafeMode.sql
+	Add var to enable "safe mode" where only superusers are allowed into site.
+
+Oct 06 19:00 patch-17-OpTemplates.sql
+	Structure changes and new vars affecting moving URL templates and aliases
+	to the ops table.
+
+Oct 06 19:00 script-17-post.pl
+	Converts old URL templates and aliases to new style ones included in the
+	ops table.
+
+Nov 26 19:37 patch-18-AdPayOptions.sql
+	Adds vars to control payment options.
+
+Dec 18 19:45 patch-19-WhosOnline.sql
+	Updated who's online code, using a table.
+
+Dec 31 02:11 patch-20-OpToBlock.sql
+	Moves op HTML to blocks.
+
+Jan 18 04:30 patch-21-MoreChanges.sql
+	Fixes additional bugs by adding and removing vars/blocks/etc.
+
+Jan 18 04:30 script-21-post.pl
+	Fixes several bugs in boxes and op templates.
+
+Jan 26 04:50 patch-22-HideAllowedHTML.sql
+	Inserts vars to control "Allowed HTML" display on post forms.
+
+Jan 26 05:11 patch-23-StoryEdit.sql
+	Adds perms to control comment_status and display_status on story edit
+	form
+
+Feb 13 10:38 patch-24-Macros.sql
+	Inserts blocks, ops, vars and tables to do with Macro support
+
+Feb 13 10:38 script-24-post.pl
+	Updates permissions for Superuser and Admin groups to allow Macro
+	editing for those groups.
+
+Feb 13 15:55 patch-25-DiaryTopics.sql
+	Make the diary section more generic. Set some vars to hide diary
+	section from everything section.
+
+Feb 13 15:55 script-25-post.pl
+	Updates user op for changed diary handling.
+
+Mar 03 09:15 patch-26-EditQueueCron.sql
+	Makes sure that cron_edit_queue is set as a box function
+
+Mar 03 09:41 patch-27-NewUserHtml.sql
+	Moves New user messages into blocks and tidies up existing messages.
+
+Mar 04 09:30 patch-28-AdRenewal.sql
+	Fixes Ad Renewal boxes and adds some blocks for extra messages.
+
+Mar 04 09:44 patch-29-RelatedLinks.sql
+	Fixes Related links box. Deletes old box if unmodified from original,
+	otherwise leaves as related_links_old
+
+Mar 14 20:00 patch-30-BlockDesc.sql
+	Updates descriptions and categories for blocks to be far more useful.
+
+Mar 14 20:00 patch-31-PaymentFixes.sql
+	Fixes some payment processing problems and takes some HTML out of the
+	code.
+
+Mar 14 20:00 script-31-post.pl
+	Fixes a few payment boxes and makes some miscellaneous HTML related
+	changes.
+
+Mar 16 10:49 patch-32-SafeModeRedirect.sql
+	Adds some vars to controls what happens when the safe_mode control is
+	set.
+
+Mar 18 22:15 patch-33-AdminSearch.sql
+	Adds a new admin tool which is used to search through vars, blocks, boxes,
+	and pages and their descriptions.
+
+Mar 28 20:25 patch-34-BugFixes.sql
+	Puts new user email format into blocks, fixes the primary key on
+	whos_online, and updates the whos_online box to use the table.
+
+Any problems, email scoop-help@lists.sourceforge.net (don't forget to join!)
+join here: http://sourceforge.net/mail/?group_id=4901
+
+or if you irc look in #scoop on irc.slashnet.org  or #kuro5hin if nobody is
+in #scoop.
+

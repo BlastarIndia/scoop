@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>A..13 RDF Feeds</TITLE>
+<META NAME="description" CONTENT="A..13 RDF Feeds">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="A_14_Cron.html">
+<LINK REL="previous" HREF="A_12_Groups.html">
+<LINK REL="up" HREF="A_Admin_Tools.html">
+<LINK REL="next" HREF="A_14_Cron.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<UL>
+<LI><A href="A_1_New_Story.html">A..<SPAN CLASS="arabic">1</SPAN> New Story</A></LI>
+<LI><A href="A_2_Story_List.html">A..<SPAN CLASS="arabic">2</SPAN> Story List</A></LI>
+<LI><A href="A_3_Archived_Story.html">A..<SPAN CLASS="arabic">3</SPAN> Archived Story List</A></LI>
+<LI><A href="A_4_New_Poll.html">A..<SPAN CLASS="arabic">4</SPAN> New Poll</A></LI>
+<LI><A href="A_5_Poll_List.html">A..<SPAN CLASS="arabic">5</SPAN> Poll List</A></LI>
+<LI><A href="A_6_Site_Controls.html">A..<SPAN CLASS="arabic">6</SPAN> Site Controls</A></LI>
+<LI><A href="A_7_Blocks.html">A..<SPAN CLASS="arabic">7</SPAN> Blocks</A></LI>
+<LI><A href="A_8_Topics.html">A..<SPAN CLASS="arabic">8</SPAN> Topics</A></LI>
+<LI><A href="A_9_Sections.html">A..<SPAN CLASS="arabic">9</SPAN> Sections</A></LI>
+<LI><A href="A_10_Special_Pages.html">A..<SPAN CLASS="arabic">10</SPAN> Special Pages</A></LI>
+<LI><A href="A_11_Boxes.html">A..<SPAN CLASS="arabic">11</SPAN> Boxes</A></LI>
+<LI><A href="A_12_Groups.html">A..<SPAN CLASS="arabic">12</SPAN> Groups</A></LI>
+<LI><A href="A_13_RDF_Feeds.html" id="current">A..<SPAN CLASS="arabic">13</SPAN> RDF Feeds</A></LI>
+<LI><A href="A_14_Cron.html">A..<SPAN CLASS="arabic">14</SPAN> Cron</A></LI>
+<LI><A href="A_15_Advertising.html">A..<SPAN CLASS="arabic">15</SPAN> Advertising</A></LI>
+<LI><A href="A_16_Ops.html">A..<SPAN CLASS="arabic">16</SPAN> Ops</A></LI>
+<LI><A href="A_17_Subscriptions.html">A..<SPAN CLASS="arabic">17</SPAN> Subscriptions</A></LI>
+<LI><A href="A_18_Hooks.html">A..<SPAN CLASS="arabic">18</SPAN> Hooks</A></LI>
+<LI><A href="A_19_Log.html">A..<SPAN CLASS="arabic">19</SPAN> Log</A></LI>
+<LI><A href="A_20_Macros.html">A..<SPAN CLASS="arabic">20</SPAN> Macros</A></LI>
+<LI><A href="A_21_User_Preferences.html">A..<SPAN CLASS="arabic">21</SPAN> User Preferences</A></LI>
+<LI><A href="A_22_Calendars.html">A..<SPAN CLASS="arabic">22</SPAN> Calendars</A></LI>
+<LI><A href="A_23_Search.html">A..<SPAN CLASS="arabic">23</SPAN> Search</A></LI>
+</UL>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000613000000000000000"></A>
+<A NAME="admin-tools-rdf"></A>
+<BR>
+A..<SPAN CLASS="arabic">13</SPAN> RDF Feeds
+</H2>
+
+<P>
+The RDF Feeds Admin Tool is where you manage RDF feeds fetched from other sites, and is composed of two parts: a list of feeds Scoop knows about, and the actions that can be performed on an RDF feed.
+
+<P>
+The list of feeds is a table with five columns.
+
+<P>
+The first column is a checkbox, allowing you to select the feeds you want to have an action apply to.  As many feeds as you like can be selected.
+
+<P>
+The second column is the title of the site providing the RDF feeds, as taken from the .rdf file.  The link leads directly to the site URL, as provided in the .rdf file.
+
+<P>
+The third column is the URL used to fetch the RDF feed.  The link leads to a preview of the feed as Scoop will display it in the sidebar.
+
+<P>
+The fourth column is the Scoop nickname of the person who submitted the RDF feed for approval.  If the column says ``none'', the feed was added directly from the admin interface.
+
+<P>
+The fifth column indicates whether or not the feed is enabled (fetched regularly and visible in the list of RDF feeds in a user's display preferences) or disabled (never fetched and not shown in a user's display preferences).
+
+<P>
+Below the list of feeds is a link that displays all of the feeds together, as they would appear if a user selected every single feed in his display prefs.  
+
+<P>
+The actions start with a text box labelled ``Add Feed:'' which allows you to enter the URL of a site's RDF file.
+
+<P>
+Below that is a list of possible actions.  One of those must be selected for anything to happen when you click the ``Save Feeds'' button; if nothing is selected, nothing will happen.  The action selected will apply to all feeds with checked boxes in the list of feeds, unless it is ``Add'', in which case it will add the RDF feed present in the ``Add Feed'' text box just above.
+
+<P>
+The actions are:
+
+<P>
+<DL>
+<DT><STRONG>Add</STRONG></DT>
+<DD>Adds the feed present at the URL given in the ``Add Feed'' text box to the list of feeds, fetches the feed so it has the site title and URL, and enables it.  Feeds added using this function do not have a submitter listed.
+</DD>
+<DT><STRONG>Delete</STRONG></DT>
+<DD>Removes the selected feeds in the list of feeds from the database.
+</DD>
+<DT><STRONG>Re-fetch</STRONG></DT>
+<DD>Forces Scoop to fetch the selected feeds immediately, whether they're due to be fetched or not.
+</DD>
+<DT><STRONG>Clear Listing</STRONG></DT>
+<DD>Clears the headlines from the selected feeds, but does not delete the feed itself.  If the feeds are enabled, the headlines will be re-inserted on the next scheduled update.
+</DD>
+<DT><STRONG>Enable/Disable</STRONG></DT>
+<DD>Toggles whether or not the feed is fetched and displayed in the user's display preferences.
+</DD>
+<DT><STRONG>Approve</STRONG></DT>
+<DD>Approves RDF feeds submitted by site users.  Newly submitted and not yet approved feeds are highlighted with a different background colour in the list of feeds.  A feed that has not been approved yet is not available to users, regardless of the ``Enabled'' setting.
+</DD>
+</DL>
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

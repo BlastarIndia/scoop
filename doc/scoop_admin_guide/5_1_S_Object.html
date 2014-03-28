@@ -1,0 +1,468 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>5.1 The $S Object</TITLE>
+<META NAME="description" CONTENT="5.1 The $S Object">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="5_2_Program_Flow.html">
+<LINK REL="previous" HREF="5_Extending_Scoop_s.html">
+<LINK REL="up" HREF="5_Extending_Scoop_s.html">
+<LINK REL="next" HREF="5_2_Program_Flow.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<UL>
+<LI><A href="5_1_S_Object.html" id="current"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN> The $S Object</A></LI>
+<LI><A href="5_2_Program_Flow.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">2</SPAN> Program Flow and Scoop's code structure</A></LI>
+<LI><A href="5_3_Working_with.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">3</SPAN> Working with Boxes</A></LI>
+<LI><A href="5_4_Creating_new.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN> Creating new ops or features</A></LI>
+<LI><A href="5_5_Creating_Submitting.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">5</SPAN> Creating and Submitting Patches</A></LI>
+</UL>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html754"
+  HREF="5_1_S_Object.html#SECTION00051100000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">1</SPAN> Data</A>
+<LI><A NAME="tex2html755"
+  HREF="5_1_S_Object.html#SECTION00051200000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">2</SPAN> Database access</A>
+<LI><A NAME="tex2html756"
+  HREF="5_1_S_Object.html#SECTION00051300000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">3</SPAN> User-related Scoop Methods</A>
+<LI><A NAME="tex2html757"
+  HREF="5_1_S_Object.html#SECTION00051400000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">4</SPAN> Story-related Scoop Methods</A>
+<LI><A NAME="tex2html758"
+  HREF="5_1_S_Object.html#SECTION00051500000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">5</SPAN> Comment-related Scoop Methods</A>
+<LI><A NAME="tex2html759"
+  HREF="5_1_S_Object.html#SECTION00051600000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">6</SPAN> Other Useful Scoop Methods</A>
+<LI><A NAME="tex2html760"
+  HREF="5_1_S_Object.html#SECTION00051700000000000000"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">7</SPAN> Debugging</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H2><A NAME="SECTION00051000000000000000"></A>
+<A NAME="hacking-s"></A>
+<BR>
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN> The $S Object
+</H2>
+
+<P>
+The $S object contains all of Scoop's data and methods. In quite a few cases, the data is accessed via a method rather than directly. All of the data is drawn from the database, but in most cases you will not have to access the database directly as Scoop does some aggressive (and transparent) data caching.
+
+<P>
+
+<H3><A NAME="SECTION00051100000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">1</SPAN> Data</A>
+</H3>
+
+<P>
+Below is a list of some of the more useful bits of data that you access directly, followed by a list of data that you want to access using Scoop's methods.
+
+<P>
+All of this data is loaded into $S in the initialization stages of each request, from the cache if possible and from the database if necessary.
+
+<P>
+<DL>
+<DT><STRONG>$S-&gt;{UI}-&gt;{VARS}</STRONG></DT>
+<DD>Each of Scoop's site controls (variables, or vars) can be accessed using $S-&gt;{UI}-&gt;{VARS}-&gt;{variable_name} for use in testing whether or not a feature is on or off, or for getting or setting values. If your code will break horribly if a variable is zero or blank then make sure to put a sensible default value in your code that will be used if the variable in question is empty. Administrators can change the variables through the Site Controls Admin Tool (<A HREF="A_6_Site_Controls.html#admin-tools-vars">A.6</A>). For ease of use, the site controls are usually assigned to a variable local to that subroutine or box if they will be used more than once in that part of the code, then used as the much shorter and easier to type variable from then on.
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;{UI}-&gt;{BLOCKS}</STRONG></DT>
+<DD>Each of Scoop's blocks can be accessed using $S-&gt;{UI}-&gt;{BLOCKS}-&gt;{block_name} for use in perl code. This method of accessing blocks should only be used if you need to process the block in question in a special way, such as handling special keys (<A HREF="4_18_Site_Layout.html#features-custom">4.18</A>); if you want to simply include one block in another one, place the included block's name between vertical pipes (|block_name|) where its content should be placed in the other block. If you are using perl code to handle special keys in a particular block, whether in a box or in the code, in the substitution command the key should be between double percent signs (%%key_name%%) as that's how keys are stored in the database. When processing the page just before sending it to the user's computer, Scoop does all the normal block interpolation automatically, so you don't have to worry about substituting keys for blocks that exist. Administrators can change the blocks through the Blocks Admin Tool (<A HREF="A_7_Blocks.html#admin-tools-blocks">A.7</A>).
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;{SECTION_DATA}</STRONG></DT>
+<DD>The information associated with each of Scoop's sections can be accessed using $S-&gt;{SECTION_DATA}-&gt;{sectionid}. The information available is the section's title, description, and icon. For example:
+<PRE>
+my $title = $S-&gt;{SECTION_DATA}-&gt;{$section}-&gt;{title};
+my $section_slogan = $S-&gt;{SECTION_DATA}-&gt;{$section}-&gt;{description};
+my $headline = qq@$title ~ $section_slogan@;
+</PRE>
+where $section is set earlier in the code to something appropriate to the page being processed.
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;{TOPIC_DATA}</STRONG></DT>
+<DD>The information associated with each of Scoop's topics can be accessed using $S-&gt;{SECTION_DATA}-&gt;{topicid}. The information available is the topic's image, alt text (or text version), image width, and image height. For example:
+<PRE>
+my $img = $S-&gt;{TOPIC_DATA}-&gt;{$tid}-&gt;{image};
+my $alt = $S-&gt;{TOPIC_DATA}-&gt;{$tid}-&gt;{alttext};
+my $topic_img = qq~&lt;IMG src="|imagedir||topics|/$img" alt="$alt"&gt;~;
+</PRE>
+where $tid is set earlier in the code to something appropriate to the page being processed.
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;{NICK}</STRONG></DT>
+<DD>The nickname of the user requesting the current page. This is mainly used for customization of the display, greeting the visitor by name, etc.
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;{UID}</STRONG></DT>
+<DD>The user ID of the user requesting the current page. This is mainly used for getting other information by or about the current user, since all information particular to a user is identified by the UID.
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;{GID}</STRONG></DT>
+<DD>The group ID of the user requesting the current page. This is mainly used for checking permissions, as the purpose of groups is mainly to give and restrict permissions. It is used as a default group ID if no group ID is specified when using the $S-&gt;have_perm() function.
+
+<P>
+</DD>
+</DL>
+
+<P>
+<DL>
+<DT><STRONG>$S-&gt;cgi-&gt;param()</STRONG></DT>
+<DD>The param method provides access to all of the form variables sent by either GET or POST to Scoop. Pass the name of the form variable to the method as the argument; the return value is the value of that variable.
+</DD>
+<DT><STRONG>$S-&gt;apache()</STRONG></DT>
+<DD>This is the apache request object, stuffed in $S so it's always available. This gives you access to methods which get or set things like the incoming or outgoing headers, the connection information, the configuration, and so on. For information on what functions the apache request object supports, read the pod for the Apache perl modules. $S-&gt;apache corresponds to the $r used in the module documentation.
+</DD>
+</DL>
+
+<P>
+
+<H3><A NAME="SECTION00051200000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">2</SPAN> Database access</A>
+</H3>
+
+<P>
+To get information into and out of the database, Scoop provides an interface to the database that allows you to build your query in code then retreive it in the form of a series of hashes. The methods provide caching where appropriate, to reduce the number of requests sent to the database.
+
+<P>
+The select, update, insert, and delete methods described below all return two values, $rv and $sth. $rv is the return value; false if the query was not successful. $sth contains the data and all of the other information about the query. It's a DBI object and has several methods of its own.  For information on what functions $sth supports, read the pod for DBI, 'perldoc DBI' and see below.
+
+<P>
+<DL>
+<DT><STRONG>$sth-&gt;fetchrow_hashref()</STRONG></DT>
+<DD>Note: this method is not an $S method. Each time it is run it fetches the next row of results from the database query you just ran until it runs out of results, after which it returns a false value. This is generally used in a while loop:
+<PRE>
+while( my $tmp = $sth-&gt;fetchrow_hashref() ) {
+   # perl code here processing $tmp-&gt;{fieldname} value(s)
+}
+</PRE>
+
+<P>
+</DD>
+<DT><STRONG>$sth-&gt;fetchrow_array()</STRONG></DT>
+<DD>Note: this method is not an $S method. Each time it is run it fetches the next row of results from the database query you just ran until it runs out of results, after which it returns a false value. This is generally used in a while loop:
+<PRE>
+while( my ($foo, $bar) = $sth-&gt;fetchrow_array() ) {
+   # perl code here processing $foo and $bar
+}
+</PRE>
+fetchrow_array is extremely useful when you are fetching only a few columns, because you can assign the returned values into normal scalar variables instead of using hashref notation.
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;db_select()</STRONG></DT>
+<DD>This method takes an anonymous hash as its arguments, with keys WHAT, FROM, WHERE, GROUP_BY, ORDER_BY, LIMIT, DEBUG, and DISTINCT. The values of these correspond to the SQL statements by the same name, excepting WHAT and DEBUG; WHAT is the list of fields to fetch from the database, and DEBUG determines whether or not Scoop will print debugging information for that particular query. All values default to blank if not used, so things like DEBUG and DISTINCT don't have to be explicitly turned off.
+<PRE>
+my ($rv, $sth) = $S-&gt;db_select({
+	WHAT =&gt; 'title,sid',
+	FROM =&gt; 'stories',
+	WHERE =&gt; qq~aid = "$S-&gt;{UID}" AND displaystatus = '0'~,
+	ORDER_BY =&gt; 'time DESC',
+	LIMIT =&gt; '10'
+});
+</PRE>
+The above code will fetch the titles and story IDs (sid) of the 10 most recent front-page posted stories by the current user. A display status of 0 means posted to front page. 1 means posted to section only, and negative display status values are for unpublished (hidden or queued) stories. See the first item in this list for getting the data returned by this query from $sth.
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;db_update()</STRONG></DT>
+<DD>This method takes an anonymous hash as its arguments, with keys WHAT, SET, WHERE, and DEBUG. The values of these correspond to the SQL statements by the same name, excepting WHAT and DEBUG; WHAT is the name of the table to update, and DEBUG determines whether or not Scoop will print debugging information for that particular query. All values default to blank if not used, so things like DEBUG don't have to be explicitly turned off.
+<PRE>
+my ($rv, $sth) = $S-&gt;db_update({
+	WHAT =&gt; 'comments',
+	SET =&gt; 'subject = "[wiped]", comment = "[wiped]"',
+	WHERE =&gt; qq~sid = "$sid" AND cid = "$cid"~
+});
+</PRE>
+The above code will wipe the subject and body of a particular comment, while leaving it in place so as not to disrupt the threading of a discussion. The variables $sid and $cid (story ID and comment ID, respectively) would be set earlier in the code, and together uniquely identify the comment.
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;db_insert()</STRONG></DT>
+<DD>This method takes an anonymous hash as its arguments, with keys INTO, COLS, VALUES, and DEBUG. The values of these correspond to the SQL statements by the same name, excepting DEBUG, which determines whether or not Scoop will print debugging information for that particular query. All values default to blank if not used, so things like DEBUG don't have to be explicitly turned off.
+<PRE>
+my ($rv, $sth) = $S-&gt;db_insert({
+	INTO =&gt; 'pollanswers',
+	COLS =&gt; 'qid, aid, answer, votes',
+	VALUES =&gt; qq~$qid, $aid, $answer, '0'~,
+});
+</PRE>
+The above code will insert a new poll answer with 0 votes into an existing poll (basically allowing write-in answers to be added to the poll). The variable $qid is the poll (question) ID, $aid is the answer ID, and $answer is the text of the answer. $aid would need to be discovered before the insert; a simple count of the number of answers + 1 via a db_select statement would provide the right value to use in the insert. $answer would be supplied by the user. (Don't forget to quote() it first! See below...)
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;db_delete()</STRONG></DT>
+<DD>This method takes an anonymous hash as its arguments, with keys FROM, WHERE, and DEBUG. The values of these correspond to the SQL statements by the same name, excepting DEBUG, which determines whether or not Scoop will print debugging information for that particular query. All values default to blank if not used, so things like DEBUG don't have to be explicitly turned off.
+<PRE>
+my ($rv, $sth) = $S-&gt;db_delete({
+	FROM =&gt; 'users',
+	WHERE =&gt; qq~creation_time &lt; DATE_SUB(NOW(), INTERVAL 1 month)
+		AND is_new_account = '1'~,
+});
+</PRE>
+The above code will delete any accounts which have not been confirmed by one month after their creation. Since unconfirmed accounts cannot have anything in the database attached to them, deleting them holds no risk of causing data integrity errors. Accounts are confirmed by logging in with the username and password emailed to the user when they create the account.
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;dbh-&gt;quote()</STRONG></DT>
+<DD>This method takes a string as its argument and returns a string properly quoted for use in the database. Use this any time you are passing any string to the database that is not hardcoded right in your perl code; even hidden form fields can be changed. 
+
+<P>
+This isn't only a security measure to stop malicious users. <B>Everything</B> going into the database or used in a query should always be quoted, even administrative stuff that only trusted administrators will use, because a misplaced quote--or even an unexpected apostrophe--can cause database errors when not quoted.
+
+<P>
+</DD>
+</DL>
+
+<P>
+
+<H3><A NAME="SECTION00051300000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">3</SPAN> User-related Scoop Methods</A>
+</H3>
+
+<P>
+<DL>
+<DT><STRONG>$S-&gt;user_data()</STRONG></DT>
+<DD>This method takes a numeric user ID and returns a hashref containing all user info, user preferences and subscription information if subscriptions are being used. 
+
+<P>
+The user info, such as the user's homepage, bio, fake email, and so on, are stored as $user-&gt;{homepage} and so on; the hash keys are the names of the fields in the users table. 
+
+<P>
+The user preferences, such as the user's time zone, how many titles they want displayed on the front and section pages, whether or not they're listed in the ``who's online'' box, and so on, are stored as $user-&gt;{prefs}-&gt;{time_zone} and so on; the hash keys are the names of the preferences in the `prefname' field of the userprefs table.
+
+<P>
+The subscription information, such as when it was created, when it expires, whether or not it is active, and so on, are stored as $user-&gt;{sub}-&gt;{created} and so on; the hash keys are the names of the fields in the subscription_info table.
+
+<P>
+If you pass user_data() an array of UIDs, it will fetch all of the user data for all of the UIDs and save them to the user data cache, and return nothing. If you want the user data for a large number of users, this is the best way to do it because it guarantees only one hit to the database; calling user_data with single UIDs after this will fetch the information from the cache. If you skip the step of sending user_data an array of UIDs, it could potentially mean a number of hits to the database equal to the number of UIDs you want information for.
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;get_nick_from_uid()</STRONG></DT>
+<DD>This method takes a numeric user ID and returns the corresponding nickname. If the user doesn't exist, it returns an empty string.
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;get_uid_from_nick()</STRONG></DT>
+<DD>This method takes a nickname and returns the corresponding numeric user ID. If the user doesn't exist, it returns an undefined value.
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;have_perm()</STRONG></DT>
+<DD>This method takes the name of a permission as seen in the Groups Admin Tool (<A HREF="A_12_Groups.html#admin-tools-groups">A.12</A>) and returns a true value if the current user has the permission. If an (optional) group ID is given as a second argument, it returns a true value if the group named has the permission. This is typically used in conditional blocks to permit or deny actions depending on permissions:
+<PRE>
+if ( $S-&gt;have_perm('comment_rate') ) {
+	$out = "Hey you! Rate comments!";
+}
+</PRE>
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;have_section_perm()</STRONG></DT>
+<DD>This method takes the name of a section permission and the name of a section as arguments and returns a true value if the user has the permission. This is used differently than $S-&gt;have_perm() because if a user <EM>has</EM> the section perm `hide_read_stories' then the user should <EM>not</EM> be allowed to read the story. This is because section perms are not a simple yes/no switch the way regular perms are; they distinguish between allowing, hiding, and denying permission. See section&nbsp;<A HREF="4_19_Flexible_Sections.html#sections-perms">4.19.3</A> for more details on section permissions and how to use them.
+<PRE>
+if ( $S-&gt;have_section_perm('hide_read_stories', 'news') ) {
+	$out = "Never heard of it";
+} elsif ( $S-&gt;have_section_perm('deny_read_stories', 'news') ) {
+	$out = "You're not allowed in here";
+} else {
+	$out = "Welcome to this section";
+}
+</PRE>
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;pref()</STRONG></DT>
+<DD>This method provides a way to get and set the user preferences for user requesting the current page. 
+
+<P>
+To get a preference, pass the name of the user preference as the only argument; the return value is the value of that user preference. 
+
+<P>
+To set a single preference, pass the name of the user preference and the new value as the only two arguments; the return value is a database error string if the update failed.
+
+<P>
+To set multiple preferences, pass a single variable that is a hashref of the preferences you wish to set, with prefnames as the keys and the new values as the hash values; the return value is a database error string if the update failed.
+
+<P>
+</DD>
+</DL>
+
+<P>
+
+<H3><A NAME="SECTION00051400000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">4</SPAN> Story-related Scoop Methods</A>
+</H3>
+
+<P>
+<DL>
+<DT><STRONG>$S-&gt;displaystory()</STRONG></DT>
+<DD>This method formats the full story: header, introtext, and bodytext. It takes the story ID as the first parameter and returns two variables: a hashref containing all story data and the formatted story. The print_story box available on the Scoop Box Exchange (<A HREF="B_Scoop_Box.html#sbe">B</A>) uses this to format the story with no comments.
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;getstories()</STRONG></DT>
+<DD>This method gets story data with a wide variety of options. This should be used instead of accessing the database directly if at all possible, because among other things, this takes into account all group and section permissions for you.
+
+<P>
+It takes one argument, a hashref containing all of its options, with the option name (listed below) as the hash key. It returns an arrayref which contains one hashref for each story returned, with all of the data requested for that story in the hashref.
+
+<P>
+The options understood by getstories() are: (note that the dash is part of the key)
+<DL>
+<DT><STRONG>-type</STRONG></DT>
+<DD>This can be one of summaries, fullstory, titlesonly, titlesonly-section, or section. Each of those returns a list of stories and their data as described in their name, subject to the options set in the other parameters. This is the only option that is required.
+</DD>
+<DT><STRONG>-topic</STRONG></DT>
+<DD>This can be the internal name of any of the topics you have configured. (The topic ID, not the alttext.) Setting a -topic value when you are using a -type of either titlesonly or section means that you will get back only stories in the topic you named.
+</DD>
+<DT><STRONG>-user</STRONG></DT>
+<DD>This can be the nickname of any user on the system. Setting a -user value when you are using a -type of section means that you will get back only stories (and diaries) written by the user you named.
+</DD>
+<DT><STRONG>-section</STRONG></DT>
+<DD>This can be the internal name of any of the sections you have configured. Setting a -section value when you are using a -type of either titlesonly or section means that you will get back only stories in the section you named. If you want the `Everything' pseudo-section, use the section name `__all__'. If you want all sections except a particular section, use the name of the section you want to exclude prefixed with an exclamation mark (!).
+</DD>
+<DT><STRONG>-sid</STRONG></DT>
+<DD>This can be any valid story ID (sid) in the system. Setting a -sid value when you are using a -type of summaries, fullstory, or titlesonly means that you will get back only the story with the story ID you named.
+</DD>
+<DT><STRONG>-dispstatus</STRONG></DT>
+<DD>This can be any of the internally used display statuses: 1 for published to section only, 0 for published to front page, -1 for hidden, -2 for in the voting queue, and -3 for in the edit queue. Setting a -dispstatus value when you are using a -type of summaries means that you will get back only stories with the displaystatus you named. If you do not set a -dispstatus value, Scoop uses 0 (front page stories only).
+</DD>
+<DT><STRONG>-where</STRONG></DT>
+<DD>This can be any SQL `where' clause. Setting a -where value when you are using a -type of either summaries or titlesonly means that whatever SQL you put here will be appended to the SQL `where' clause.
+</DD>
+<DT><STRONG>-from</STRONG></DT>
+<DD>This can be any SQL `from' clause. Setting a -from value when you are using a -type of summaries means that whatever SQL you put here will be appended to the SQL `from' clause.
+</DD>
+<DT><STRONG>-perm_override</STRONG></DT>
+<DD>This is generally either a 1 or not set, as it is used as a true/false test. Setting a -perm_override value to anything true when you are using a -type of fullstory means that story viewing permissions are ignored and the user can see even hidden stories.
+</DD>
+<DT><STRONG>-page</STRONG></DT>
+<DD>This can be any positive number, and represents the `page number' of a story index page. Setting a -page value when you are using a -type of either summaries or section means that you will get a list of stories offset by that number of pages.
+</DD>
+</DL>
+
+<P>
+</DD>
+</DL>
+
+<P>
+
+<H3><A NAME="SECTION00051500000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">5</SPAN> Comment-related Scoop Methods</A>
+</H3>
+
+<P>
+<DL>
+<DT><STRONG>$S-&gt;display_comments()</STRONG></DT>
+<DD>This method takes up to four arguments and returns formatted comments as a string. The four arguments are, in order, sid, pid, mode, and cid (story ID, parent comment ID, display mode, and comment ID). sid and cid together uniquely identify every comment. A pid of 0 indicates top level comments (you can think of the story as comment #0). The mode can be `alone' (do not display any replies) or `collapsed' (show only the subject and author as a link to the full comment); if blank, replies to the comment named in sid and cid are displayed and formatted according to the user's comment display preferences.
+</DD>
+<DT><STRONG>$S-&gt;_commentcount()</STRONG></DT>
+<DD>This method takes a sid (story ID) as its argument and returns the total number of comments, both topical and editorial, attached to that sid.
+</DD>
+<DT><STRONG>$S-&gt;_comment_highest()</STRONG></DT>
+<DD>This method takes a sid (story ID) as its argument and returns the cid (comment ID) of the highest numbered comment attached to that sid.
+
+<P>
+</DD>
+</DL>
+
+<P>
+
+<H3><A NAME="SECTION00051600000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">6</SPAN> Other Useful Scoop Methods</A>
+</H3>
+
+<P>
+<DL>
+<DT><STRONG>$S-&gt;interpolate()</STRONG></DT>
+<DD>This method does all of the work of substituting the value of blocks into the keys before sending the page out. It can also be used to substitute the special keys in particular blocks. It takes a string containing the block you want interpolated and a hashref containing the data for the keys as arguments, and returns a string containing the block with the keys substituted.
+
+<P>
+Generally to use this function, you would build up a hashref with the data - the keys of the hashref must be the keys you want substituted in the block - then have the function interpolate all the special keys you handle in one go. Any other, non-special keys will not be touched at this time, and will be substituted when Scoop does its final page preparation.
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;mail()</STRONG></DT>
+<DD>This method sends an email from the address you set in the site control <B>local_email</B>. The arguments it takes are, in order, the recipient's email address, the email subject, and the email content. If there is a problem with sending the email, it will return an error message.
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;admin_alert()</STRONG></DT>
+<DD>This method sends an email from the address you set in the site control <B>local_email</B> to the email(s) listed in the site control <B>admin_alert</B>. It takes one argument, the warning about the event that triggered the email. Information on the current user (the user who triggered the email) is automatically included.
+
+<P>
+</DD>
+<DT><STRONG>$S-&gt;urlify()</STRONG></DT>
+<DD>This method takes a string as its only argument and returns that string with any non-URL-safe characters URL-encoded. This method should be used on any string that will be used in a URL.
+
+<P>
+</DD>
+</DL>
+
+<P>
+
+<H3><A NAME="SECTION00051700000000000000">
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN>.<SPAN CLASS="arabic">7</SPAN> Debugging</A>
+</H3>
+
+<P>
+If you look at the code, you will see the variable $DEBUG scattered all over, always near a warn() command. All of those debugging messages, if Scoop is in debugging mode, are printed in apache's error log. You can turn debugging on for each perl module by setting the value of $DEBUG to 1 at the top of the file.
+
+<P>
+Most debugging statements look like this:
+<PRE>
+warn "some error text" if $DEBUG;
+</PRE>
+They should include the function name, but not all of them do.  The error or status text you include is completely up to you, and will depend on what behaviour you are trying to track down.
+
+<P>
+Whatever you do, don't forget the `if $DEBUG' part of the statement, and don't forget to turn $DEBUG off before you submit your patch. Debugging output in distributed code is not something most people like.
+
+<P>
+The only warn statements that should ever be used without the `if $DEBUG' are for actual errors or events that the admin must be able to look up in the logs. If the admin must be notified of something immediately (such as when a member tries to break things) you can use $S-&gt;admin_alert(), which sends an email to the site admins.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

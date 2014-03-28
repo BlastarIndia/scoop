@@ -1,0 +1,225 @@
+\section{Setup and Administration}
+\label{admin}
+
+Basically all administration is done through the web interface and is stored in the database.  For a reference to what each item in your admin menu does and details on how to use each interface, see appendix~\ref{admin-tools}.
+
+This section will take you through the setup you should do before taking your site live, explain why things work the way they do as much as possible, and help you learn where to find stuff.  For information on taking customization farther, and enabling Scoop's more interesting features, see section~\ref{features}.
+
+Scoop has a few quirks that make no sense until somebody explains them; as much as possible, those are covered here as well.
+
+\subsection{Initial Setup}
+\label{initial-setup}
+
+Ok, you go to the URL of your website and there's the ``Welcome to Scoop!'' message.  Before you make the site public, there are a few things that you'll really want to change.
+
+{\bf Note:} if you just get a directory listing, check to make sure that you followed the directions in the section~\ref{install} completely, and that the Apache that's running is the one you compiled, has mod\_perl working, and has been freshly started with the Scoop code present.
+
+First, log in with the username password you entered in the install phase.  If you installed by hand and didn't use the install.pl script, the initial username and password are both `scoop'.  Once you're logged in, the login fields should disappear and in their place is a box titled with your username.  Not far below that, another new box has appeared, titled `Admin Tools'.
+
+The first thing to do is to make sure all of the required settings are right.  All site-wide settings can be found in Site Controls (the link is in the Admin Tools box).
+
+{\bf Note:} if you get `Permission Denied' when you click on the Site Controls link, there's probably something wrong with your cookies.  See section~\ref{apache-config} for details on how it should be set up.
+
+Most of the default settings should work, but there are some that you should definitely change, all in the `General' category:
+\begin{itemize}
+\item {\bf imagedir}: check this and make sure it's correct.  If your images are showing up on the page, it probably is fine.
+\item {\bf local\_email}: put the email you want Scoop to send stuff like new account notices {\em from}.  This email address must be a valid one, both for the program and because people sometimes reply to it.  You can put a name in it as well as the email address, by putting ``My Site Name \latexhtml{$<$scoop@mysite.org$>$}{<scoop@mysite.org>}'' (without the quotes) in the field.  If this email is invalid, Scoop will often tell people that {\em their} email is invalid when they try to create an account.
+\item {\bf sitename}: The official name of your site, not the URL.  This is used for display and in emails, mostly.
+\item {\bf site\_url}: The full URL of your site's front page, without a trailing slash.  If there is a trailing slash, links sent in email to new accounts won't work properly because the double slash screws up Scoop's path parser (which separates parameters with slashes).
+\item {\bf time\_zone}: Put your time zone here.  Rather, put the time zone your server runs on here, otherwise people will get very confused about posts coming from the future or the past, and the like.
+\item {\bf admin\_alert}: The email(s) Scoop should email when it has a problem.  This is generally rarely used, but extremely important.
+\end{itemize}
+
+The Site Controls interface allows two ways of changing settings:
+\begin{itemize}
+\item You can choose a variable by name directly from the drop-down list in the form, click ``Get'', make your changes, and click ``Save''.  
+\item You can choose a category of variables from the list above the form, scroll down and change as many variables as you like, then click ``Save'' to change them all at once.  
+\end{itemize}
+
+When using the category list, you can only change the value; when using the single variable form, you can change any part of the variable.  You'll generally only need to change the value, and once your site is set up you probably won't visit this tool very often.
+
+\subsection{Basic Customization}
+\label{how-start}
+
+Scoop pulls basically everything from the database, including many of its features.  Unless you are adding major new functionality to Scoop, you will do all customization through the web interface it provides.  Some display text and settings are still in the code, but they are being moved to the database as developers find them.
+
+Scoop builds every page from building blocks known as Blocks and Boxes, and many options are set in Site Controls; all three can be found in the Admin Tools menu when you're logged in as an administrator.
+
+It can often be tricky to figure out where the item you're looking for is, or what it's called. The Search Admin Tool (\ref{admin-tools-search}) lets you search through values and descriptions for several of the other admin tools.
+
+\subsubsection{Site Controls}
+\label{how-vars}
+
+You should start your customization in Site Controls.  We already looked at a few of the variables available in section~\ref{initial-setup}.  Site Controls are Scoop's equivalent to what other programs call ``preferences'' or ``options''.  Here you can enable and disable features such as the spellchecker, advertising, polls, diaries, and a variety of other things, as well as changing the configuration for those features.
+
+Once you get the hang of Scoop, the various Site Controls will make more sense to you.   Scrolling through the categories can give you some idea of the basic functionality that Scoop ships with.  Each control also has a description to tell you what effect it will have on your site.
+
+Section~\ref{features} refers to all the relevant Site Controls for each feature it describes, and gives a brief overview of how they work together while describing the feature.
+
+A few preferences are group-specific, that is, you want certain people to have one setting, and certain others to have a different setting.  Those preferences are generally found in the Groups Admin Tool, and are referred to within Scoop as permissions, or `perms'.
+
+Some others are section-specific, or both section- and group-specific.  Those are generally found in the Sections Admin Tool, and are referred to within Scoop as `section perms'.
+
+The preferences found in Site Controls are global to the site. There are also user-specific preferences (user prefs) which each user can change on their own; the user preferences available and their defaults can be managed in the User Preferences Admin Tool (\ref{admin-tools-user-preferences}).
+
+\subsubsection{Blocks}
+\label{how-blocks}
+
+The most basic elements of Scoop's generated pages are the blocks.  {\bf A block is simply a chunk of text or HTML} code that is used when generating a page.  Blocks should be (and usually are) fairly self-contained; that is, any tags that you open in a block should be closed in the same block, and the block shouldn't break anything horribly if you put it in a different location on the page.
+
+You can customize these blocks according to your own site design.  To do any significant customization, you'll need to have a working knowledge of HTML.
+
+A good starting place, just to test the waters, might be the header and footer blocks.  Make a few small changes to these, and hit the ``Save'' button.  When the page reloads, see how the changes you made were already implemented?  This is because the header and footer blocks are used when creating most pages.
+
+The best part of the blocks system is the ability to include other blocks within a block.  Look carefully at the header block.  You will notice that, mixed in with the HTML elements and text, are a few items marked off by pipes (\latexhtml{$\vert$}{|}).  Where you see the key `\latexhtml{$\vert$}{|}section\_links\latexhtml{$\vert$}{|}', Scoop will take the value from the section\_links block and seamlessly replace the key with it.
+
+If you refer to a block that doesn't exist, possibly by making a typo in a key that should refer to a block that does exist, Scoop silently replaces it with an empty string.  If you're quite sure you put a block there and nothing is showing up, double-check your spelling.
+
+Now that you know this, you can start changing the look of your site.  But it's easy to very quickly get lost in the maze of blocks and keys, especially with ``special keys'' which do not refer to a block at all, so the best place to start is at the top level---the page templates category.
+
+A page template is just another block, but it's the first one Scoop pulls up when it's building a page because it is a complete HTML page, starting with \latexhtml{$<$html$>$}{<html>} and ending with \latexhtml{$<$/html$>$}{</html>}.
+
+Your front page (and section pages) will use index\_template, viewing a story uses the story\_template, and most admin pages use admin\_template.  Be very careful changing these, because, if you mess them up, you might not be able to view your site.
+
+To change a template, go to the block editor and choose the ``Page Templates'' link, then scroll down to view the contents of the ``index\_template'' block.  You can see near the top there is a key called \latexhtml{$\vert$}{|}header\latexhtml{$\vert$}{|}.  As you can probably guess, this is a reference back to the header that we changed a few paragraphs before.  It also contains the special key \latexhtml{$\vert$}{|}CONTENT\latexhtml{$\vert$}{|}, which is where all of the stories for the page are inserted.  By changing this page you can drastically alter how your site appears.  The special block \latexhtml{$\vert$}{|}CONTENT\latexhtml{$\vert$}{|} is critical, as it is replaced with the main content---in the case of the index\_template, it is replaced with the headlines and story summaries.
+
+There are several special keys, most specific to a particular block and filled from the database.  For example, the comment block, in the content category, has special keys for the comment subject, author, rating, and so on; those special keys have no meaning outside the comment block and corresponding blocks will not be found in the Blocks Admin Tool.
+
+For more details on special keys and how the blocks fit together, see section~\ref{features-custom}.
+
+\subsubsection{Boxes}
+\label{how-boxes}
+
+Blocks are only the beginning of the story, however, and since they always return (roughly) the same thing, they can't provide some of the more customized content.  
+
+You will notice that the templates also contain keys like \latexhtml{$\vert$}{|}BOX,admin\_tools\latexhtml{$\vert$}{|} and \latexhtml{$\vert$}{|}BOX,user\_box\latexhtml{$\vert$}{|}.  Unlike the blocks that we have just looked at, {\bf a box is a chunk of Perl code} that generally has HTML as output.  Mostly, the boxes produce fairly generic output and don't need much changing, and the box template (Blocks Admin Tool, Box Templates category) chosen will have the most effect on how they look.
+
+Boxes can include keys as part of their output, and those will be interpolated in the same way as keys included in blocks.
+
+If you already know Perl, you will find Boxes an invaluable way to customize your Scoop site.  Some fairly significant features have been done entirely in boxes, since boxes have access to every Scoop function and every bit of data Scoop carries.
+
+If you don't know Perl, you will be limited to tweaking the existing boxes, or borrowing code from the Scoop Box Exchange.  I am not going to provide a Perl tutorial for you here, but if you are interested in some light customization, just examine some of the boxes that ship with Scoop. If you like, you can look at a Perl tutorial so you can go a bit farther.
+
+For more information on customizing your site using boxes, see section~\ref{hacking}.
+
+One warning, though: be very careful about who you give permission to edit boxes to, because {\bf boxes can run any program on your system}.  This is considered a feature; it's just dangerous if you're not careful about your permissions (\ref{user-perms}).
+
+\subsection{Users and Stories}
+\label{admin-users}
+
+Scoop has a permission and group system that allows you to customize which users can and cannot do what on your site.
+
+\subsubsection{Accounts}
+
+Account creation is automated and easy.  It requires a user to provide a working email address, so Scoop can confirm their account; it also requires you to configure Scoop to be able to successfully send email with a valid From: address (covered in section~\ref{how-start}).
+
+If Scoop's {\bf email address is invalid}, it will often tell a new user trying to create an account that it's the user's email address that is invalid.
+
+Beside the username in all stories and comments, as well as on the User Info page, an ``Edit User'' link will let you edit that user's User Info, as well as change their username and group, and add notes about that user that only administrators can see, such as keeping a record of abuses so the account can have its permissions reduced appropriately if necessary.
+
+It's generally not a good idea to delete a user unless the account was just created and hadn't really done anything, because there is so much stuff tied to the userid and to that stuff (i.e., a user has comments, those comments have replies). Accounts which are created and post nothing but abusive comments and stories are generally the only accounts that should be deleted.
+
+If somebody goes on an unfair rating rampage, their ratings can be reversed.  To revoke their rating abilities at the same time, you have to create a more restricted group that is missing that permission, then put that group's name in the site control `rating\_wipe\_group', in the Security category. The link to reverse a user's ratings is on the page showing that user's ratings.
+
+\subsubsection{Groups}
+\label{admin-users-groups}
+
+For a small site, you will generally only need three groups: Superuser, Users, and Anonymous.  Nearly all registered users will be in the group Users, you, as the administrator, will be in the Superuser group, and anybody not logged in will be in the Anonymous group.
+
+For a larger site, the groups Admin and Editor come in handy.  Generally speaking, somebody in the Admin group should have administrative access to the site so they can fix things that break - such as blocks, boxes, and so on.  Somebody in the Editor group should have permission to change other people's stories, so they can fix typos, kick a story into or out of the edit queue, and so on.
+
+For still larger sites, or sites with more specialized needs, other groups can be used and created at will, such as a Subscribers group if the site uses a subscription model, or a more limited group for users who have abused their privileges.
+
+\subsubsection{Permissions}
+\label{user-perms}
+
+The group a user is placed in determines what they are allowed to do on the site; what each group is allowed to do depends on the permissions given in the Groups Admin Tool (\ref{admin-tools-groups}).
+
+Most of the permissions are fairly self-explanatory, such as comment\_post, which determines whether or not a user is allowed to post a comment.  All permissions are described in appendix~\ref{admin-tools-groups}, along with warnings and recommendations for their use.
+
+More than half of the permissions are for administrative stuff.  All but one determine whether or not the user can perform an action; the one exception is super\_mojo, which basically means that regardless of comment ratings, users in that group are always considered trusted.
+
+The Superuser should have all permissions checked at all times, except the ``suballow\_group\_change'' and ``allow\_subscription'' perms, as those allow Scoop to change the user group if subscriptions are active. (Generally, subscribers will have fewer perms than the superuser...)
+
+{\bf Warning:} if a group has permission to edit users and groups, members of that group can give themselves and others superuser privileges.  Just because it's a website, don't think somebody with superuser privileges can't hose your system; Scoop's box system can run {\bf any command on your system}---including starting a daemon, or fetching the daemon (or trojan!) first, then starting it---and present the output to a person viewing the page in any way the box creator wants. I have heard of one site administrator using a Scoop box to restart sshd when it died once.
+
+Permissions are checked both when an action is attempted and when building the page; somebody without the comment\_post permission, for example, simply will not see the ``Reply to this'' and ``Post a comment'' links anywhere.
+
+If you ever need to {\bf add a new permission}, the master list is stored in the Site Control ``perms''.  When you add a new perm it will default to being unselected for all groups.  If for any reason you delete a perm from that list, the perm will still be set for all users that formerly had it, so make sure you've removed the permission from the groups first.
+
+There are also {\bf section permissions}, allowing you to have read-only or admin-only sections, as well as allowing certain groups to automatically post and bypass the queue.  Those settings can be useful in several situations, including a ``Site News'' style section, in which normal users cannot post stories at all, but the site administrator can automatically post to the section.  These are available in the Sections Admin Tool (\ref{admin-tools-sections}).  Using those permissions, an admin-only section, for example, can use either ``Hide'', where Scoop pretends that the section doesn't exist for that user, or ``Deny'', where Scoop admits that the section exists and tells the user he doesn't have permission to see it.
+
+\subsubsection{Publishing Stories}
+\label{how-publishing}
+
+Scoop uses a democratic model of publishing by default; that is, unlike most weblogs which have a limited number of people choosing what to post, {\bf any registered user can vote} on what stories to publish and where.  Which users can submit stories and vote is controlled by their group permissions (see section~\ref{admin-users}).
+
+If you have enabled the `edit queue' (see section~\ref{moderation-queues}) and the user has chosen to use it, he can change his story according to `editorial' comments other users offer to help improve it to the point where it can be moved on to the voting queue.
+
+When the user is satisfied or a time limit is reached, the story is moved from the edit queue to the voting queue, and can then be voted on.  If the edit queue isn't active, all stories go immediately to the voting queue.  Other users then cast their vote; either +1 (post), -1 (drop), or 0 (abstain).  The votes are added up using the methods described in section~\ref{moderation-autopost}, and when the story reaches one of the thresholds, the story is either posted or dropped.  All of the limits can be configured through the Site Controls Admin Tool, in the Stories category.
+
+If there are not enough people to vote a story up, the Superuser can force a story to be published---this is common in brand new sites.  By clicking the `edit' link in the story then setting the dropdown box just under the title to ``Always Display'' a story can be published on the front page regardless of votes.
+
+If you don't want to use Scoop's story voting mechanism but just let yourself or maybe a few people post stories at will, you can take away normal users' ability to post stories or vote using the Groups Admin Tool, then use the Sections Admin Tool to give your group the ability to auto-post stories to the front page or the section page, whichever you prefer.
+
+\subsection{Routine Maintenance}
+\label{admin-routine}
+
+Scoop doesn't require a lot of admin intervention once it's set up and running smoothly.  It is entirely possible for the site to function completely normally when the sole administrator has gone on vacation, in fact.
+
+\subsubsection{Scheduled Tasks}
+
+Scoop has a built-in scheduler that will handle quite a bit of routine maintenance for you, such as fetching headlines from other sites, sending your headline digest to anybody who requested it, and cleaning out unused items in the database.  This can be administered via the Cron Admin Tool (see appendix~\ref{admin-tools-cron}).
+
+To have Scoop's cron run, you need to set your system to request the path /cron on your Scoop site more frequently than the most frequent item in Scoop's cron list.  When the path /cron is requested, Scoop will check to see if it is due to run any cron items.
+
+In unix, using wget or something similar in your system cron works well.  You can also use the run\_cron.pl script available in the scoop/scripts/ directory from your system cron.
+
+The crons turned on by default are the generally useful ones, that you probably really want to run, like rdf (to create your rdf feed) and sessionreap (to remove old unused sessions from the session table, which can get quite large).
+
+You may want to use Apache's log rotation to avoid filling up your hard drive.  This is not set up via Scoop, but in the Apache configuration. See the apache documentation at \hturl{http://httpd.apache.org/docs/logs.html\#rotation} to set it up to suit your site.
+
+\subsubsection{Required Admin Approvals}
+
+Only RDF feeds and advertisements require your approval as administrator before they are published on the site.
+
+If you're allowing users to see and submit RDF feeds, make sure you visit the RDF Feeds Admin Tool every so often to approve or reject newly submitted feeds.
+
+Similarly, if you are serving ads on your pages, make sure you visit the Advertising Admin Tool every so often to approve or reject any ads that have been purchased.
+
+\subsubsection{Event notification and logging}
+\label{routine-hooks}
+
+Scoop has the ability to run a box when certain events occur; the box can then do anything any Scoop box or function can do.  This can be administered in the Hooks Admin Tool.
+
+A few of the events that are included but not activated by default log admin actions such as comment deletion.  If you activate the hooks that log admin events and set the variable use\_logging to either 1 (normal logging) or 2 (extended logging), the logs it creates can be viewed using the Log Admin Tool.
+
+For example, if you wanted Scoop to email you when a story was posted, you could create a box that sends the email, and then bind the hook story\_post to your new box.
+
+A given hook can have as many functions as you want bound to it; however, you can't control what order they're run in, so none of them should depend on another of the hooks. Hooks are given specified parameters which are relevent to the event; story\_post, for example, has two parameters: sid (the Story ID, a five-part numeric code) and where (the location the story is posted: either 'front' or 'Section').
+
+See section~\ref{admin-tools-hooks} for more information on hooks, when they are run, and tips on writing boxes for them.
+
+\subsection{Performance Monitoring}
+\label{performance}
+
+\hturl{http://jeremy.zawodny.com/mysql/mytop/} MySQL performance monitoring on the command line. Display is similar to unix `top' but shows the queries running and stats on efficiency and slow queries.
+
+In the mysql client, you can see what queries are currently running by typing at the mysql prompt:
+\begin{verbatim}
+mysql> show full processlist;
+\end{verbatim}
+
+%FIXME: more performance tips added as they're thought of.
+
+\subsection{General Administrative Tips}
+\label{admin-general}
+
+\subsubsection{Security}
+
+Boxes can run arbitrary perl code on the server, with the permissions of the apache daemon. This includes any external programs present on your system. Be careful when you give out edit\_box perms.
+
+\subsubsection{Access Control}
+
+If you have a development site that you don't really want people to see, or you're still setting it up and {\bf don't want it to be publicly available just yet}, you can use Scoop's ``Safe Mode'', which returns a 503 Service Unavailable to everybody except the Superuser account, allowing you to set your site up then ``flick a switch'' (the variable {\bf safe\_mode}) to let everybody else in. As Scoop will process logins before determining whether or not to allow access, you can have a login form on a custom 503 error page which will allow you access to the site. See section~\ref{features-safemode} for details.
+

@@ -1,0 +1,541 @@
+#!/usr/bin/perl
+use Getopt::Std;
+use DBI;
+use vars qw($dbh);
+
+#note: scalar, hash ref, array ref are return values
+my ($command, $args, $which) = &parse_args();
+$args->{H} =~ /([^:]+):?(.+)?/;
+
+my $db_user = $args->{U} || 'nobody';
+my $db_pass = $args->{P} || 'password';
+my $db_name = $args->{D} || 'scoop';
+my $db_type = $args->{d} || 'mysql';
+my $db_host = $1         || 'localhost';
+my $db_port = $2		 || 3306;
+if($2 == 0 && $db_type eq 'Pg')
+{
+	$db_port = 5432;
+}
+
+my $editor  = $ENV{EDITOR} || ((-x '/bin/vi') ? '/bin/vi' : '/usr/bin/vi');
+
+if (($command eq "help") || ($command =~ /^--?h/) || !$command) {
+	&print_help();
+} elsif ($command eq "import") {
+	&import_boxes();
+} elsif ($command eq "export") {
+	&export_boxes();
+} elsif ($command eq "list") {
+	&list_boxes();
+} elsif ($command eq "edit") {
+	&edit_boxes();
+} else {
+	&print_help("Unknown command: $command");
+}
+
+$dbh->disconnect if $dbh;
+exit;
+
+sub edit_boxes {
+	&print_help("Must specify a box to work with") unless $which->[0];
+	&make_connection();
+	# Specify a saner working directory
+	my $basedir;
+	if(-d '/tmp') {
+		$basedir = '/tmp';
+		}
+	elsif(-d $ENV{HOME}){
+		$basedir = $ENV{HOME};
+		}
+	else {	# if all else fails... of course, this will also be likely
+		# to fail, but what do you do?
+		$basedir = '.';
+		}
+	my $resource = '';
+	if ($args->{f} eq "-") {
+		if ($args->{b}) {
+			$args->{f} = "${basedir}/$which->[0].block.html";
+			$resource = 'blocks';
+		} elsif ($args->{p}) {
+			$args->{f} = "${basedir}/$which->[0].page.html";
+			$resource = 'pages';
+		} elsif ($args->{v}) {
+			$args->{f} = "${basedir}/$which->[0].var.txt";
+			$resource = 'vars';
+		} else {
+			$args->{f} = "${basedir}/$which->[0].box.pl";
+			$resource = 'boxes';
+		}
+	}
+	undef $args->{s};  # just in case
+	undef $args->{u};  # I suffered to write this line.
+
+	# check to make sure the editor exists, and let them know if it doesn't
+	unless( -e $editor && -x _ ) {
+		print "Couldn't find $editor.  Is the path correct?\n";
+		return;
+	}
+
+	&export_boxes();  # first dump the box
+
+	# loop, until they get it right, or they force load or don't save
+	my $syntax_err = 1;
+	my $insert_changes = 1;
+	while( $syntax_err ) {
+		system($editor, $args->{f});   # then edit it
+
+		# test for validity, and print errors if there are any
+		# also prompt to see if they want to continue anyway
+		my $errors = `perl -c $args->{f} 2>&1`;
+
+		# don't try to check the perl syntax of a block or page!
+		$errors = 'foo syntax OK' unless( $resource eq 'boxes' );
+
+		unless( $errors =~ /^(\S+?) syntax OK$/ ) {
+
+			# mark that they messed up, so we don't insert a bad box
+			$insert_changes = 0;
+
+			print "Error in box $which->[0]:\n";
+			print $errors;
+
+			print "---- Do you wish to try to fix the errors? [Y|n] ";
+			chomp( my $reply = <STDIN> );
+			next unless( $reply =~ /n/i );
+
+			print "---- Import box with errors? [y|N] ";
+			chomp( $reply = <STDIN> );
+			if( $reply =~ /y/i ) {
+				$insert_changes = 1;
+			}
+
+			print "Not saving box changes to database\n";
+			last;
+
+		} else {
+			$syntax_err = 0;
+		}
+		$insert_changes = 1;
+	}
+
+	# finish up
+	&import_boxes() if( $insert_changes );  # put the box back
+	unlink($args->{f});  # and clean up
+}
+
+sub list_boxes {
+	&make_connection();
+	my $query;
+
+	if ($args->{b}) {
+		$query = "SELECT bid AS id FROM blocks";
+	} elsif ($args->{p}) {
+		$query = "SELECT pageid AS id, title FROM special";
+	} elsif ($args->{v}) {
+		$query = "SELECT name AS id FROM vars";
+	} else {
+		$query = "SELECT boxid AS id, title FROM box";
+	}
+
+	my $sth = $dbh->prepare($query) || die "couldn't prepare $query: $DBI::errstr\n";
+	$sth->execute() || die "couldn't execute $query: $DBI::errstr\n";
+
+	while (my $res = $sth->fetchrow_hashref()) {
+		print "$res->{id}";
+		print "\t$res->{title}" if !$args->{b};
+		print "\n";
+	}
+	$sth->finish;
+}
+
+sub import_boxes {
+	&print_help("Must specify a box to work with") unless $which->[0];
+
+	my $content = &slurp_file($args->{f});
+	$content =~ s/\\/\\\\/gs;
+	$content =~ s/'/\\'/gs;
+
+	die "Nothing to put in the DB!\n" unless $content;
+	
+	&make_connection();
+	my $exists = &does_exist($which->[0], $dbh);
+	my $resource = 'boxes';	# This is reset as appropriate below
+
+	if ($args->{b}) {
+		my $query;
+		$resource = 'blocks';
+		if ($exists) {
+			$query = "UPDATE blocks SET block = '$content' WHERE bid = '$which->[0]'";
+		} else {
+			$query = "INSERT INTO blocks (bid, block) VALUES ('$which->[0]', '$content')";
+		}
+
+		$dbh->do($query) || die "couldn't do $query: $DBI::errstr\n";
+	} elsif ($args->{p}) {
+		my $query;
+		$resource = 'pages';
+		if ($exists) {
+			$query = "UPDATE special SET content = '$content' WHERE pageid = '$which->[0]'";
+		} else {
+			$query = "INSERT INTO special (pageid, content) VALUES ('$which->[0]', '$content')";
+		}
+
+		$dbh->do($query) || die "couldn't do $query: $DBI::errstr\n";
+	} elsif ($args->{v}) {
+		my $query;
+		$resource = 'vars';
+		if ($exists) {
+			$query = "UPDATE vars SET value = '$content' WHERE name = '$which->[0]'";
+		} else {
+			$query = "INSERT INTO vars (name, value) VALUES ('$which->[0]', '$content')";
+		}
+
+		$dbh->do($query) || die "couldn't do $query: $DBI::errstr\n";
+	} else {
+		my $query;
+		$resource = 'boxes';
+		if ($exists) {
+			$query = "UPDATE box SET content = '$content' WHERE boxid =
+			'$which->[0]'";
+		} else {
+			$query = "INSERT INTO box (boxid, content) VALUES ('$which->[0]', '$content')";
+		}
+
+		$dbh->do($query) || die "couldn't do $query: $DBI::errstr\n";
+	}
+
+	&update_cache($resource); # make sure the cache is updated
+}
+
+sub export_boxes {
+	&print_help("Must specify a box to work with") unless $which->[0];
+	&make_connection;
+
+	if ($args->{b}) {
+		my $query = "SELECT block FROM blocks WHERE bid = '$which->[0]'";
+		my $sth = $dbh->prepare($query) || die "couldn't prepare $query: $DBI::errstr\n";
+		$sth->execute() || die "couldn't execute $query: $DBI::errstr\n";
+		my ($block) = $sth->fetchrow_array();
+		$sth->finish;
+
+		die "Block $which->[0] not found\n" unless $block;
+
+		open(FH, ">$args->{f}") || die "couldn't open $args->{f} for writing: $!\n";
+		if ($args->{s}) {
+			$block = &sql_escape($block);
+			print FH "INSERT INTO blocks (bid, block) VALUES ('$which->[0]', '$block');";
+		} elsif ($args->{u}) {
+			$block = &sql_escape($block);
+			print FH "UPDATE blocks SET block = '$block' WHERE bid = '$which->[0]';";
+		} else {
+			print FH $block;
+		}
+		close(FH) || die "couldn't close $args->{f}: $!";
+	} elsif ($args->{v}) {
+		my $query = "SELECT value FROM vars WHERE name = '$which->[0]'";
+		my $sth = $dbh->prepare($query) || die "couldn't prepare $query: $DBI::errstr\n";
+		$sth->execute() || die "couldn't execute $query: $DBI::errstr\n";
+		my ($variable) = $sth->fetchrow_array();
+		$sth->finish;
+
+		die "Var $which->[0] not found\n" unless $variable;
+
+		open(FH, ">$args->{f}") || die "couldn't open $args->{f} for writing: $!\n";
+		if ($args->{s}) {
+			$block = &sql_escape($variable);
+			print FH "INSERT INTO vars (name, value) VALUES ('$which->[0]', '$variable');";
+		} elsif ($args->{u}) {
+			$block = &sql_escape($variable);
+			print FH "UPDATE vars SET value = '$variable' WHERE name = '$which->[0]';";
+		} else {
+			print FH $variable;
+		}
+		close(FH) || die "couldn't close $args->{f}: $!";
+	} elsif ($args->{p}) {
+		my $query = "SELECT content";
+		$query .= ", title, description" if $args->{s};
+		$query .= " FROM special WHERE pageid = '$which->[0]'";
+		my $sth = $dbh->prepare($query) || die "couldn't prepare $query: $DBI::errstr\n";
+		$sth->execute() || die "couldn't execute $query: $DBI::errstr\n";
+		my $page = $sth->fetchrow_hashref();
+		$sth->finish;
+
+		die "Special page $which->[0] not found\n" unless $page->{content};
+
+		open(FH, ">$args->{f}") || die "couldn't open $args->{f} for writing: $!\n";
+		if ($args->{s}) {
+			print FH "INSERT INTO special (pageid, title, description, content) VALUES ('$which->[0]', '",
+			&sql_escape($page->{title}), "', '",
+			&sql_escape($page->{description}), "', '",
+			&sql_escape($page->{content}), "');";
+		} elsif ($args->{u}) {
+			print FH "UPDATE special SET content = '", &sql_escape($page->{content}), "' WHERE pageid = '$which->[0]';";
+		} else {
+			print FH $page->{content};
+		}
+		close(FH) || die "couldn't close $args->{f}: $!\n";
+	} else {
+		my $query = "SELECT content";
+		$query .= ", title, description, template" if $args->{s};
+		$query .= " FROM box WHERE boxid = '$which->[0]'";
+		my $sth = $dbh->prepare($query) || die "couldn't prepare $query: $DBI::errstr\n";
+		$sth->execute() || die "couldn't execute $query: $DBI::errstr\n";
+		my $box = $sth->fetchrow_hashref();
+		$sth->finish;
+		die "Box $which->[0] not found\n" unless $box->{content};
+
+		open(FH, ">$args->{f}") || die "couldn't open $args->{f} for writing: $!\n";
+		if ($args->{s}) {
+			print FH "INSERT INTO box (boxid, title, content, description, template) VALUES ('$which->[0]', '",
+			&sql_escape($box->{title}), "', '",
+			&sql_escape($box->{content}), "', '",
+			&sql_escape($box->{description}), "', '",
+			&sql_escape($box->{template}), "');";
+		} elsif ($args->{u}) {
+			print FH "UPDATE box SET content = '", &sql_escape($box->{content}), "' WHERE boxid = '$which->[0]';";
+		} else {
+			print FH $box->{content};
+		}
+		close(FH) || die "couldn't close $args->{f}: $!\n";
+	}
+}
+
+
+# takes one arg, the resource column of the cache_time table to update
+# stamps it in the db (last_update) with a timestamp in epoch seconds
+sub update_cache {
+	my $resource = shift;
+
+	return if( $resource eq 'pages' ); # we don't cache special pages, so don't worry about
+                                       # the cache
+
+	my $time = time;
+	warn "stamping cache $resource with $time\n";
+	my $q = "UPDATE cache_time set last_update = $time where resource LIKE '$resource%' or resource = 'refresh_all'";
+
+	my $sth = $dbh->prepare($q) || die "couldn't prepare $q: $DBI::errstr\n";
+	$sth->execute() || die "couldn't execute $q: $DBI::errstr\n";
+	$sth->finish;
+
+}
+
+sub does_exist {
+	my $d = shift;
+
+	my $query;
+	if ($args->{b}) {
+		$query = "SELECT COUNT(*) FROM blocks WHERE bid = '$d'";
+	} elsif ($args->{p}) {
+		$query = "SELECT COUNT(*) FROM special WHERE pageid = '$d'";
+	} elsif ($args->{v}) {
+		$query = "SELECT COUNT(*) FROM vars WHERE name = '$d'";
+	} else {
+		$query = "SELECT COUNT(*) FROM box WHERE boxid = '$d'";
+	}
+
+	my $sth = $dbh->prepare($query) || die "couldn't prepare $query: $DBI::errstr\n";
+	$sth->execute() || die "couldn't execute $query: $DBI::errstr\n";
+	my ($count) = $sth->fetchrow_array();
+	$sth->finish;
+
+	return $count;
+}
+
+sub sql_escape {
+	my $d = shift;
+
+	$d =~ s/\\/\\\\/gs;
+	$d =~ s/'/\\'/gs;
+	$d =~ s/\n/\\n/gs;
+	$d =~ s/\r/\\r/gs;
+
+	return $d;
+}
+
+sub slurp_file {
+	my $file = shift;
+
+	open(FILE, "<$file") || die "couldn't open $file for reading: $!\n";
+	my $old_sep = $/; undef $/;
+	my $slurped = <FILE>;
+	close(FILE) || die "couldn't close $file: $!\n";
+	$/ = $old_sep;
+
+	return $slurped;
+}
+
+sub make_connection {
+	return if $dbh;
+
+	my $dsn = "DBI:$db_type:database=$db_name;host=$db_host;port=$db_port";
+	$dbh = DBI->connect($dsn, $db_user, $db_pass) || 
+		die "Couldn't connect to database: $!";
+}
+
+sub parse_args {
+	# first, remove any initial non-arg (the command)
+	my $command = shift(@ARGV);
+
+	# next, have Getopt::Std parse out the args
+	my $args = {};
+	getopts('U:H:P:D:d::subpvf:', $args);
+	$args->{f} ||= "-";   # default to stdin/stdout
+
+	return ($command, $args, \@ARGV);
+}
+
+sub print_help {
+	print "$_[0]\n" if $_[0];
+	while (<DATA>) {
+		last if /^=/;  # a hack to support POD at the end
+		print "$_";
+	}
+}
+		
+
+__END__
+usage:  boxtool command [args] box
+
+Commands may be one of the following:
+   import    place the data in file (or read from STDIN) into the database, as
+             box. it will be inserted if needed, or just replaced
+   export    dump box from the database into file (or STDOUT by default)
+   list      prints a list of all boxes, and their title's if applicable
+   edit      exports box to temp file, opens it in an editor, and imports it
+             back when you close the editor
+   help      get this message (-h and --help also work)
+
+Possible args are:
+   -U user   set the username for connecting to the database
+   -P pass   set the password for connecting to the database
+   -D db     set the database to connect to
+   -H host[:port]
+             set the hostname (and possibly port) used to connect
+   -s        generate SQL inserts for boxes (works only with export)
+   -u        generate SQL updates for boxes (works only with export)
+   -b        work with blocks instead of boxes
+   -v        work with vars instead of boxes
+   -p        work with special pages instead of boxes
+   -f file   instead of using STDOUT and STDIN, use file. file can be -, in
+             which case the default of STDIN or STDOUT will be used
+
+=head1 NAME
+
+boxtool - command-line interface to boxes, blocks, and pages in Scoop
+
+=head1 SYNOPSIS
+
+boxtool command [options] box
+
+=head1 DESCRIPTION
+
+The boxtool program is designed to provide command-line access to boxes,
+blocks, and special pages in Scoop, so that they can be edited with more
+traditional tools, as opposed to web-based forms. boxtool is called with a
+command (see L<"COMMANDS">), possibly some arguments, and a box (or block, or
+page) to operate on. By default, output goes to STDOUT, and input comes from
+STDIN.
+
+=head1 CONFIGURATION
+
+While all configuration can be done with command-line arguments, it's generally
+much easier to define database info in the script. To do this, open boxtool in
+an editor and change the vars near the top with the db_ prefix. Change the part
+after the ||, so that they can still be over-ridden from the command-line.
+
+=head1 COMMANDS
+
+=over 4
+
+=item import
+
+Takes data from either STDIN or the specified file, and inserts it into the
+database under the boxname defined. Also works with blocks and pages.
+
+=item export
+
+Pulls the specified box (or block or page) from the database, and dumps it to
+either STDOUT, or the specified file. With the -s arg, the dump will be in the
+form of an SQL INSERT.
+
+=item list
+
+Lists all of the boxes, blocks, or pages in the database. Includes the id,
+followed by a tab and the title (unless it's a block).
+
+=item edit
+
+For increased convience, edit will export the box to a temporary file (name
+plus ".box", ".block", or ".page" in the current directory), open it in your
+editor (as defined by the EDITOR environment var), and when you finish, imports
+the box and removes the temp file. Note that, with the -f option, you can
+change the file which is used (though it'll still be temporary).
+
+=item help
+
+Outputs a short help message listing all of the command and arguments to
+boxtool. "boxtool -h" and "boxtool --help" also work.
+
+=back
+
+=head1 ARGUMENTS
+
+=over 4
+
+=item -U user
+
+Sets the username used to connect to the database.
+
+=item -P pass
+
+Sets the password used to connect to the database.
+
+=item -D db
+
+Sets the database to connect to.
+
+=item -H host[:port]
+
+Sets the host (and possibly port) that the server is running on.
+
+=item -s
+
+Instead of dumping only the box when exporting, generate an SQL INSERT that can
+be used to reproduce the box (or block, or page).
+
+=item -u
+
+Instead of dumping the box when exporting, or making a full insert, generates
+an SQL UPDATE that will change the content of an existing box (or block, or
+page).
+
+=item -b
+
+Work with blocks instead of boxes.
+
+=item -p
+
+Work with pages instead of boxes.
+
+=item -f file
+
+Instead of reading from STDIN, or writing to STDOUT, use file.
+
+=back
+
+=head1 BUGS
+
+None that I know of, but then, if there were any, I'd document them and call
+them features :)
+
+=head1 AUTHOR
+
+Keith Smiley <keith@mailroom.com>
+
+=head1 COPYRIGHT
+
+The boxtool utility is free software; you can redistribute it and/or modify it
+under the same terms as the Scoop software.
+
+=cut

@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>2.8 Troubleshooting</TITLE>
+<META NAME="description" CONTENT="2.8 Troubleshooting">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="previous" HREF="2_7_System_specific_notes.html">
+<LINK REL="up" HREF="2_Installation.html">
+<LINK REL="next" HREF="3_Setup_Administration.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<UL>
+<LI><A href="2_1_Dependencies.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> Dependencies</A></LI>
+<LI><A href="2_2_Installing_MySQL.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> Installing MySQL and Apache/mod_perl</A></LI>
+<LI><A href="2_3_Getting_Scoop.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN> Getting Scoop</A></LI>
+<LI><A href="2_4_Using_Installer.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN> Using the Installer</A></LI>
+<LI><A href="2_5_Installing_Hand.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN> Installing By Hand</A></LI>
+<LI><A href="2_6_Upgrading_Scoop.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN> Upgrading Scoop</A></LI>
+<LI><A href="2_7_System_specific_notes.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN> System-specific notes</A></LI>
+<LI><A href="2_8_Troubleshooting.html" id="current"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">8</SPAN> Troubleshooting</A></LI>
+</UL>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00028000000000000000"></A>
+<A NAME="install-troubleshooting"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">8</SPAN> Troubleshooting
+</H2>
+
+<P>
+Before starting the troubleshooting process, you should collect certain pieces of information.
+
+<P>
+
+<UL>
+<LI>The exact error message (if any) or behaviour you see in your browser
+</LI>
+<LI>The exact error message (if any) from Apache's error logs--check your Apache configuration for its location; it's usually called error_log
+</LI>
+<LI>Any other error messages produced
+</LI>
+<LI>What you were doing when the error happened (eg, just loading the front page, or logging in, or trying to change something in the Admin Tools)
+</LI>
+</UL>
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER"><A NAME="352"></A>
+<TABLE>
+<CAPTION><STRONG>Table 2:</STRONG>
+Troubleshooting</CAPTION>
+<TR><TD><A NAME="352"></A>
+<TABLE CELLPADDING=3 BORDER="1">
+<LI>2. <A NAME="tex2html2"
+  HREF="2_8_Troubleshooting.html#352">Troubleshooting</A>
+<TR><TD ALIGN="LEFT"><B>Symptom</B></TD>
+<TD ALIGN="LEFT"><B>Solution</B></TD>
+</TR>
+<TR><TD ALIGN="LEFT">Apache refuses to start, complaining that it can't find some of the perl modules, but I installed all of them.  
+
+<P>
+A typical error message is: Can't find packagename in @INC (@INC includes path1,path2,...)</TD>
+<TD ALIGN="LEFT">This usually means one of two things.  Either the package named wasn't actually installed, or the @INC used by mod_perl is different than the @INC used by CPAN when you installed the modules (common if you upgraded Perl after compiling mod_perl, or if you installed the modules, upgraded perl, then compiled mod_perl).  
+
+<P>
+Search for the file named in the error message.  If it doesn't exist, you will need to install it (see section&nbsp;<A HREF="2_1_Dependencies.html#install-modules">2.1.2</A>) then try again.  If the file does exist, check its location against the paths listed in the error message; chances are the version information in the paths is different.  
+
+<P>
+If this is the case, you can either recompile mod_perl (<A HREF="2_2_Installing_MySQL.html#install-apache-modperl">2.2</A>) to use the new perl version, or you can add the relevant paths to @INC.  To add the paths to @INC, put the following two lines in your startup.pl file, immediately after the line that says ``use strict;''.  
+
+<P>
+<DIV ALIGN="LEFT">
+BEGIN { push(@INC, '/usr/lib/perl5/site_perl/5.x.y/i586-linux'); } 
+<BR>
+BEGIN { push(@INC, '/usr/lib/perl5/site_perl/5.x.y'); } 
+
+</DIV>
+
+<P>
+Change the version from 5.x.y to whichever version your modules were installed with (obviously, the version that is not in the @INC in the error message).  Those two lines should be sufficient.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Apache refuses to start, complaining that the &lt;perl&gt; directives are not recognized</TD>
+<TD ALIGN="LEFT">mod_perl is not installed or active; see section&nbsp;<A HREF="2_2_Installing_MySQL.html#install-apache-modperl">2.2</A>.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Apache starts, but I see a directory index (may or may not be Scoop's) instead of the front page, or I get a ``Directory index forbidden by rule'' error in my browser</TD>
+<TD ALIGN="LEFT">This usually means your virtualhost setup or your location setup isn't correct, especially if the directory index isn't of Scoop's html/ directory.  It may also mean that a higher-level directory has too-restrictive of permissions (such as the Directory / having a ``Deny from All'' command, which would be characterized by <B>client denied by server configuration</B> in the error logs).</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Apache starts, but I see Scoop's html/ directory index instead of the front page, or I get a ``Directory index forbidden by rule'' error in my browser</TD>
+<TD ALIGN="LEFT">This usually means that Apache is indeed looking in the right place, but the mod_perl instructions are not running.  See section&nbsp;<A HREF="2_5_Installing_Hand.html#apache-config">2.5.2</A>.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">I can log in, but I'm logged out again on the very next page</TD>
+<TD ALIGN="LEFT">This is a cookie problem.  Generally, your server is not configured to send cookies properly; look in the Apache configuration file Scoop generated for you, and make sure the variable <B>cookie_host</B> is set to the URL you use to access the site as described in section&nbsp;<A HREF="2_5_Installing_Hand.html#apache-config">2.5.2</A>.  
+
+<P>
+If your cookie host is set properly, make sure your browser is not rejecting cookies from your domain.  You may want to delete the cookie if it already exists, and tell your browser to notify you of attempts to set a cookie, to see if you're being sent one at all.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">I can log in, but when I try to click on any of the Admin Tools, I get a "Permission Denied" error</TD>
+<TD ALIGN="LEFT">See above; you're most likely being logged out, and if you're not logged in you don't have permission to do administrative tasks.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">My site starts up fine, but when I (or anybody else) tries to create an account, no email is sent</TD>
+<TD ALIGN="LEFT">make sure your smtp and email variables in the apache config file (<A HREF="2_5_Installing_Hand.html#apache-config">2.5.2</A>) and the Site Controls (<A HREF="3_1_Initial_Setup.html#initial-setup">3.1</A>) are set properly.  Make sure the SMTP server you are using allows your Scoop server to send email through it. Make sure your SMTP server is allowed to send email to the receiving server, too, before messing with its configuration--if it's in a spam blocklist the receiving server is using, no email will get through, through no configuration on your part.</TD>
+</TR>
+<TR><TD ALIGN="LEFT">I get the error ``&lt;Perl&gt;: PerlSetVar takes two arguments, Perl config var and value'' but my PerlSetVar commands all have the two arguments they need</TD>
+<TD ALIGN="LEFT">Check your VERSION file - chances are there's been a cvs conflict (usually at the bottom of the file). The conflict delimiters mess up how apache parses that file for version info.</TD>
+</TR>
+</TABLE></TD></TR>
+</TABLE>
+</DIV><P></P>
+<BR>
+
+<P>
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

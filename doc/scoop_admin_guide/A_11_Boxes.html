@@ -1,0 +1,144 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>A..11 Boxes</TITLE>
+<META NAME="description" CONTENT="A..11 Boxes">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="A_12_Groups.html">
+<LINK REL="previous" HREF="A_10_Special_Pages.html">
+<LINK REL="up" HREF="A_Admin_Tools.html">
+<LINK REL="next" HREF="A_12_Groups.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<UL>
+<LI><A href="A_1_New_Story.html">A..<SPAN CLASS="arabic">1</SPAN> New Story</A></LI>
+<LI><A href="A_2_Story_List.html">A..<SPAN CLASS="arabic">2</SPAN> Story List</A></LI>
+<LI><A href="A_3_Archived_Story.html">A..<SPAN CLASS="arabic">3</SPAN> Archived Story List</A></LI>
+<LI><A href="A_4_New_Poll.html">A..<SPAN CLASS="arabic">4</SPAN> New Poll</A></LI>
+<LI><A href="A_5_Poll_List.html">A..<SPAN CLASS="arabic">5</SPAN> Poll List</A></LI>
+<LI><A href="A_6_Site_Controls.html">A..<SPAN CLASS="arabic">6</SPAN> Site Controls</A></LI>
+<LI><A href="A_7_Blocks.html">A..<SPAN CLASS="arabic">7</SPAN> Blocks</A></LI>
+<LI><A href="A_8_Topics.html">A..<SPAN CLASS="arabic">8</SPAN> Topics</A></LI>
+<LI><A href="A_9_Sections.html">A..<SPAN CLASS="arabic">9</SPAN> Sections</A></LI>
+<LI><A href="A_10_Special_Pages.html">A..<SPAN CLASS="arabic">10</SPAN> Special Pages</A></LI>
+<LI><A href="A_11_Boxes.html" id="current">A..<SPAN CLASS="arabic">11</SPAN> Boxes</A></LI>
+<LI><A href="A_12_Groups.html">A..<SPAN CLASS="arabic">12</SPAN> Groups</A></LI>
+<LI><A href="A_13_RDF_Feeds.html">A..<SPAN CLASS="arabic">13</SPAN> RDF Feeds</A></LI>
+<LI><A href="A_14_Cron.html">A..<SPAN CLASS="arabic">14</SPAN> Cron</A></LI>
+<LI><A href="A_15_Advertising.html">A..<SPAN CLASS="arabic">15</SPAN> Advertising</A></LI>
+<LI><A href="A_16_Ops.html">A..<SPAN CLASS="arabic">16</SPAN> Ops</A></LI>
+<LI><A href="A_17_Subscriptions.html">A..<SPAN CLASS="arabic">17</SPAN> Subscriptions</A></LI>
+<LI><A href="A_18_Hooks.html">A..<SPAN CLASS="arabic">18</SPAN> Hooks</A></LI>
+<LI><A href="A_19_Log.html">A..<SPAN CLASS="arabic">19</SPAN> Log</A></LI>
+<LI><A href="A_20_Macros.html">A..<SPAN CLASS="arabic">20</SPAN> Macros</A></LI>
+<LI><A href="A_21_User_Preferences.html">A..<SPAN CLASS="arabic">21</SPAN> User Preferences</A></LI>
+<LI><A href="A_22_Calendars.html">A..<SPAN CLASS="arabic">22</SPAN> Calendars</A></LI>
+<LI><A href="A_23_Search.html">A..<SPAN CLASS="arabic">23</SPAN> Search</A></LI>
+</UL>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000611000000000000000"></A>
+<A NAME="admin-tools-boxes"></A>
+<BR>
+A..<SPAN CLASS="arabic">11</SPAN> Boxes
+</H2>
+
+<P>
+The Boxes Admin Tool is where you manage boxes. To use this admin tool, you must have the edit_boxes perm (<A HREF="A_12_Groups.html#perm-edit-boxes">A.12.14</A>) active for your group.
+
+<P>
+<B>WARNING:</B> any user with permission to edit boxes can run arbitrary code on the server, with Apache's user and group permissions. Be careful when giving this permission to other people.
+
+<P>
+Boxes are bits of perl code that have full access to all of Scoop's data and subroutines. They range in complexity from the <B>user_box</B> which checks a few permissions to determine which items to display in the user's customized menu, to a set of boxes which handle the payment processing for advertisements and subscriptions and activate those items once they are paid.
+
+<P>
+Some features exist only in boxes, and likewise, entirely new features can be added using boxes without touching the underlying code. Boxes can also call external programs on the server, as can any perl script; the <B>fortune_box</B> is a simple example of this, and calls the unix `fortune' program to fetch a random quote, then formats it for display. For more information on adding features to Scoop, see section&nbsp;<A HREF="5_Extending_Scoop_s.html#hacking">5</A>.
+
+<P>
+To edit a box, first select the desired box from the drop-down box labelled ``Box:'' then click the ``Get Box'' button next to it. The fields below will be filled in with the appropriate information.
+
+<P>
+To create a new box, leave the drop-down box set to ``Select Box'' and fill in the fields below as appropriate.
+
+<P>
+To save a new box or changes to an existing box, click the ``Save Box'' button at the bottom of the form.
+
+<P>
+The fields are:
+
+<P>
+<DL>
+<DT><STRONG>Box</STRONG></DT>
+<DD>is the name of the box being edited. When creating a new box, this should be ``Select Box'', and when saving any existing box, it must match the name in the ``Box ID'' field below.
+</DD>
+<DT><STRONG>Delete this box</STRONG></DT>
+<DD>if checked, will cause Scoop to delete the box chosen in the above drop-down box. It is only displayed if a box is loaded into the form.
+</DD>
+<DT><STRONG>Box ID</STRONG></DT>
+<DD>is the name of the box being edited. When saving any existing box, it must match the name in the ``Box'' field above. When creating a new box, this field must contain a value not already used for a box name.
+</DD>
+<DT><STRONG>Title</STRONG></DT>
+<DD>is the display title of the box, and is used in the special key `title' in the box template, unless the title is changed in the box code.
+</DD>
+<DT><STRONG>Template</STRONG></DT>
+<DD>is the HTML used to contain the box's output. This is a block, and can be edited in the Blocks Admin Tool (<A HREF="A_7_Blocks.html#admin-tools-blocks">A.7</A>). The block must contain the special key `content' and may contain the special key `title'. When a box's information is loaded into the form, an edit link appears next to this field which brings you to the Blocks Admin Tool with the box template already loaded for editing.
+</DD>
+<DT><STRONG>Allow users to toggle box off</STRONG></DT>
+<DD>determines whether or not this box is listed in the user's display preferences. Some boxes are integral parts of the interface and shouldn't be optional, while others, like RDF feeds, are extras and make sense as optional boxes.
+</DD>
+<DT><STRONG>Description</STRONG></DT>
+<DD>is, as you would expect, a description of the box and what it does.
+</DD>
+<DT><STRONG>Content</STRONG></DT>
+<DD>is the perl code itself. Boxes can be considered standalone scripts instead of part of a mod_perl program, as they do not need to be in a subroutine or otherwise structurally different than what you'd find in an actual standalone perl script, except they have the advantage of having full access to all of Scoop's data and functionality, through the $S object. (For more information on the $S object and using it, see section&nbsp;<A HREF="5_Extending_Scoop_s.html#hacking">5</A>, Extending Scoop's Abilities.)
+</DD>
+</DL>
+
+<P>
+The code in a given box can return either one or two values; the single value, or first of a pair, is placed in the special key `content' in the box template. The second value, if present, is placed in the special key `title' in the box template. If the second value is not present, the contents of the ``Title'' field above is used instead.
+
+<P>
+You should return the values as an anonymous hash.  That is,
+
+<P>
+<PRE>
+return \{ content =&gt; \$content, title =&gt; '\$title' \}
+</PRE>
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

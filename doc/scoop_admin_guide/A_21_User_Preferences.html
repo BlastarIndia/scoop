@@ -1,0 +1,184 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>A..21 User Preferences</TITLE>
+<META NAME="description" CONTENT="A..21 User Preferences">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="A_22_Calendars.html">
+<LINK REL="previous" HREF="A_20_Macros.html">
+<LINK REL="up" HREF="A_Admin_Tools.html">
+<LINK REL="next" HREF="A_22_Calendars.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<UL>
+<LI><A href="A_1_New_Story.html">A..<SPAN CLASS="arabic">1</SPAN> New Story</A></LI>
+<LI><A href="A_2_Story_List.html">A..<SPAN CLASS="arabic">2</SPAN> Story List</A></LI>
+<LI><A href="A_3_Archived_Story.html">A..<SPAN CLASS="arabic">3</SPAN> Archived Story List</A></LI>
+<LI><A href="A_4_New_Poll.html">A..<SPAN CLASS="arabic">4</SPAN> New Poll</A></LI>
+<LI><A href="A_5_Poll_List.html">A..<SPAN CLASS="arabic">5</SPAN> Poll List</A></LI>
+<LI><A href="A_6_Site_Controls.html">A..<SPAN CLASS="arabic">6</SPAN> Site Controls</A></LI>
+<LI><A href="A_7_Blocks.html">A..<SPAN CLASS="arabic">7</SPAN> Blocks</A></LI>
+<LI><A href="A_8_Topics.html">A..<SPAN CLASS="arabic">8</SPAN> Topics</A></LI>
+<LI><A href="A_9_Sections.html">A..<SPAN CLASS="arabic">9</SPAN> Sections</A></LI>
+<LI><A href="A_10_Special_Pages.html">A..<SPAN CLASS="arabic">10</SPAN> Special Pages</A></LI>
+<LI><A href="A_11_Boxes.html">A..<SPAN CLASS="arabic">11</SPAN> Boxes</A></LI>
+<LI><A href="A_12_Groups.html">A..<SPAN CLASS="arabic">12</SPAN> Groups</A></LI>
+<LI><A href="A_13_RDF_Feeds.html">A..<SPAN CLASS="arabic">13</SPAN> RDF Feeds</A></LI>
+<LI><A href="A_14_Cron.html">A..<SPAN CLASS="arabic">14</SPAN> Cron</A></LI>
+<LI><A href="A_15_Advertising.html">A..<SPAN CLASS="arabic">15</SPAN> Advertising</A></LI>
+<LI><A href="A_16_Ops.html">A..<SPAN CLASS="arabic">16</SPAN> Ops</A></LI>
+<LI><A href="A_17_Subscriptions.html">A..<SPAN CLASS="arabic">17</SPAN> Subscriptions</A></LI>
+<LI><A href="A_18_Hooks.html">A..<SPAN CLASS="arabic">18</SPAN> Hooks</A></LI>
+<LI><A href="A_19_Log.html">A..<SPAN CLASS="arabic">19</SPAN> Log</A></LI>
+<LI><A href="A_20_Macros.html">A..<SPAN CLASS="arabic">20</SPAN> Macros</A></LI>
+<LI><A href="A_21_User_Preferences.html" id="current">A..<SPAN CLASS="arabic">21</SPAN> User Preferences</A></LI>
+<LI><A href="A_22_Calendars.html">A..<SPAN CLASS="arabic">22</SPAN> Calendars</A></LI>
+<LI><A href="A_23_Search.html">A..<SPAN CLASS="arabic">23</SPAN> Search</A></LI>
+</UL>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000621000000000000000"></A>
+<A NAME="admin-tools-user-preferences"></A>
+<BR>
+A..<SPAN CLASS="arabic">21</SPAN> User Preferences
+</H2>
+
+<P>
+All user preferences (except user group, real email, and password) can be customized, modified, and enabled in the User Preferences Admin Tool. Many of the built-in user preferences are <B>required by Scoop and should never be deleted</B>. If you don't want your users to change those preferences, set the default value however you like and disable the preference, but that default value is often required.
+
+<P>
+User preferences can be public or private, required or optional, available to some groups but not others, allow or not allow HTML, have a specific validation process or allow any content. All of these options are set in this admin tool.
+
+<P>
+Like most admin tools, the form begins with the 'save' and 'get' buttons, and a selectbox for choosing which user preference to fetch for editing.
+
+<P>
+<DL>
+<DT><STRONG>Delete</STRONG></DT>
+<DD>This checkbox is just under the first selectbox and over on the left, and should generally not be used for Scoop's built-in preferences. As mentioned above, most of the built-in preferences are required for correct operation of the site, and should be disabled instead of deleted if you don't want users to have access to them. Checking this and saving will cause the selected preference to be removed from the database.
+</DD>
+<DT><STRONG>Name</STRONG></DT>
+<DD>Like most admin tools, if the selectbox is set to `Add New', a new item is created with the name entered here; to update an existing preference, the selectbox and the name field must match.
+</DD>
+<DT><STRONG>Enabled</STRONG></DT>
+<DD>The enabled checkbox allows you to make a preference available or not globally.
+</DD>
+<DT><STRONG>Title</STRONG></DT>
+<DD>This is displayed to the user as the title of the user preference. It should be a short but descriptive name.
+</DD>
+<DT><STRONG>Description</STRONG></DT>
+<DD>If the title is not enough to explain the preference, additional instructions can be placed in this field. The description is displayed according to the `Template' chosen (below).
+</DD>
+<DT><STRONG>Default Value</STRONG></DT>
+<DD>If the user has not set a value for this preference, the default value is used. This should be a value that validates correctly according to the validation filters set below, although it is not actually filtered here.
+</DD>
+</DL>
+
+<P>
+The next portion of the form lets you specify the display settings for this preference.
+
+<P>
+<DL>
+<DT><STRONG>Shown on signup page?</STRONG></DT>
+<DD>This determines whether or not a particular preference is required or not, and whether or not it is displayed on the newuser page when accounts are first created. The options are:
+
+<UL>
+<LI><B>No</B> This preference is optional and does not need to be shown on the signup page
+</LI>
+<LI><B>Yes</B> This preference is optional and should be shown on the signup page
+</LI>
+<LI><B>Yes, and it's required</B> This preference is required and thus must be shown on the signup page to collect an initial value. This preference can never be saved blank, it must always have a value that validates as specified below
+</LI>
+</UL>
+</DD>
+<DT><STRONG>Preferences page</STRONG></DT>
+<DD>Which preferences page to display this user preference on. The pages included by default are: User Info, Interface, and Comments. You can create new preferences pages simply by entering a value which does not yet exist in this field. The menu used for navigating between preferences pages will detect new pages and add them to its list. The preferences page named 'Protected' (display title of `Email and Password') should not be used here, as it is reserved for `protected settings', those settings which define a user: username, group, password, and realemail.
+</DD>
+<DT><STRONG>Order on page</STRONG></DT>
+<DD>What order to display this preference in, in relation to the other preferences on the same page. If you enter an order number which is already in use, the conflicting number and all preferences with order numbers higher than this are shifted down the page by one place.
+</DD>
+<DT><STRONG>Control to display</STRONG></DT>
+<DD>The form element which will collect the data for this preference. The form element should have a name setting identical to the preference name, and a default value of |value|, so that the user's current preference is correctly displayed. This can also be a box call; for selectboxes, radio buttons, and checkboxes it typically is, so that the correct item is selected. There are generic boxes for two of the three types which can often be used for quite a few of the preferences: pref_selectbox, which takes as its parameters the preference name, the current value, and the list of possible values and produces a selectbox with the current item selected; and pref_checkbox, which takes as its parameters the preference name and the current value and produces a checkbox, selected or not as appropriate.
+</DD>
+<DT><STRONG>Template</STRONG></DT>
+<DD>A block whose name ends in `_pref' and which formats the title, description, and control appropriately. See the block description for the two templates included by default for more information.
+</DD>
+<DT><STRONG>Visible on public user info page?</STRONG></DT>
+<DD>Determines whether or not the value of this preference will be displayed to any user who requests the user info page. If visible, its display is also subject to the `Perm to view' setting (below).
+</DD>
+<DT><STRONG>Formatting to apply to value</STRONG></DT>
+<DD>If you would like to format the value of this preference a certain way when it is displayed on the public user info page, you should specify the HTML here, and place |value| where you want the value placed. For example, the homepage preference formats the value as a hyperlink.
+</DD>
+</DL>
+
+<P>
+The next portion of the form lets you specify what permissions or site controls must be satisfied before the preference can be used, if it is enabled.
+
+<P>
+<DL>
+<DT><STRONG>Site Control</STRONG></DT>
+<DD>The site control that must be true for this preference to be available. For example, if you are not using Scoop's ad server at all, the site control `use_ads' would be false, and the preference `ad_open_new_win' would be irrelevant--and thus shouldn't be shown.
+</DD>
+<DT><STRONG>Perm to view</STRONG></DT>
+<DD>If a user requires a specific permission before being allowed to see a preference, that permission is selected here. For example, the `admin_notes' preference is visible on the user's public info page, but only to admins who have permission to edit users.
+</DD>
+<DT><STRONG>Perm to edit</STRONG></DT>
+<DD>If a user requires a specific permission before being allowed to change a preference, that permission is selected here. As above, only admins can change the `admin_notes' preferences.
+</DD>
+<DT><STRONG>Trusted User status</STRONG></DT>
+<DD>This preference is only available to `trusted users' (<A HREF="4_13_Trusted_Users.html#features-mojo">4.13</A>).
+</DD>
+</DL>
+
+<P>
+The last portion of the form deals with input validation; what values are permitted.
+
+<P>
+<DL>
+<DT><STRONG>HTML allowed</STRONG></DT>
+<DD>This determines whether or not HTML is permitted in the preference. If it is permitted, the value is run through the HTML filter. The HTML allowed can be specified in the `allowed_html' block; the context for user preferences is `pref' (see the block description for details).
+</DD>
+<DT><STRONG>Field length</STRONG></DT>
+<DD>This determines the maximum length of the value. If left blank or set to zero, no limit is imposed (although the database has a limit of 64kb).
+</DD>
+<DT><STRONG>Box or regular expression</STRONG></DT>
+<DD>This filters the preference for acceptable values. This can be either a box or a regular expression. For a regular expression, simply enter the regex in this field, with pipes escaped: for example, <code>^(on\|off)$</code> is used for all checkboxes, as they have only two possible valid values, on or off. To use a box for advanced filtering, such as the `start_page' preference uses to allow any defined section as a valid value, enter the box call without the surrounding pipes: <code>BOX,boxid[,args]</code>. The boxes that perform validation are called with the following arguments: the name of the preference, the value the user tried to save, then any of the optional arguments listed in this field after the box ID. These boxes should only return a value if they encounter an error; a blank return value indicates success, and the value filtered will be saved.
+</DD>
+</DL>
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.70)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>C..4 Site layout and customization</TITLE>
+<META NAME="description" CONTENT="C..4 Site layout and customization">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="sag.css">
+
+<LINK REL="next" HREF="C_5_Crashes_general.html">
+<LINK REL="previous" HREF="C_3_Users_logging.html">
+<LINK REL="up" HREF="C_Frequently_Asked.html">
+<LINK REL="next" HREF="C_5_Crashes_general.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><A href="http://scoop.kuro5hin.org/"><IMG src="small_logo.jpg"></A><UL><LI><A href="sag.html">SAG Home</A></LI>
+<LI><A href="1_Introduction.html"><SPAN CLASS="arabic">1</SPAN> Introduction</A></LI>
+<LI><A href="2_Installation.html"><SPAN CLASS="arabic">2</SPAN> Installation</A></LI>
+<LI><A href="3_Setup_Administration.html"><SPAN CLASS="arabic">3</SPAN> Setup and Administration</A></LI>
+<LI><A href="4_Scoop_Features.html"><SPAN CLASS="arabic">4</SPAN> Scoop Features and Customization</A></LI>
+<LI><A href="5_Extending_Scoop_s.html"><SPAN CLASS="arabic">5</SPAN> Extending Scoop's Abilities</A></LI>
+<LI><A href="A_Admin_Tools.html">A. The Admin Tools Menu</A></LI>
+<LI><A href="B_Scoop_Box.html">B. The Scoop Box Exchange</A></LI>
+<LI><A href="C_Frequently_Asked.html">C. Frequently Asked Questions</A></LI>
+<UL>
+<LI><A href="C_1_General_installation.html">C..<SPAN CLASS="arabic">1</SPAN> General and installation</A></LI>
+<LI><A href="C_2_Stories_comments.html">C..<SPAN CLASS="arabic">2</SPAN> Stories, comments, and the queue</A></LI>
+<LI><A href="C_3_Users_logging.html">C..<SPAN CLASS="arabic">3</SPAN> Users, logging in, and logging out</A></LI>
+<LI><A href="C_4_Site_layout.html" id="current">C..<SPAN CLASS="arabic">4</SPAN> Site layout and customization</A></LI>
+<LI><A href="C_5_Crashes_general.html">C..<SPAN CLASS="arabic">5</SPAN> Crashes and general misbehaviour</A></LI>
+<LI><A href="C_6_Email.html">C..<SPAN CLASS="arabic">6</SPAN> Email</A></LI>
+<LI><A href="C_7_Other.html">C..<SPAN CLASS="arabic">7</SPAN> Other</A></LI>
+</UL>
+<LI><A href="About_this_document.html">About this document ...</A></LI>
+</UL>
+</DIV>
+<!--End of Navigation Panel-->
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html1360"
+  HREF="C_4_Site_layout.html#SECTION00084100000000000000">C..<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN> What's the difference between blocks and boxes?</A>
+<LI><A NAME="tex2html1361"
+  HREF="C_4_Site_layout.html#SECTION00084200000000000000">C..<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> How do I add some of those sidebar boxes that kuro5hin has?</A>
+</UL>
+<!--End of Table of Child-Links-->
+<HR>
+
+<H2><A NAME="SECTION00084000000000000000">
+C..<SPAN CLASS="arabic">4</SPAN> Site layout and customization</A>
+</H2>
+
+<P>
+
+<H3><A NAME="SECTION00084100000000000000">
+C..<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN> What's the difference between blocks and boxes?</A>
+</H3>
+
+<P>
+<B>Blocks</B> are used to build the display. At first they can be confusing, because it's not always clear which block is used where, but they allow you to quickly and easily change the entire layout of the site. This is where all layout changes are made; there are no HTML template files to modify. (The html/ directory in the Scoop package contains the site's static files, such as its images and robots.txt.)
+
+<P>
+<B>Boxes</B>, on the other hand, are bits of perl code that run every time they appear on a page. They range from very simple (the main_menu box which checks a few permissions and displays appropriate menu items) to very complex (the payment processing boxes used to handle ad and subscription payment and activation). Boxes have full access to all of Scoop's data and functions, as well as the normal Perl ability to call external programs and capture their output for parsing (the fortune_box is an example of this; it calls the unix program 'fortune' and displays the quote returned). There are a number of useful boxes included with Scoop, and quite a number of other boxes available on the Scoop Box Exchange (<A HREF="B_Scoop_Box.html#sbe">B</A>).
+
+<P>
+
+<H3><A NAME="SECTION00084200000000000000">
+C..<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> How do I add some of those sidebar boxes that kuro5hin has?</A>
+</H3>
+
+<P>
+Some of kuro5hin's custom boxes are available on the Scoop Box Exchange (<A HREF="B_Scoop_Box.html#sbe">B</A>). Others aren't. The SBE is the first place to look for boxes that aren't included with Scoop.
+
+<P>
+
+<HR>
+<ADDRESS>
+<I>janra <BR>
+2005-02-27</I>
+</ADDRESS>
+</BODY>
+</HTML>

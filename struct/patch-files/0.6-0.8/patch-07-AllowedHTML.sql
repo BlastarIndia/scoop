@@ -1,0 +1,1 @@
+INSERT INTO blocks (bid, block) VALUES ('allowed_html', 'A, HREF, NAME, -close\nB, -close\nP\nI, -close\nOL, -close\nUL, -close\nLI\nDL, -close\nDT\nDD\nEM, -close\nBR\nSTRONG, -close\nBLOCKQUOTE, TYPE=cite, -close\nCITE, -close\nTT, -close\nCODE, -close\n');
