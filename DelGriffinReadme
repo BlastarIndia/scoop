@@ -1,0 +1,347 @@
+
+[+] [P]
+A minor update to installing scooop on modern boxes
+
+By Del Griffith [Watch this Diary] in Del Griffith's Diary
+Fri Mar 28, 2014 at 10:36:41 AM CST 
+Tags: kuro5hin, scoop, boredrom (all tags)	kuro5hin
+	
+I just got it running on Debian 6.  I know Debian 7 is out but Im on low bandwidth so I have to work with what I have here.
+
+Since it disappears from time to time, HERE IS THE LAST VERSION of Scoop.
+https://mega.co.nz/#!OEN2xZSb!00BgMBHg2lMdRAqNkI6y2Rc6DkxOpoZaUJsF6HGQLXg
+
+And old article to reference.
+http://www.kuro5hin.org/story/2009/11/14/20139/115
+
+
+	If your etc/apt/sources.list is all fucked, remember to put something like this in:
+
+deb http://ftp.debian.org/debian/ squeeze main contrib non-free
+deb-src http://ftp.debian.org/debian/ squeeze main contrib non-free
+Well that's great for Debian 6. i386.  It won't work for 5 or 7...
+
+Next this is the package list that'll get your enough perl bullshit to run scoop.  More is probably missing.
+
+
+apt-get install -y openssh-server
+apt-get install -y sendmail-bin
+apt-get install -y apache2.2-common
+apt-get install -y apache2
+apt-get install -y libapache2-mod-perl2
+apt-get install -y expat
+
+apt-get install -y mysql-server mysql-client
+
+apt-get install -y libdbi-perl
+apt-get install -y libdbd-mysql-perl
+apt-get install -y libmd5-perl
+apt-get install -y libapache-dbi-perl
+apt-get install -y libapache2-request-perl
+apt-get install -y libclass-singleton-perl
+apt-get install -y libcrypt-unixcrypt-perl
+apt-get install -y libmail-sendmail-perl
+apt-get install -y libstring-random-perl
+apt-get install -y libtime-modules-perl
+apt-get install -y libdate-calc-perl
+apt-get install -y libxml-parser-perl
+apt-get install -y libcrypt-cbc-perl
+apt-get install -y libcrypt-blowfish-perl
+apt-get install -y libxml-rss-perl
+apt-get install -y libcache-memcached-perl
+apt-get install -y libtext-aspell-perl
+
+apt-get install -y libdigest-md5-file-perl 
+apt-get install -y libterm-readkey-perl
+apt-get install -y libmime-perl
+apt-get install -y libdata-showtable-perl
+
+The apache config:
+
+
+<VirtualHost :80>
+
+  ServerAdmin webmaster@localhost
+
+  ServerName scoop
+
+  DocumentRoot /usr/src/scoop-1.1.8/html
+
+  #ErrorLog logs/scoop-error_log
+
+  #CustomLog logs/scoop-access_log combined
+
+  PerlConfigRequire /usr/src/scoop-1.1.8/etc/startup.pl
+
+
+
+
+
+  <Location />
+
+        PerlSetVar DBType mySQL
+
+        PerlSetVar mysql_version 3.23
+
+        PerlSetVar db_name scoop
+
+        PerlSetVar db_host localhost
+
+        PerlSetVar db_user root
+
+        PerlSetVar db_pass fuck
+
+
+
+        PerlSetVar cookie_host scoop.superglobalmegacorp.com
+
+        PerlSetVar SMTP localhost
+
+        PerlSetVar site_id myscoopsite
+
+        PerlSetVar site_key 5190980f36e9a03effd0231f36e74ec85a422971835b25c83bf724a2
+
+        PerlSetVar dbdown_page /pages/dbdown.html
+
+
+
+    SetHandler perl-script
+
+    PerlHandler Scoop::ApacheHandler
+
+  </Location>
+
+
+
+  <Location /images>
+
+    SetHandler default-handler
+
+  </Location>
+
+
+
+  <Location /pages>
+
+    SetHandler default-handler
+
+  </Location>
+
+
+
+  <Location ~ "^(robots.txt|favicon.ico)$">
+
+    SetHandler default-handler
+
+  <Location>
+
+
+
+
+
+        ScriptAlias /cgi-bin usr/lib/cgi-bin
+
+        <Directory "usr/lib/cgi-bin">
+
+             AllowOverride None
+
+             Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+
+             Order allow,deny
+
+             Allow from all
+
+        </Directory>
+
+
+
+        ErrorLog /var/log/apache2/error.log
+
+
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+
+        # alert, emerg.
+
+        LogLevel warn
+
+
+
+        CustomLog /var/log/apache2/access.log combined
+
+
+
+        Alias /images "/usr/src/scoop-1.1.8/html/images"
+
+        <Directory "/usr/src/scoop-1.1.8/html/images">
+
+        Options Indexes MultiViews FollowSymLinks
+
+        Allow from all
+
+        </Directory>
+
+
+
+
+
+</VirtualHost>
+
+
+
+The source 'diff' for Apache 2
+
+
+diff -ruN scoop-1.1.8-virginetc/startup.pl scoop-1.1.8/etc/startup.pl
+
+--- scoop-1.1.8-virginetc/startup.pl  2006-04-27 11:52:47.000000000 +0800
+
++++ scoop-1.1.8/etc/startup.pl  2014-03-28 20:07:28.000000000 +0800
+
+@@ -1,6 +1,6 @@
+
+ #!/usr/bin/perl
+
+ use strict;
+
+-use mod_perl ();
+
++use mod_perl2();
+
+ #BEGIN {
+
+ #      eval "use mod_perl ()";
+
+ #}
+
+@@ -17,8 +17,10 @@
+
+ }
+
+
+
+ # Die unless we have mod_perl
+
+-$ENV{GATEWAY_INTERFACE} ~ /^CGI-Perl
+
+-       or die "GATEWAY_INTERFACE not Perl!";
+
++#$ENV{GATEWAY_INTERFACE} =~ ^CGI-Perl
+
++#       or die "GATEWAY_INTERFACE not Perl!";
+
++$ENV{MOD_PERL}~mod_perl or die "MOD_PERL not used!";
+
++
+
+
+
+ BEGIN { $Crypt::UnixCrypt::OVERRIDE_BUILTIN = 1 }
+
+ use Crypt::UnixCrypt;
+
+diff -ruN scoop-1.1.8-virgin/lib/Scoop/ApacheHandler.pm scoop-1.1.8/lib/Scoop/ApacheHandler.pm
+
+--- scoop-1.1.8-virginlib/Scoop/ApacheHandler.pm      2004-07-06 14:07:43.000000000 +0800
+
++++ scoop-1.1.8/lib/Scoop/ApacheHandler.pm      2014-03-28 20:08:39.000000000 +0800
+
+@@ -23,7 +23,8 @@
+
+
+
+ sub handler {
+
+        my $r = shift;
+
+-       Apache->request($r);
+
++#      Apache->request($r);
+
++       Apache2::RequestUtil->request($r);
+
+        my $time; # = localtime(time());
+
+        warn "n<<ApacheHandler: $time>> I've got this one...n" if $DEBUG;
+
+        if ($PARANOID) {
+
+@@ -83,7 +84,8 @@
+
+        unless ($S->{OPS}->{$op} && $S->{OPS}->{$op}->{enabled}) {
+
+             &n bsp;  $S->cleanup();
+
+             &n bsp;  undef $Scoop::_instance;
+
+-             & nbsp; return $Scoop::MP2 ? &Apache::DECLINED : &Apache::Constants::DECLINED;
+
++#              return $Scoop::MP2 ? &Apache::DECLINED : &Apache::Constants::DECLINED;
+
++             & nbsp; return $Scoop::MP2 ? &Apache2::Const::DECLINED : &Apache::Constants::DECLINED;
+
+        }
+
+
+
+        # check to make sure the user has permission to to use this op
+
+diff -ruN scoop-1.1.8-virginlib/Scoop.pm scoop-1.1.8/lib/Scoop.pm
+
+--- scoop-1.1.8-virgin/lib/Scoop.pm    2006-04-27 11:52:47.000000000 +0800
+
++++ scoop-1.1.8/lib/Scoop.pm    2014-03-28 20:10:25.000000000 +0800
+
+@@ -816,7 +816,8 @@
+
+ =cut
+
+ sub _set_apache_request {
+
+        my $self = shift;
+
+-       my $r = Apache->request();
+
++#      my $r = Apache->request();
+
++       my $r = Apache2::RequestUtil->request();
+
+
+
+        # set {APACHE} to the request obj
+
+        $self->{APACHE} = $r;
+
+@@ -835,8 +836,10 @@
+
+ sub _set_request_params {
+
+        my $self = shift;
+
+
+
+-       use Apache::Request;
+
+-       my $q = Apache::Request->new( $self->{APACHE} );
+
++#      use Apache::Request;
+
++#      my $q = Apache::Request->new( $self->{APACHE} );
+
++       use Apache2::Request;
+
++       my $q = Apache2::Request->new( $self->{APACHE} );
+
+        $self->{APR} = $q;
+
+
+
+        my $all_args = {};
+
+
+
+Sorry for stray nbsp's but you'll have to figure it out.
+
+*HEY MUMBLE, CAN I GET A DUMP OF YOUR K5DUMP TO SEE HOW IT LOADS ON THE 'REAL' THING?
+
+
