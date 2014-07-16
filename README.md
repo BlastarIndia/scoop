@@ -1,7 +1,7 @@
 scoop
 =====
 
-Scoop by Rusty Foster and the CMF running Kuro5hin and other websites
+Scoop 1.27 by Rusty Foster and the CMF running Kuro5hin and other websites
 
 Also found here:
 http://archive.debian.net/sarge/web/scoop
