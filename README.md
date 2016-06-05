@@ -25,3 +25,8 @@ It only works in Apache1 with an old version of Perl.
 Nobody has modernized it yet. Wordpress killed it as did many other things.
 
 Wordpress was once named B2 and abanonded but someone picked it up modernized it and named it Wordpress and it became famous. Such is the fate of open source projects to be picked up by someone else. If not they end up like Scoop and are forgotten.
+
+DelG found a way to install Scoop on a modern Linux system:
+https://github.com/BlastarIndia/scoop/blob/master/DelGScooponModern.txt
+
+Also note the default robots.txt blocks all robots and Google check the main root of where Scoop is instead for the robots.txt file.
