@@ -30,3 +30,5 @@ DelG found a way to install Scoop on a modern Linux system:
 https://github.com/BlastarIndia/scoop/blob/master/DelGScooponModern.txt
 
 Also note the default robots.txt blocks all robots and Google check the main root of where Scoop is instead for the robots.txt file.
+
+Remove password! Scoop has exploits, admin beware!
